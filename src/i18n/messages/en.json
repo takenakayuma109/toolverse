@@ -104,7 +104,68 @@
     "subtitle": "Find the best tools",
     "trending": "Trending",
     "newTools": "New Tools",
-    "featured": "Featured",
+    "featured": {
+      "ai": {
+        "tag": "PICK OF THE MONTH",
+        "title": "AI Writer Pro",
+        "subtitle": "Create content at lightning speed with AI"
+      },
+      "productivity": {
+        "tag": "EDITORS' CHOICE",
+        "title": "TaskFlow",
+        "subtitle": "Intelligent task management powered by AI"
+      },
+      "finance": {
+        "tag": "TOP FREE APP",
+        "title": "FinTrack",
+        "subtitle": "Track your finances effortlessly"
+      },
+      "marketing": {
+        "tag": "NEW RELEASE",
+        "title": "MarketSense",
+        "subtitle": "Real-time marketing analytics and insights"
+      },
+      "development": {
+        "tag": "MAJOR UPDATE",
+        "title": "CodePilot",
+        "subtitle": "AI pair programming for modern developers"
+      },
+      "creator": {
+        "tag": "FEATURED",
+        "title": "DesignStudio",
+        "subtitle": "AI-powered design for creators"
+      },
+      "automation": {
+        "tag": "TRENDING NOW",
+        "title": "AutoFlow",
+        "subtitle": "Build workflows without code"
+      },
+      "analytics": {
+        "tag": "ESSENTIAL",
+        "title": "DataLens",
+        "subtitle": "Advanced data visualization"
+      },
+      "today": {
+        "tag": "TODAY'S PICK",
+        "title": "SENRIGAN",
+        "subtitle": "AI-powered foresight analytics platform"
+      },
+      "trending": {
+        "tag": "TRENDING",
+        "title": "AI Writer Pro",
+        "subtitle": "The most popular web app this week"
+      },
+      "webapps": {
+        "tag": "WEB APPS",
+        "title": "Toolverse Web Apps",
+        "subtitle": "Discover powerful web applications — no install needed"
+      },
+      "official": {
+        "tag": "OFFICIAL",
+        "title": "PresenceVision",
+        "subtitle": "AI-powered presence management by Toolverse"
+      }
+    },
     "categories": "Categories",
     "reviews": "Reviews",
     "rating": "Rating",
@@ -224,6 +285,56 @@
     "debtNavigator": {
       "name": "Debt Navigator",
       "description": "Debt management and optimization navigator"
+    }
+  },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI-powered presence management and analytics"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI-powered foresight analytics platform"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "Patent search, analysis, and management"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "Debt management and optimization navigator"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "Advanced AI writing assistant for professionals"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "Intelligent task management with AI prioritization"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "AI pair programming and code review assistant"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "Real-time marketing analytics and insights"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "No-code workflow automation builder"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "Personal finance tracking and budgeting"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "AI-powered design tool for creators"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "Advanced data visualization and analytics"
     }
   },
   "footer": {

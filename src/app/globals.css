@@ -120,6 +120,31 @@ body {
   color: #e8e0d8 !important;
 }
 
+/* ── Marketplace sidebar & content for offwhite ── */
+[data-theme="offwhite"] .bg-white\/50 { background-color: rgba(250, 246, 241, 0.7) !important; }
+[data-theme="offwhite"] .bg-white\/80 { background-color: rgba(245, 240, 235, 0.85) !important; }
+
+/* Ensure strong text contrast on offwhite */
+[data-theme="offwhite"] .text-gray-900 { color: #2d2520 !important; }
+[data-theme="offwhite"] .text-gray-600 { color: #5a4f45 !important; }
+[data-theme="offwhite"] .text-gray-500 { color: #6e635a !important; }
+[data-theme="offwhite"] .text-gray-400 { color: #8a7f74 !important; }
+
+/* Sidebar active/hover states for offwhite */
+[data-theme="offwhite"] .bg-violet-100 { background-color: rgba(124, 92, 191, 0.15) !important; }
+[data-theme="offwhite"] .text-violet-700 { color: #6b46b8 !important; }
+[data-theme="offwhite"] .text-violet-600 { color: #7c5cbf !important; }
+[data-theme="offwhite"] .hover\:bg-violet-100:hover { background-color: rgba(124, 92, 191, 0.12) !important; }
+
+/* Offwhite gradient icon containers */
+[data-theme="offwhite"] .from-gray-100.to-gray-200 { background: linear-gradient(to bottom right, #ede7df, #ddd5cb) !important; }
+[data-theme="offwhite"] .bg-gray-100 { background-color: var(--ow-surface) !important; }
+
+/* Offwhite border refinements */
+[data-theme="offwhite"] .border-gray-200 { border-color: var(--ow-border) !important; }
+[data-theme="offwhite"] .border-gray-700 { border-color: var(--ow-border) !important; }
+[data-theme="offwhite"] .border-gray-800 { border-color: var(--ow-border) !important; }
+
 /* ──────────── Animations ──────────── */
 
 @keyframes float {

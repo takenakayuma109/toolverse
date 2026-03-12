@@ -11,17 +11,6 @@ import type { Tool, ToolCategory } from '@/types';
 
 type SidebarSection = 'today' | 'trending' | 'webapps' | 'official' | ToolCategory;
 
-const categoryLabels: Record<string, string> = {
-  ai: 'AI',
-  productivity: 'Productivity',
-  finance: 'Finance',
-  marketing: 'Marketing',
-  development: 'Development',
-  creator: 'Creator',
-  automation: 'Automation',
-  analytics: 'Analytics',
-};
-
 const categoryI18nKeyMap: Record<string, string> = {
   creator: 'creatorTools',
 };
@@ -38,20 +27,20 @@ const categoryIconStyles: Record<string, { bg: string; shadow: string }> = {
   analytics: { bg: 'from-indigo-500 to-blue-600', shadow: 'shadow-indigo-500/40' },
 };
 
-// Featured content for each category
-const featuredContent: Record<string, { tag: string; title: string; subtitle: string; tool: string; gradient: string }> = {
-  ai: { tag: 'PICK OF THE MONTH', title: 'AI Writer Pro', subtitle: 'Create content at lightning speed with AI', tool: 'ai-writer-pro', gradient: 'from-violet-600 via-purple-600 to-fuchsia-600' },
-  productivity: { tag: 'EDITORS\' CHOICE', title: 'TaskFlow', subtitle: 'Intelligent task management powered by AI', tool: 'task-flow', gradient: 'from-blue-600 via-cyan-600 to-teal-600' },
-  finance: { tag: 'TOP FREE APP', title: 'FinTrack', subtitle: 'Track your finances effortlessly', tool: 'fintrack', gradient: 'from-emerald-600 via-green-600 to-lime-600' },
-  marketing: { tag: 'NEW RELEASE', title: 'MarketSense', subtitle: 'Real-time marketing analytics and insights', tool: 'market-sense', gradient: 'from-orange-600 via-red-600 to-rose-600' },
-  development: { tag: 'MAJOR UPDATE', title: 'CodePilot', subtitle: 'AI pair programming for modern developers', tool: 'code-pilot', gradient: 'from-slate-600 via-gray-600 to-zinc-600' },
-  creator: { tag: 'FEATURED', title: 'DesignStudio', subtitle: 'AI-powered design for creators', tool: 'design-studio', gradient: 'from-pink-600 via-rose-600 to-red-600' },
-  automation: { tag: 'TRENDING NOW', title: 'AutoFlow', subtitle: 'Build workflows without code', tool: 'auto-flow', gradient: 'from-amber-600 via-yellow-600 to-orange-600' },
-  analytics: { tag: 'ESSENTIAL', title: 'DataLens', subtitle: 'Advanced data visualization', tool: 'data-lens', gradient: 'from-indigo-600 via-blue-600 to-cyan-600' },
-  today: { tag: 'TODAY\'S PICK', title: 'SENRIGAN', subtitle: 'AI-powered foresight analytics platform', tool: 'senrigan', gradient: 'from-violet-600 via-indigo-600 to-purple-600' },
-  trending: { tag: 'TRENDING', title: 'AI Writer Pro', subtitle: 'The most popular web app this week', tool: 'ai-writer-pro', gradient: 'from-rose-600 via-pink-600 to-fuchsia-600' },
-  webapps: { tag: 'WEB APPS', title: 'Toolverse Web Apps', subtitle: 'Discover powerful web applications — no install needed', tool: 'presence-vision', gradient: 'from-cyan-600 via-blue-600 to-indigo-600' },
-  official: { tag: 'OFFICIAL', title: 'PresenceVision', subtitle: 'AI-powered presence management by Toolverse', tool: 'presence-vision', gradient: 'from-violet-600 via-indigo-600 to-purple-600' },
+// Featured content keys for each section (references i18n keys)
+const featuredSections: Record<string, { toolId: string; gradient: string }> = {
+  ai: { toolId: 'ai-writer-pro', gradient: 'from-violet-600 via-purple-600 to-fuchsia-600' },
+  productivity: { toolId: 'task-flow', gradient: 'from-blue-600 via-cyan-600 to-teal-600' },
+  finance: { toolId: 'fintrack', gradient: 'from-emerald-600 via-green-600 to-lime-600' },
+  marketing: { toolId: 'market-sense', gradient: 'from-orange-600 via-red-600 to-rose-600' },
+  development: { toolId: 'code-pilot', gradient: 'from-slate-600 via-gray-600 to-zinc-600' },
+  creator: { toolId: 'design-studio', gradient: 'from-pink-600 via-rose-600 to-red-600' },
+  automation: { toolId: 'auto-flow', gradient: 'from-amber-600 via-yellow-600 to-orange-600' },
+  analytics: { toolId: 'data-lens', gradient: 'from-indigo-600 via-blue-600 to-cyan-600' },
+  today: { toolId: 'senrigan', gradient: 'from-violet-600 via-indigo-600 to-purple-600' },
+  trending: { toolId: 'ai-writer-pro', gradient: 'from-rose-600 via-pink-600 to-fuchsia-600' },
+  webapps: { toolId: 'presence-vision', gradient: 'from-cyan-600 via-blue-600 to-indigo-600' },
+  official: { toolId: 'presence-vision', gradient: 'from-violet-600 via-indigo-600 to-purple-600' },
 };
 
 function AppIcon3D({ icon, size = 'md', className }: { icon: string; size?: 'sm' | 'md' | 'lg'; className?: string }) {
@@ -85,11 +74,24 @@ export default function MarketplacePage() {
     return t(`home.categories.${key}`);
   };
 
+  // Get translated tool name and description
+  const getToolName = (tool: Tool) => {
+    const key = tool.id.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const translated = t(`toolDescriptions.${key}.name`);
+    return translated && !translated.startsWith('toolDescriptions.') ? translated : tool.name;
+  };
+
+  const getToolDescription = (tool: Tool) => {
+    const key = tool.id.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const translated = t(`toolDescriptions.${key}.description`);
+    return translated && !translated.startsWith('toolDescriptions.') ? translated : tool.description;
+  };
+
   const sectionTitle = useMemo(() => {
-    if (activeSection === 'today') return t('marketplace.today') || 'Today';
+    if (activeSection === 'today') return t('marketplace.today');
     if (activeSection === 'trending') return t('marketplace.trending');
-    if (activeSection === 'webapps') return t('marketplace.webApps') || 'Web Apps';
-    if (activeSection === 'official') return t('marketplace.official') || t('common.official');
+    if (activeSection === 'webapps') return t('marketplace.webApps');
+    if (activeSection === 'official') return t('marketplace.official');
     return getCategoryName(activeSection);
   }, [activeSection, t]);
 
@@ -121,14 +123,14 @@ export default function MarketplacePage() {
     return tools;
   }, [activeSection, searchQuery]);
 
-  const featured = featuredContent[activeSection] || featuredContent.today;
-  const featuredTool = allTools.find((t) => t.id === featured.tool);
+  const featuredSection = featuredSections[activeSection] || featuredSections.today;
+  const featuredTool = allTools.find((t) => t.id === featuredSection.toolId);
 
   const topSections = [
-    { id: 'today' as const, icon: <LayoutGrid className="w-5 h-5" />, label: t('marketplace.today') || 'Today' },
+    { id: 'today' as const, icon: <LayoutGrid className="w-5 h-5" />, label: t('marketplace.today') },
     { id: 'trending' as const, icon: <Flame className="w-5 h-5" />, label: t('marketplace.trending') },
-    { id: 'webapps' as const, icon: <Globe className="w-5 h-5" />, label: t('marketplace.webApps') || 'Web Apps' },
-    { id: 'official' as const, icon: <Award className="w-5 h-5" />, label: t('marketplace.official') || t('common.official') },
+    { id: 'webapps' as const, icon: <Globe className="w-5 h-5" />, label: t('marketplace.webApps') },
+    { id: 'official' as const, icon: <Award className="w-5 h-5" />, label: t('marketplace.official') },
   ];
 
   return (
@@ -266,7 +268,7 @@ export default function MarketplacePage() {
             <div className={cn(
               'relative rounded-2xl overflow-hidden mb-8',
               'bg-gradient-to-br',
-              featured.gradient,
+              featuredSection.gradient,
               'shadow-2xl'
             )}>
               <div className="absolute inset-0 opacity-10">
@@ -277,22 +279,22 @@ export default function MarketplacePage() {
               <div className="relative z-10 p-6 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-start sm:items-end gap-6 min-h-[220px] sm:min-h-[280px]">
                 <div className="flex-1">
                   <span className="inline-block px-3 py-1 rounded-full bg-white/20 text-white/90 text-xs font-semibold tracking-wider mb-4">
-                    {featured.tag}
+                    {t(`marketplace.featured.${activeSection}.tag`)}
                   </span>
                   <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
-                    {featured.title}
+                    {t(`marketplace.featured.${activeSection}.title`)}
                   </h2>
                   <p className="text-white/80 text-sm sm:text-base max-w-lg">
-                    {featured.subtitle}
+                    {t(`marketplace.featured.${activeSection}.subtitle`)}
                   </p>
                   <div className="mt-5 flex items-center gap-4">
                     <AppIcon3D icon={featuredTool.icon} size="md" className="border-white/30" />
                     <div>
-                      <p className="text-white font-semibold">{featuredTool.name}</p>
-                      <p className="text-white/70 text-sm">{featuredTool.description}</p>
+                      <p className="text-white font-semibold">{getToolName(featuredTool)}</p>
+                      <p className="text-white/70 text-sm">{getToolDescription(featuredTool)}</p>
                     </div>
                     <button className="ml-auto flex-shrink-0 px-5 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white text-sm font-medium transition-all border border-white/20">
-                      {t('marketplace.view') || 'View'}
+                      {t('marketplace.view')}
                     </button>
                   </div>
                 </div>
@@ -304,12 +306,12 @@ export default function MarketplacePage() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-1">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                {t('marketplace.essential') || 'Essential'} {sectionTitle} {t('marketplace.apps') || 'Apps'}
+                {t('marketplace.essential')} {sectionTitle} {t('marketplace.apps')}
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </h3>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">
-              {t('marketplace.selectedByEditors') || 'Selected by Toolverse editors'}
+              {t('marketplace.selectedByEditors')}
             </p>
 
             {filteredTools.length > 0 ? (
@@ -323,12 +325,12 @@ export default function MarketplacePage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">
-                          {tool.name}
+                          {getToolName(tool)}
                         </h4>
                         {tool.isOfficial && <Badge variant="gradient" size="sm">{t('common.official')}</Badge>}
                       </div>
                       <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">
-                        {tool.description}
+                        {getToolDescription(tool)}
                       </p>
                       <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
                         <span className="flex items-center gap-0.5">
@@ -345,7 +347,7 @@ export default function MarketplacePage() {
                       </div>
                     </div>
                     <button className="flex-shrink-0 px-4 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-950/50 text-violet-600 dark:text-violet-400 text-sm font-medium transition-all border border-gray-200 dark:border-gray-700 hover:border-violet-300 dark:hover:border-violet-700">
-                      {t('marketplace.view') || 'View'}
+                      {t('marketplace.view')}
                     </button>
                   </div>
                 ))}

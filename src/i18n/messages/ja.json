@@ -12,7 +12,7 @@
     "japanese": "日本語",
     "english": "English",
     "search": "検索",
-    "searchPlaceholder": "ツールを検索...",
+    "searchPlaceholder": "アプリを検索...",
     "loading": "読み込み中...",
     "error": "エラーが発生しました",
     "retry": "再試行",
@@ -38,12 +38,12 @@
   },
   "nav": {
     "home": "ホーム",
-    "discover": "ディスカバー",
+    "discover": "探す",
     "workspace": "ワークスペース",
     "creator": "クリエイター",
-    "studio": "Tool Studio",
+    "studio": "ツールスタジオ",
     "account": "アカウント",
-    "billing": "課金",
+    "billing": "課金管理",
     "admin": "管理者"
   },
   "home": {
@@ -104,15 +104,76 @@
     "subtitle": "最高のツールを見つけよう",
     "trending": "トレンド",
     "newTools": "新着ツール",
-    "featured": "注目",
+    "featured": {
+      "ai": {
+        "tag": "今月のおすすめ",
+        "title": "AI Writer Pro",
+        "subtitle": "AIの力で、超高速コンテンツ制作"
+      },
+      "productivity": {
+        "tag": "編集部イチオシ",
+        "title": "TaskFlow",
+        "subtitle": "AIが優先度を自動判断するタスク管理"
+      },
+      "finance": {
+        "tag": "人気の無料アプリ",
+        "title": "FinTrack",
+        "subtitle": "家計管理をもっとシンプルに"
+      },
+      "marketing": {
+        "tag": "新着リリース",
+        "title": "MarketSense",
+        "subtitle": "リアルタイムのマーケティング分析・インサイト"
+      },
+      "development": {
+        "tag": "メジャーアップデート",
+        "title": "CodePilot",
+        "subtitle": "モダン開発者のためのAIペアプログラミング"
+      },
+      "creator": {
+        "tag": "注目アプリ",
+        "title": "DesignStudio",
+        "subtitle": "クリエイター向けAIデザインツール"
+      },
+      "automation": {
+        "tag": "トレンド急上昇",
+        "title": "AutoFlow",
+        "subtitle": "コード不要でワークフローを構築"
+      },
+      "analytics": {
+        "tag": "必須アプリ",
+        "title": "DataLens",
+        "subtitle": "高度なデータ可視化ツール"
+      },
+      "today": {
+        "tag": "本日のおすすめ",
+        "title": "SENRIGAN",
+        "subtitle": "AI搭載の先見分析プラットフォーム"
+      },
+      "trending": {
+        "tag": "トレンド",
+        "title": "AI Writer Pro",
+        "subtitle": "今週最も人気のウェブアプリ"
+      },
+      "webapps": {
+        "tag": "ウェブアプリ",
+        "title": "Toolverse ウェブアプリ",
+        "subtitle": "インストール不要。強力なウェブアプリを見つけよう"
+      },
+      "official": {
+        "tag": "公式",
+        "title": "PresenceVision",
+        "subtitle": "Toolverse公式のAIプレゼンス管理ツール"
+      }
+    },
     "categories": "カテゴリ",
     "reviews": "レビュー",
     "rating": "評価",
     "view": "表示",
     "install": "インストール",
     "installed": "インストール済み",
-    "today": "Today",
-    "webApps": "Web Apps",
+    "today": "トゥデイ",
+    "webApps": "ウェブアプリ",
     "official": "公式",
     "essential": "おすすめ",
     "apps": "アプリ",
@@ -224,6 +285,56 @@
     "debtNavigator": {
       "name": "Debt Navigator",
       "description": "債務管理・最適化ナビゲーター"
+    }
+  },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AIを活用したプレゼンス管理・分析ツール"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI搭載の先見分析プラットフォーム"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "特許情報の検索・分析・管理ツール"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "債務管理・最適化ナビゲーター"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "プロ向けAIライティングアシスタント"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "AIで優先度を自動判断するタスク管理"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "AIペアプログラミング・コードレビューアシスタント"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "リアルタイムマーケティング分析・インサイト"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "ノーコードワークフロー自動化ビルダー"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "個人向け家計管理・予算ツール"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "クリエイター向けAIデザインツール"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "高度なデータ可視化・分析ツール"
     }
   },
   "footer": {
