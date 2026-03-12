@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useLocaleStore, getInitialLocale } from '@/store/locale';
 import { useThemeStore, getInitialTheme, applyTheme } from '@/store/theme';
+import { useAuthStore } from '@/store/auth';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileNav from '@/components/layout/MobileNav';
@@ -14,17 +15,28 @@ import OfficialToolsSection from '@/components/home/OfficialToolsSection';
 import CTASection from '@/components/home/CTASection';
 import MarketplacePage from '@/components/marketplace/MarketplacePage';
 import WorkspacePage from '@/components/workspace/WorkspacePage';
-import CreatorPage from '@/components/creator/CreatorPage';
+import ToolStudioPage from '@/components/studio/ToolStudioPage';
 import AuthPage from '@/components/auth/AuthPage';
 import BillingPage from '@/components/billing/BillingPage';
+import AdminDashboardPage from '@/components/admin/AdminDashboardPage';
 
-type PageView = 'home' | 'discover' | 'workspace' | 'creator' | 'account' | 'auth' | 'billing';
+export type PageView =
+  | 'home'
+  | 'discover'
+  | 'workspace'
+  | 'studio'
+  | 'account'
+  | 'auth'
+  | 'billing'
+  | 'admin';
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
   const [isInitialized, setIsInitialized] = useState(false);
   const setLocale = useLocaleStore((s) => s.setLocale);
   const setTheme = useThemeStore((s) => s.setTheme);
+  const getInitialAuth = useAuthStore((s) => s.getInitialAuth);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   useEffect(() => {
     const initialLocale = getInitialLocale();
@@ -32,24 +44,9 @@ export default function Home() {
     const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     applyTheme(initialTheme);
+    getInitialAuth();
     setIsInitialized(true);
-  }, [setLocale, setTheme]);
-
-  useEffect(() => {
-    const handler = (e: CustomEvent<{ page: PageView }>) => {
-      setCurrentPage(e.detail.page);
-    };
-    window.addEventListener('navigate' as string, handler as EventListener);
-    return () => window.removeEventListener('navigate' as string, handler as EventListener);
-  }, []);
-
-  useEffect(() => {
-    window.dispatchEvent = ((original) => {
-      return function (this: Window, event: Event) {
-        return original.call(this, event);
-      };
-    })(window.dispatchEvent.bind(window));
-  }, []);
+  }, [setLocale, setTheme, getInitialAuth]);
 
   const navigateTo = (page: PageView) => {
     setCurrentPage(page);
@@ -73,24 +70,27 @@ export default function Home() {
         return <MarketplacePage />;
       case 'workspace':
         return <WorkspacePage />;
-      case 'creator':
-        return <CreatorPage />;
+      case 'studio':
+        return <ToolStudioPage />;
       case 'auth':
-        return <AuthPage />;
+      case 'account':
+        return isAuthenticated
+          ? <WorkspacePage />
+          : <AuthPage />;
       case 'billing':
         return <BillingPage />;
-      case 'account':
-        return <AuthPage />;
+      case 'admin':
+        return <AdminDashboardPage />;
       case 'home':
       default:
         return (
           <>
-            <HeroSection />
+            <HeroSection onNavigate={navigateTo} />
             <FeaturesSection />
-            <CategoriesSection />
+            <CategoriesSection onNavigate={navigateTo} />
             <TrendingSection />
             <OfficialToolsSection />
-            <CTASection />
+            <CTASection onNavigate={navigateTo} />
           </>
         );
     }

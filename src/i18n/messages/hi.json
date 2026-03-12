@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "एक प्लेटफ़ॉर्म जहाँ दुनिया भर के टूल्स इकट्ठा होते हैं, बनाए जाते हैं, खोजे जाते हैं और उपयोग किए जाते हैं",
+    "getStarted": "शुरू करें",
+    "learnMore": "और जानें",
+    "signIn": "साइन इन",
+    "signUp": "साइन अप",
+    "signOut": "साइन आउट",
+    "language": "भाषा",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "खोजें",
+    "searchPlaceholder": "टूल्स खोजें...",
+    "loading": "लोड हो रहा है...",
+    "error": "एक त्रुटि हुई",
+    "retry": "पुनः प्रयास करें",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएँ",
+    "edit": "संपादित करें",
+    "create": "बनाएँ",
+    "back": "वापस",
+    "next": "अगला",
+    "previous": "पिछला",
+    "viewAll": "सभी देखें",
+    "free": "मुफ़्त",
+    "popular": "लोकप्रिय",
+    "new": "नया",
+    "theme": "थीम",
+    "dark": "डार्क",
+    "offwhite": "सौम्य",
+    "light": "लाइट",
+    "official": "आधिकारिक",
+    "trending": "🔥 ट्रेंडिंग",
+    "freemium": "फ्रीमियम"
+  },
+  "nav": {
+    "home": "होम",
+    "discover": "खोजें",
+    "workspace": "कार्यक्षेत्र",
+    "creator": "क्रिएटर",
+    "studio": "Tool Studio",
+    "admin": "प्रशासन",
+    "account": "खाता",
+    "billing": "बिलिंग"
+  },
+  "home": {
+    "hero": {
+      "title": "टूल्स की दुनिया में आपका स्वागत है",
+      "subtitle": "सॉफ़्टवेयर, SaaS, AI और ऑटोमेशन टूल्स के लिए अगली पीढ़ी का प्लेटफ़ॉर्म",
+      "cta": "टूल्स देखें",
+      "ctaSecondary": "क्रिएटर बनें"
+    },
+    "features": {
+      "title": "Toolverse के साथ क्या कर सकते हैं",
+      "marketplace": {
+        "title": "मार्केटप्लेस",
+        "description": "दुनिया भर के सर्वश्रेष्ठ टूल्स खोजें और तुरंत उपयोग करें"
+      },
+      "workspace": {
+        "title": "यूनिवर्सल कार्यक्षेत्र",
+        "description": "सभी टूल्स एक ही जगह पर। सिंगल लॉगिन, एकीकृत डेटा"
+      },
+      "creator": {
+        "title": "क्रिएटर इकोनॉमी",
+        "description": "अपने टूल्स दुनिया को प्रकाशित करें और राजस्व अर्जित करें"
+      },
+      "api": {
+        "title": "प्लेटफ़ॉर्म API",
+        "description": "प्रमाणीकरण, बिलिंग, स्टोरेज। सब कुछ API से बनाएँ"
+      }
+    },
+    "stats": {
+      "tools": "टूल्स",
+      "creators": "क्रिएटर्स",
+      "users": "उपयोगकर्ता",
+      "countries": "देश"
+    },
+    "categories": {
+      "title": "श्रेणी के अनुसार ब्राउज़ करें",
+      "ai": "AI",
+      "productivity": "उत्पादकता",
+      "finance": "वित्त",
+      "marketing": "मार्केटिंग",
+      "development": "विकास",
+      "creatorTools": "क्रिएटर",
+      "automation": "ऑटोमेशन",
+      "analytics": "एनालिटिक्स"
+    },
+    "officialTools": {
+      "title": "आधिकारिक टूल्स",
+      "subtitle": "Toolverse द्वारा प्रदान किए गए आधिकारिक टूल्स आज़माएँ"
+    },
+    "cta": {
+      "title": "आइए साथ मिलकर टूल्स की दुनिया बनाएँ",
+      "subtitle": "क्रिएटर के रूप में जुड़ें और अगली पीढ़ी की सॉफ़्टवेयर इंटरनेट लेयर का निर्माण करें",
+      "button": "अभी शुरू करें"
+    }
+  },
+  "marketplace": {
+    "title": "खोजें",
+    "subtitle": "सर्वश्रेष्ठ टूल्स खोजें",
+    "trending": "ट्रेंडिंग",
+    "newTools": "नए टूल्स",
+    "featured": "विशेष रुप से प्रदर्शित",
+    "categories": "श्रेणियाँ",
+    "reviews": "समीक्षाएँ",
+    "rating": "रेटिंग",
+    "install": "इंस्टॉल करें",
+    "installed": "इंस्टॉल किया गया",
+    "pricing": "मूल्य निर्धारण",
+    "filters": "फ़िल्टर",
+    "sortBy": "इसके अनुसार क्रमबद्ध करें",
+    "allCategories": "सभी श्रेणियाँ",
+    "results": "परिणाम",
+    "noResults": "कोई टूल नहीं मिला"
+  },
+  "workspace": {
+    "title": "कार्यक्षेत्र",
+    "dashboard": "डैशबोर्ड",
+    "projects": "प्रोजेक्ट्स",
+    "files": "फ़ाइलें",
+    "data": "डेटा",
+    "tools": "टूल्स",
+    "recentActivity": "हाल की गतिविधि",
+    "quickActions": "त्वरित कार्य",
+    "myTools": "मेरे टूल्स",
+    "favorites": "पसंदीदा",
+    "noProjects": "अभी तक कोई प्रोजेक्ट नहीं",
+    "createProject": "प्रोजेक्ट बनाएँ"
+  },
+  "creator": {
+    "title": "क्रिएटर पोर्टल",
+    "subtitle": "टूल्स बनाएँ, दुनिया को पहुँचाएँ",
+    "toolRegistration": "टूल पंजीकरण",
+    "pricing": "मूल्य निर्धारण",
+    "analytics": "एनालिटिक्स",
+    "updates": "अपडेट",
+    "revenue": "राजस्व",
+    "publish": "प्रकाशित करें",
+    "draft": "ड्राफ़्ट",
+    "published": "प्रकाशित",
+    "totalRevenue": "कुल राजस्व",
+    "monthlyRevenue": "इस माह का राजस्व",
+    "totalUsers": "कुल उपयोगकर्ता",
+    "activeUsers": "सक्रिय उपयोगकर्ता",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "SDK का उपयोग करके Toolverse प्लेटफ़ॉर्म पर टूल्स बनाएँ",
+      "install": "इंस्टॉल करें",
+      "docs": "दस्तावेज़"
+    }
+  },
+  "auth": {
+    "signInTitle": "Toolverse में साइन इन करें",
+    "signUpTitle": "Toolverse पर साइन अप करें",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "orContinueWith": "या इसके साथ जारी रखें",
+    "google": "Google से जारी रखें",
+    "apple": "Apple से जारी रखें",
+    "github": "GitHub से जारी रखें",
+    "agreeTerms": "मैं सेवा की शर्तों से सहमत हूँ",
+    "alreadyHaveAccount": "पहले से खाता है?",
+    "dontHaveAccount": "खाता नहीं है?"
+  },
+  "billing": {
+    "title": "बिलिंग और प्लान",
+    "currentPlan": "वर्तमान प्लान",
+    "upgrade": "अपग्रेड करें",
+    "subscription": "सदस्यता",
+    "usage": "उपयोग",
+    "revenueShare": "राजस्व हिस्सेदारी",
+    "payouts": "भुगतान",
+    "plans": {
+      "free": {
+        "name": "मुफ़्त",
+        "price": "₹0",
+        "description": "व्यक्तिगत उपयोग के लिए बिल्कुल सही"
+      },
+      "pro": {
+        "name": "प्रो",
+        "price": "₹1,199",
+        "period": "/माह",
+        "description": "पेशेवरों के लिए"
+      },
+      "team": {
+        "name": "टीम",
+        "price": "₹3,299",
+        "period": "/माह",
+        "description": "टीम सहयोग के लिए"
+      },
+      "enterprise": {
+        "name": "एंटरप्राइज़",
+        "price": "संपर्क करें",
+        "description": "बड़े संगठनों के लिए"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI-संचालित उपस्थिति प्रबंधन और विश्लेषण टूल"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI-संचालित दूरदर्शी विश्लेषण प्लेटफ़ॉर्म"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "पेटेंट जानकारी खोज, विश्लेषण और प्रबंधन टूल"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "ऋण प्रबंधन और अनुकूलन नेविगेटर"
+    }
+  },
+  "footer": {
+    "product": "उत्पाद",
+    "company": "कंपनी",
+    "resources": "संसाधन",
+    "legal": "कानूनी",
+    "about": "Toolverse के बारे में",
+    "blog": "ब्लॉग",
+    "careers": "करियर",
+    "contact": "संपर्क करें",
+    "documentation": "दस्तावेज़",
+    "apiReference": "API संदर्भ",
+    "sdkGuide": "SDK गाइड",
+    "community": "समुदाय",
+    "terms": "सेवा की शर्तें",
+    "privacy": "गोपनीयता नीति",
+    "cookies": "कुकी नीति",
+    "copyright": "© 2026 Toolverse. सर्वाधिकार सुरक्षित।"
+  }
+}

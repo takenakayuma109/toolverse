@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "전 세계의 도구가 모이고, 만들어지고, 발견되고, 활용되는 플랫폼",
+    "getStarted": "시작하기",
+    "learnMore": "자세히 보기",
+    "signIn": "로그인",
+    "signUp": "회원가입",
+    "signOut": "로그아웃",
+    "language": "언어",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "검색",
+    "searchPlaceholder": "도구 검색...",
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "retry": "재시도",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "편집",
+    "create": "만들기",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "viewAll": "전체 보기",
+    "free": "무료",
+    "popular": "인기",
+    "new": "신규",
+    "theme": "테마",
+    "dark": "다크",
+    "offwhite": "부드러운",
+    "light": "라이트",
+    "official": "공식",
+    "trending": "🔥 인기",
+    "freemium": "프리미엄"
+  },
+  "nav": {
+    "home": "홈",
+    "discover": "디스커버",
+    "workspace": "워크스페이스",
+    "creator": "크리에이터",
+    "studio": "Tool Studio",
+    "admin": "관리자",
+    "account": "계정",
+    "billing": "결제"
+  },
+  "home": {
+    "hero": {
+      "title": "도구의 우주에 오신 것을 환영합니다",
+      "subtitle": "소프트웨어, SaaS, AI, 자동화 도구가 모이는 차세대 플랫폼",
+      "cta": "도구 탐색",
+      "ctaSecondary": "크리에이터 되기"
+    },
+    "features": {
+      "title": "Toolverse로 할 수 있는 것",
+      "marketplace": {
+        "title": "마켓플레이스",
+        "description": "전 세계의 우수한 도구를 발견하고 바로 사용하세요"
+      },
+      "workspace": {
+        "title": "유니버설 워크스페이스",
+        "description": "모든 도구를 하나의 공간에서. 싱글 로그인, 통합 데이터"
+      },
+      "creator": {
+        "title": "크리에이터 이코노미",
+        "description": "도구를 세계에 공개하고 수익을 올리세요"
+      },
+      "api": {
+        "title": "플랫폼 API",
+        "description": "인증, 결제, 스토리지. 모든 것을 API로 구축하세요"
+      }
+    },
+    "stats": {
+      "tools": "도구 수",
+      "creators": "크리에이터",
+      "users": "사용자",
+      "countries": "지원 국가"
+    },
+    "categories": {
+      "title": "카테고리별 탐색",
+      "ai": "AI",
+      "productivity": "생산성",
+      "finance": "금융",
+      "marketing": "마케팅",
+      "development": "개발",
+      "creatorTools": "크리에이터",
+      "automation": "자동화",
+      "analytics": "분석"
+    },
+    "officialTools": {
+      "title": "공식 도구",
+      "subtitle": "Toolverse가 제공하는 공식 도구를 사용해 보세요"
+    },
+    "cta": {
+      "title": "함께 도구의 우주를 만들어 갑시다",
+      "subtitle": "크리에이터로 참여하여 차세대 소프트웨어 인터넷 레이어를 구축하세요",
+      "button": "지금 시작하기"
+    }
+  },
+  "marketplace": {
+    "title": "디스커버",
+    "subtitle": "최고의 도구를 찾아보세요",
+    "trending": "트렌딩",
+    "newTools": "신규 도구",
+    "featured": "추천",
+    "categories": "카테고리",
+    "reviews": "리뷰",
+    "rating": "평점",
+    "install": "설치",
+    "installed": "설치됨",
+    "pricing": "요금",
+    "filters": "필터",
+    "sortBy": "정렬",
+    "allCategories": "모든 카테고리",
+    "results": "건의 결과",
+    "noResults": "도구를 찾을 수 없습니다"
+  },
+  "workspace": {
+    "title": "워크스페이스",
+    "dashboard": "대시보드",
+    "projects": "프로젝트",
+    "files": "파일",
+    "data": "데이터",
+    "tools": "도구",
+    "recentActivity": "최근 활동",
+    "quickActions": "빠른 작업",
+    "myTools": "내 도구",
+    "favorites": "즐겨찾기",
+    "noProjects": "프로젝트가 아직 없습니다",
+    "createProject": "프로젝트 만들기"
+  },
+  "creator": {
+    "title": "크리에이터 포털",
+    "subtitle": "도구를 만들고 세계에 전달하세요",
+    "toolRegistration": "도구 등록",
+    "pricing": "요금 설정",
+    "analytics": "분석",
+    "updates": "업데이트",
+    "revenue": "수익",
+    "publish": "게시",
+    "draft": "초안",
+    "published": "게시됨",
+    "totalRevenue": "총 수익",
+    "monthlyRevenue": "이번 달 수익",
+    "totalUsers": "총 사용자",
+    "activeUsers": "활성 사용자",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "SDK를 사용하여 Toolverse 플랫폼에서 도구를 구축하세요",
+      "install": "설치",
+      "docs": "문서"
+    }
+  },
+  "auth": {
+    "signInTitle": "Toolverse 로그인",
+    "signUpTitle": "Toolverse 회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "orContinueWith": "또는 다음으로 로그인",
+    "google": "Google로 계속",
+    "apple": "Apple로 계속",
+    "github": "GitHub로 계속",
+    "agreeTerms": "이용약관에 동의합니다",
+    "alreadyHaveAccount": "이미 계정이 있으신가요?",
+    "dontHaveAccount": "계정이 없으신가요?"
+  },
+  "billing": {
+    "title": "결제 및 플랜",
+    "currentPlan": "현재 플랜",
+    "upgrade": "업그레이드",
+    "subscription": "구독",
+    "usage": "사용량",
+    "revenueShare": "수익 배분",
+    "payouts": "지급",
+    "plans": {
+      "free": {
+        "name": "무료",
+        "price": "₩0",
+        "description": "개인 사용에 적합"
+      },
+      "pro": {
+        "name": "프로",
+        "price": "₩19,900",
+        "period": "/월",
+        "description": "전문가를 위한 플랜"
+      },
+      "team": {
+        "name": "팀",
+        "price": "₩49,900",
+        "period": "/월",
+        "description": "팀 협업을 위한 플랜"
+      },
+      "enterprise": {
+        "name": "엔터프라이즈",
+        "price": "문의하기",
+        "description": "대규모 조직을 위한 플랜"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI 기반 프레즌스 관리 및 분석 도구"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI 기반 선견 분석 플랫폼"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "특허 정보 검색, 분석 및 관리 도구"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "채무 관리 및 최적화 내비게이터"
+    }
+  },
+  "footer": {
+    "product": "제품",
+    "company": "회사",
+    "resources": "리소스",
+    "legal": "법적 정보",
+    "about": "Toolverse 소개",
+    "blog": "블로그",
+    "careers": "채용",
+    "contact": "문의하기",
+    "documentation": "문서",
+    "apiReference": "API 레퍼런스",
+    "sdkGuide": "SDK 가이드",
+    "community": "커뮤니티",
+    "terms": "이용약관",
+    "privacy": "개인정보 처리방침",
+    "cookies": "쿠키 정책",
+    "copyright": "© 2026 Toolverse. 모든 권리 보유."
+  }
+}

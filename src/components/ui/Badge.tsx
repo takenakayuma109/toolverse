@@ -13,7 +13,7 @@ export default function Badge({ children, variant = 'default', size = 'sm', clas
   return (
     <span
       className={cn(
-        'inline-flex items-center font-medium rounded-full',
+        'inline-flex items-center font-medium rounded-full whitespace-nowrap',
         {
           'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300': variant === 'default',
           'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400': variant === 'success',

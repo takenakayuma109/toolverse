@@ -4,8 +4,17 @@ import { useCallback } from 'react';
 import { useLocaleStore } from '@/store/locale';
 import ja from '@/i18n/messages/ja.json';
 import en from '@/i18n/messages/en.json';
+import zh from '@/i18n/messages/zh.json';
+import ko from '@/i18n/messages/ko.json';
+import fr from '@/i18n/messages/fr.json';
+import de from '@/i18n/messages/de.json';
+import es from '@/i18n/messages/es.json';
+import pt from '@/i18n/messages/pt.json';
+import ar from '@/i18n/messages/ar.json';
+import ru from '@/i18n/messages/ru.json';
+import hi from '@/i18n/messages/hi.json';
 
-const messages = { ja, en } as const;
+const messages = { ja, en, zh, ko, fr, de, es, pt, ar, ru, hi } as const;
 
 type NestedKeyOf<T, Prefix extends string = ''> = T extends object
   ? {

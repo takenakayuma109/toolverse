@@ -1,8 +1,8 @@
 {
   "common": {
     "appName": "Toolverse",
-    "tagline": "The Universe of Tools",
-    "description": "A platform where the world's tools are gathered, created, discovered, and used",
+    "tagline": "The Universe of Web Apps",
+    "description": "A platform where the world's web apps are gathered, created, discovered, and used",
     "getStarted": "Get Started",
     "learnMore": "Learn More",
     "signIn": "Sign In",
@@ -31,20 +31,25 @@
     "theme": "Theme",
     "dark": "Dark",
     "offwhite": "Soft",
-    "light": "Light"
+    "light": "Light",
+    "official": "Official",
+    "trending": "🔥 Trending",
+    "freemium": "Freemium"
   },
   "nav": {
     "home": "Home",
     "discover": "Discover",
     "workspace": "Workspace",
     "creator": "Creator",
+    "studio": "Tool Studio",
     "account": "Account",
-    "billing": "Billing"
+    "billing": "Billing",
+    "admin": "Admin"
   },
   "home": {
     "hero": {
       "title": "Welcome to the Universe of Tools",
-      "subtitle": "The next-generation platform for Software, SaaS, AI, and Automation tools",
+      "subtitle": "The next-generation platform for Web Apps, SaaS, AI, and Automation tools",
       "cta": "Explore Tools",
       "ctaSecondary": "Become a Creator"
     },
@@ -103,8 +108,15 @@
     "categories": "Categories",
     "reviews": "Reviews",
     "rating": "Rating",
+    "view": "View",
     "install": "Install",
     "installed": "Installed",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "Official",
+    "essential": "Essential",
+    "apps": "Apps",
+    "selectedByEditors": "Selected by Toolverse editors",
     "pricing": "Pricing",
     "filters": "Filters",
     "sortBy": "Sort By",

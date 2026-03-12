@@ -1,8 +1,8 @@
 {
   "common": {
     "appName": "Toolverse",
-    "tagline": "The Universe of Tools",
-    "description": "世界中のツールが集まり、作られ、発見され、利用されるプラットフォーム",
+    "tagline": "The Universe of Web Apps",
+    "description": "世界中のWebアプリが集まり、作られ、発見され、利用されるプラットフォーム",
     "getStarted": "始めましょう",
     "learnMore": "もっと詳しく",
     "signIn": "ログイン",
@@ -31,20 +31,25 @@
     "theme": "テーマ",
     "dark": "ダーク",
     "offwhite": "やさしい",
-    "light": "ライト"
+    "light": "ライト",
+    "official": "公式",
+    "trending": "🔥 トレンド",
+    "freemium": "フリーミアム"
   },
   "nav": {
     "home": "ホーム",
     "discover": "ディスカバー",
     "workspace": "ワークスペース",
     "creator": "クリエイター",
+    "studio": "Tool Studio",
     "account": "アカウント",
-    "billing": "課金"
+    "billing": "課金",
+    "admin": "管理者"
   },
   "home": {
     "hero": {
       "title": "ツールの宇宙へようこそ",
-      "subtitle": "ソフトウェア、SaaS、AI、自動化ツールが集まる次世代プラットフォーム",
+      "subtitle": "Webアプリ、SaaS、AI、自動化ツールが集まる次世代プラットフォーム",
       "cta": "ツールを探す",
       "ctaSecondary": "クリエイターになる"
     },
@@ -103,8 +108,15 @@
     "categories": "カテゴリ",
     "reviews": "レビュー",
     "rating": "評価",
+    "view": "表示",
     "install": "インストール",
     "installed": "インストール済み",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "公式",
+    "essential": "おすすめ",
+    "apps": "アプリ",
+    "selectedByEditors": "Toolverse編集部セレクション",
     "pricing": "料金",
     "filters": "フィルター",
     "sortBy": "並べ替え",

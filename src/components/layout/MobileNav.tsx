@@ -2,15 +2,15 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
-import { Home, Compass, LayoutGrid, Palette, User } from 'lucide-react';
+import { Home, Compass, LayoutGrid, Wrench, User } from 'lucide-react';
 
-type PageView = 'home' | 'discover' | 'workspace' | 'creator' | 'account' | 'auth' | 'billing';
+type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin';
 
 const NAV_ITEMS = [
   { key: 'home' as PageView, Icon: Home },
   { key: 'discover' as PageView, Icon: Compass },
   { key: 'workspace' as PageView, Icon: LayoutGrid },
-  { key: 'creator' as PageView, Icon: Palette },
+  { key: 'studio' as PageView, Icon: Wrench },
   { key: 'account' as PageView, Icon: User },
 ] as const;
 
@@ -34,6 +34,7 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
       <div className="flex items-center justify-around h-16 px-2">
         {NAV_ITEMS.map(({ key, Icon }) => {
           const isActive = currentPage === key;
+          const label = t(`nav.${key}`);
           return (
             <button
               key={key}
@@ -59,11 +60,11 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
               </span>
               <span
                 className={cn(
-                  'mt-1 text-[10px] font-medium truncate max-w-full',
+                  'mt-1 text-xs font-medium truncate max-w-full',
                   isActive ? 'text-violet-600 dark:text-violet-400' : 'text-gray-500 dark:text-gray-400'
                 )}
               >
-                {t(`nav.${key}`)}
+                {label}
               </span>
             </button>
           );

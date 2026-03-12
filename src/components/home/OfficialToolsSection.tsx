@@ -42,7 +42,7 @@ export default function OfficialToolsSection() {
                         {tool.name}
                       </h3>
                       <Badge variant="gradient" size="md">
-                        Official
+                        {t('common.official')}
                       </Badge>
                     </div>
                     <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
@@ -58,13 +58,15 @@ export default function OfficialToolsSection() {
                         {formatNumber(tool.userCount)} {t('home.stats.users')}
                       </span>
                     </div>
-                    <Button
-                      size="md"
-                      variant="primary"
-                      className="mt-6 group-hover:shadow-lg group-hover:shadow-violet-500/25 transition-shadow"
-                    >
-                      {t('marketplace.install')}
-                    </Button>
+                    <div className="mt-auto pt-6">
+                      <Button
+                        size="md"
+                        variant="primary"
+                        className="flex-shrink-0 group-hover:shadow-lg group-hover:shadow-violet-500/25 transition-shadow"
+                      >
+                        {t('marketplace.install')}
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "منصة تجمع أدوات العالم وتُنشئها وتكتشفها وتستخدمها",
+    "getStarted": "ابدأ الآن",
+    "learnMore": "اعرف المزيد",
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "signOut": "تسجيل الخروج",
+    "language": "اللغة",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "بحث",
+    "searchPlaceholder": "البحث عن أدوات...",
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ",
+    "retry": "إعادة المحاولة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "viewAll": "عرض الكل",
+    "free": "مجاني",
+    "popular": "شائع",
+    "new": "جديد",
+    "theme": "المظهر",
+    "dark": "داكن",
+    "offwhite": "ناعم",
+    "light": "فاتح",
+    "official": "رسمي",
+    "trending": "🔥 رائج",
+    "freemium": "مجاني جزئياً"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "discover": "اكتشف",
+    "workspace": "مساحة العمل",
+    "creator": "المنشئ",
+    "studio": "Tool Studio",
+    "admin": "الإدارة",
+    "account": "الحساب",
+    "billing": "الفواتير"
+  },
+  "home": {
+    "hero": {
+      "title": "مرحباً بك في عالم الأدوات",
+      "subtitle": "منصة الجيل التالي للبرمجيات والخدمات السحابية والذكاء الاصطناعي وأدوات الأتمتة",
+      "cta": "استكشف الأدوات",
+      "ctaSecondary": "كن منشئاً"
+    },
+    "features": {
+      "title": "ما يمكنك فعله مع Toolverse",
+      "marketplace": {
+        "title": "السوق",
+        "description": "اكتشف واستخدم فوراً أفضل الأدوات من جميع أنحاء العالم"
+      },
+      "workspace": {
+        "title": "مساحة عمل شاملة",
+        "description": "جميع الأدوات في مكان واحد. تسجيل دخول موحد وبيانات متكاملة"
+      },
+      "creator": {
+        "title": "اقتصاد المنشئين",
+        "description": "انشر أدواتك للعالم واحصل على إيرادات"
+      },
+      "api": {
+        "title": "واجهات برمجة المنصة",
+        "description": "المصادقة والفوترة والتخزين. ابنِ كل شيء باستخدام الواجهات البرمجية"
+      }
+    },
+    "stats": {
+      "tools": "الأدوات",
+      "creators": "المنشئون",
+      "users": "المستخدمون",
+      "countries": "الدول"
+    },
+    "categories": {
+      "title": "تصفح حسب الفئة",
+      "ai": "الذكاء الاصطناعي",
+      "productivity": "الإنتاجية",
+      "finance": "المالية",
+      "marketing": "التسويق",
+      "development": "التطوير",
+      "creatorTools": "المنشئ",
+      "automation": "الأتمتة",
+      "analytics": "التحليلات"
+    },
+    "officialTools": {
+      "title": "الأدوات الرسمية",
+      "subtitle": "جرّب الأدوات الرسمية المقدمة من Toolverse"
+    },
+    "cta": {
+      "title": "لنبنِ معاً عالم الأدوات",
+      "subtitle": "انضم كمنشئ وساهم في بناء طبقة إنترنت البرمجيات من الجيل التالي",
+      "button": "ابدأ الآن"
+    }
+  },
+  "marketplace": {
+    "title": "اكتشف",
+    "subtitle": "اعثر على أفضل الأدوات",
+    "trending": "الرائج",
+    "newTools": "أدوات جديدة",
+    "featured": "مميز",
+    "categories": "الفئات",
+    "reviews": "المراجعات",
+    "rating": "التقييم",
+    "install": "تثبيت",
+    "installed": "مُثبَّت",
+    "pricing": "الأسعار",
+    "filters": "التصفية",
+    "sortBy": "ترتيب حسب",
+    "allCategories": "جميع الفئات",
+    "results": "نتائج",
+    "noResults": "لم يتم العثور على أدوات"
+  },
+  "workspace": {
+    "title": "مساحة العمل",
+    "dashboard": "لوحة التحكم",
+    "projects": "المشاريع",
+    "files": "الملفات",
+    "data": "البيانات",
+    "tools": "الأدوات",
+    "recentActivity": "النشاط الأخير",
+    "quickActions": "إجراءات سريعة",
+    "myTools": "أدواتي",
+    "favorites": "المفضلة",
+    "noProjects": "لا توجد مشاريع بعد",
+    "createProject": "إنشاء مشروع"
+  },
+  "creator": {
+    "title": "بوابة المنشئين",
+    "subtitle": "أنشئ أدوات وشاركها مع العالم",
+    "toolRegistration": "تسجيل الأدوات",
+    "pricing": "التسعير",
+    "analytics": "التحليلات",
+    "updates": "التحديثات",
+    "revenue": "الإيرادات",
+    "publish": "نشر",
+    "draft": "مسودة",
+    "published": "منشور",
+    "totalRevenue": "إجمالي الإيرادات",
+    "monthlyRevenue": "إيرادات الشهر",
+    "totalUsers": "إجمالي المستخدمين",
+    "activeUsers": "المستخدمون النشطون",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "ابنِ أدوات على منصة Toolverse باستخدام حزمة التطوير",
+      "install": "تثبيت",
+      "docs": "التوثيق"
+    }
+  },
+  "auth": {
+    "signInTitle": "تسجيل الدخول إلى Toolverse",
+    "signUpTitle": "التسجيل في Toolverse",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "orContinueWith": "أو المتابعة عبر",
+    "google": "المتابعة مع Google",
+    "apple": "المتابعة مع Apple",
+    "github": "المتابعة مع GitHub",
+    "agreeTerms": "أوافق على شروط الخدمة",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "dontHaveAccount": "ليس لديك حساب؟"
+  },
+  "billing": {
+    "title": "الفواتير والخطط",
+    "currentPlan": "الخطة الحالية",
+    "upgrade": "ترقية",
+    "subscription": "الاشتراك",
+    "usage": "الاستخدام",
+    "revenueShare": "مشاركة الإيرادات",
+    "payouts": "المدفوعات",
+    "plans": {
+      "free": {
+        "name": "مجاني",
+        "price": "$0",
+        "description": "مثالي للاستخدام الشخصي"
+      },
+      "pro": {
+        "name": "احترافي",
+        "price": "$14.99",
+        "period": "/شهر",
+        "description": "للمحترفين"
+      },
+      "team": {
+        "name": "فريق",
+        "price": "$39.99",
+        "period": "/شهر",
+        "description": "للتعاون الجماعي"
+      },
+      "enterprise": {
+        "name": "مؤسسات",
+        "price": "اتصل بنا",
+        "description": "للمؤسسات الكبيرة"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "أداة إدارة وتحليل الحضور المدعومة بالذكاء الاصطناعي"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "منصة تحليلات استشرافية مدعومة بالذكاء الاصطناعي"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "أداة بحث وتحليل وإدارة معلومات البراءات"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "ملاح لإدارة الديون وتحسينها"
+    }
+  },
+  "footer": {
+    "product": "المنتج",
+    "company": "الشركة",
+    "resources": "الموارد",
+    "legal": "قانوني",
+    "about": "عن Toolverse",
+    "blog": "المدوّنة",
+    "careers": "التوظيف",
+    "contact": "اتصل بنا",
+    "documentation": "التوثيق",
+    "apiReference": "مرجع API",
+    "sdkGuide": "دليل SDK",
+    "community": "المجتمع",
+    "terms": "شروط الخدمة",
+    "privacy": "سياسة الخصوصية",
+    "cookies": "سياسة ملفات تعريف الارتباط",
+    "copyright": "© 2026 Toolverse. جميع الحقوق محفوظة."
+  }
+}

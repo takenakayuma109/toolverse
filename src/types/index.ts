@@ -1,4 +1,4 @@
-export type Locale = 'ja' | 'en';
+export type Locale = 'ja' | 'en' | 'zh' | 'ko' | 'fr' | 'de' | 'es' | 'pt' | 'ar' | 'ru' | 'hi';
 
 export interface Tool {
   id: string;

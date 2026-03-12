@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "Una plataforma donde las herramientas del mundo se reúnen, crean, descubren y utilizan",
+    "getStarted": "Comenzar",
+    "learnMore": "Saber más",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "language": "Idioma",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar herramientas...",
+    "loading": "Cargando...",
+    "error": "Se produjo un error",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "viewAll": "Ver todo",
+    "free": "Gratis",
+    "popular": "Popular",
+    "new": "Nuevo",
+    "theme": "Tema",
+    "dark": "Oscuro",
+    "offwhite": "Suave",
+    "light": "Claro",
+    "official": "Oficial",
+    "trending": "🔥 Tendencia",
+    "freemium": "Freemium"
+  },
+  "nav": {
+    "home": "Inicio",
+    "discover": "Descubrir",
+    "workspace": "Espacio de trabajo",
+    "creator": "Creador",
+    "studio": "Tool Studio",
+    "admin": "Administración",
+    "account": "Cuenta",
+    "billing": "Facturación"
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenido al universo de las herramientas",
+      "subtitle": "La plataforma de nueva generación para software, SaaS, IA y herramientas de automatización",
+      "cta": "Explorar herramientas",
+      "ctaSecondary": "Convertirse en creador"
+    },
+    "features": {
+      "title": "Qué puedes hacer con Toolverse",
+      "marketplace": {
+        "title": "Marketplace",
+        "description": "Descubre y usa al instante las mejores herramientas de todo el mundo"
+      },
+      "workspace": {
+        "title": "Espacio de trabajo universal",
+        "description": "Todas las herramientas en un solo lugar. Inicio de sesión único, datos unificados"
+      },
+      "creator": {
+        "title": "Economía de creadores",
+        "description": "Publica tus herramientas en el mundo y genera ingresos"
+      },
+      "api": {
+        "title": "API de la plataforma",
+        "description": "Autenticación, facturación, almacenamiento. Construye todo con API"
+      }
+    },
+    "stats": {
+      "tools": "Herramientas",
+      "creators": "Creadores",
+      "users": "Usuarios",
+      "countries": "Países"
+    },
+    "categories": {
+      "title": "Explorar por categoría",
+      "ai": "IA",
+      "productivity": "Productividad",
+      "finance": "Finanzas",
+      "marketing": "Marketing",
+      "development": "Desarrollo",
+      "creatorTools": "Creador",
+      "automation": "Automatización",
+      "analytics": "Analítica"
+    },
+    "officialTools": {
+      "title": "Herramientas oficiales",
+      "subtitle": "Prueba las herramientas oficiales de Toolverse"
+    },
+    "cta": {
+      "title": "Construyamos juntos el universo de las herramientas",
+      "subtitle": "Únete como creador y construye la capa de Internet de software de nueva generación",
+      "button": "Comenzar ahora"
+    }
+  },
+  "marketplace": {
+    "title": "Descubrir",
+    "subtitle": "Encuentra las mejores herramientas",
+    "trending": "Tendencias",
+    "newTools": "Nuevas herramientas",
+    "featured": "Destacados",
+    "categories": "Categorías",
+    "reviews": "Reseñas",
+    "rating": "Calificación",
+    "install": "Instalar",
+    "installed": "Instalado",
+    "pricing": "Precios",
+    "filters": "Filtros",
+    "sortBy": "Ordenar por",
+    "allCategories": "Todas las categorías",
+    "results": "resultados",
+    "noResults": "No se encontraron herramientas"
+  },
+  "workspace": {
+    "title": "Espacio de trabajo",
+    "dashboard": "Panel",
+    "projects": "Proyectos",
+    "files": "Archivos",
+    "data": "Datos",
+    "tools": "Herramientas",
+    "recentActivity": "Actividad reciente",
+    "quickActions": "Acciones rápidas",
+    "myTools": "Mis herramientas",
+    "favorites": "Favoritos",
+    "noProjects": "Aún no hay proyectos",
+    "createProject": "Crear proyecto"
+  },
+  "creator": {
+    "title": "Portal de creadores",
+    "subtitle": "Crea herramientas y compártelas con el mundo",
+    "toolRegistration": "Registro de herramientas",
+    "pricing": "Precios",
+    "analytics": "Analítica",
+    "updates": "Actualizaciones",
+    "revenue": "Ingresos",
+    "publish": "Publicar",
+    "draft": "Borrador",
+    "published": "Publicado",
+    "totalRevenue": "Ingresos totales",
+    "monthlyRevenue": "Ingresos del mes",
+    "totalUsers": "Usuarios totales",
+    "activeUsers": "Usuarios activos",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "Construye herramientas en la plataforma Toolverse usando el SDK",
+      "install": "Instalar",
+      "docs": "Documentación"
+    }
+  },
+  "auth": {
+    "signInTitle": "Iniciar sesión en Toolverse",
+    "signUpTitle": "Registrarse en Toolverse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "orContinueWith": "O continuar con",
+    "google": "Continuar con Google",
+    "apple": "Continuar con Apple",
+    "github": "Continuar con GitHub",
+    "agreeTerms": "Acepto los términos de servicio",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "dontHaveAccount": "¿No tienes una cuenta?"
+  },
+  "billing": {
+    "title": "Facturación y planes",
+    "currentPlan": "Plan actual",
+    "upgrade": "Mejorar plan",
+    "subscription": "Suscripción",
+    "usage": "Uso",
+    "revenueShare": "Reparto de ingresos",
+    "payouts": "Pagos",
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "price": "0 €",
+        "description": "Perfecto para uso personal"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "14,99 €",
+        "period": "/mes",
+        "description": "Para profesionales"
+      },
+      "team": {
+        "name": "Equipo",
+        "price": "39,99 €",
+        "period": "/mes",
+        "description": "Para colaboración en equipo"
+      },
+      "enterprise": {
+        "name": "Empresa",
+        "price": "Contáctenos",
+        "description": "Para grandes organizaciones"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "Herramienta de gestión y análisis de presencia impulsada por IA"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "Plataforma de análisis prospectivo impulsada por IA"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "Herramienta de búsqueda, análisis y gestión de patentes"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "Navegador de gestión y optimización de deudas"
+    }
+  },
+  "footer": {
+    "product": "Producto",
+    "company": "Empresa",
+    "resources": "Recursos",
+    "legal": "Legal",
+    "about": "Acerca de Toolverse",
+    "blog": "Blog",
+    "careers": "Empleo",
+    "contact": "Contacto",
+    "documentation": "Documentación",
+    "apiReference": "Referencia de API",
+    "sdkGuide": "Guía del SDK",
+    "community": "Comunidad",
+    "terms": "Términos de servicio",
+    "privacy": "Política de privacidad",
+    "cookies": "Política de cookies",
+    "copyright": "© 2026 Toolverse. Todos los derechos reservados."
+  }
+}

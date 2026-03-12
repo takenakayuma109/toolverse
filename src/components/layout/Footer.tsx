@@ -45,7 +45,7 @@ export default function Footer() {
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-6">
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-2">
             <div className="inline-flex items-center gap-2 group">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 via-indigo-500 to-purple-600 shadow-lg shadow-violet-500/20">
                 <Sparkles className="h-5 w-5 text-white" strokeWidth={2} />
@@ -54,7 +54,7 @@ export default function Footer() {
                 Toolverse
               </span>
             </div>
-            <p className="mt-3 max-w-xs text-sm text-gray-600 dark:text-gray-400">
+            <p className="mt-3 max-w-xs text-sm text-gray-600 dark:text-gray-400 break-words">
               {t('common.tagline')}
             </p>
             <div className="mt-6 flex gap-3">
@@ -132,7 +132,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-gray-200 dark:border-gray-800 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-400 min-w-0">
             {t('footer.copyright')}
           </p>
           <div className="flex items-center gap-2">

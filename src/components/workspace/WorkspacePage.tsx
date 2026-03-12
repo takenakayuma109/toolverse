@@ -61,7 +61,7 @@ export default function WorkspacePage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
       <div className="flex flex-col lg:flex-row">
         {/* Mobile tabs */}
-        <div className="lg:hidden flex overflow-x-auto border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 gap-1 scrollbar-hide">
+        <div className="lg:hidden flex overflow-x-auto border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 gap-1 scrollbar-hide hide-scrollbar">
           {SIDEBAR_ITEMS.map((item) => (
             <button
               key={item.id}
@@ -101,8 +101,8 @@ export default function WorkspacePage() {
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
                 )}
               >
-                <item.icon className="w-5 h-5" />
-                {t(item.labelKey)}
+                <item.icon className="w-5 h-5 shrink-0" />
+                <span className="truncate">{t(item.labelKey)}</span>
               </button>
             ))}
           </nav>
@@ -183,7 +183,7 @@ export default function WorkspacePage() {
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
-              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide hide-scrollbar">
                 <div className="flex gap-4 min-w-max pb-2">
                   {installedTools.map((tool) => (
                     <Card
@@ -228,7 +228,7 @@ export default function WorkspacePage() {
                           {item.action}
                         </p>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-400">
+                      <div className="flex items-center gap-2 text-sm text-gray-400 whitespace-nowrap shrink-0">
                         <Clock className="w-4 h-4" />
                         {item.time}
                       </div>

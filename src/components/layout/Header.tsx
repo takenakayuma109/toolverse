@@ -2,19 +2,20 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useAuthStore } from '@/store/auth';
 import { cn } from '@/lib/utils';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import ThemeSwitch from '@/components/ui/ThemeSwitch';
 import Input from '@/components/ui/Input';
-import { Menu, X, Search, Sparkles } from 'lucide-react';
+import { Menu, X, Search, Sparkles, Upload, Shield, User, LogOut, CreditCard } from 'lucide-react';
 
-type PageView = 'home' | 'discover' | 'workspace' | 'creator' | 'account' | 'auth' | 'billing';
+type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin';
 
 const NAV_ITEMS = [
   { key: 'home' },
   { key: 'discover' },
   { key: 'workspace' },
-  { key: 'creator' },
+  { key: 'studio' },
 ] as const;
 
 type NavKey = (typeof NAV_ITEMS)[number]['key'];
@@ -26,15 +27,26 @@ interface HeaderProps {
 
 export default function Header({ onNavigate, currentPage }: HeaderProps) {
   const { t } = useTranslation();
+  const { user, isAuthenticated, signOut } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (!userMenuOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (!(e.target as Element).closest('[data-user-menu]')) setUserMenuOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [userMenuOpen]);
 
   const handleNav = (key: NavKey) => {
     onNavigate(key as PageView);
@@ -70,7 +82,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
                 key={key}
                 onClick={() => handleNav(key)}
                 className={cn(
-                  'relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                  'relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap',
                   currentPage === key
                     ? 'text-violet-600 dark:text-violet-400'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/80 dark:hover:bg-gray-800/80'
@@ -115,20 +127,69 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
             <ThemeSwitch className="hidden sm:inline-flex" />
             <LanguageSwitch className="hidden sm:inline-flex" />
 
-            <div className="hidden sm:flex items-center gap-2">
-              <button
-                onClick={() => onNavigate('auth')}
-                className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 text-sm px-3 py-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98]"
-              >
-                {t('common.signIn')}
-              </button>
-              <button
-                onClick={() => onNavigate('auth')}
-                className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 text-sm px-3 py-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 active:scale-[0.98]"
-              >
-                {t('common.signUp')}
-              </button>
-            </div>
+            {isAuthenticated && user ? (
+              <div className="relative" data-user-menu>
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                    {user.name.charAt(0)}
+                  </div>
+                  <span className="hidden lg:block text-sm font-medium text-gray-700 dark:text-gray-300 max-w-32 truncate">
+                    {user.name}
+                  </span>
+                </button>
+
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-[60]">
+                    <div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                    </div>
+                    <button onClick={() => { onNavigate('workspace'); setUserMenuOpen(false); }}
+                      className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <User className="w-4 h-4" /> {t('nav.workspace')}
+                    </button>
+                    <button onClick={() => { onNavigate('studio'); setUserMenuOpen(false); }}
+                      className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <Upload className="w-4 h-4" /> {t('nav.studio')}
+                    </button>
+                    <button onClick={() => { onNavigate('billing'); setUserMenuOpen(false); }}
+                      className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <CreditCard className="w-4 h-4" /> {t('nav.billing') || 'Billing'}
+                    </button>
+                    {user.role === 'admin' && (
+                      <button onClick={() => { onNavigate('admin'); setUserMenuOpen(false); }}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/30">
+                        <Shield className="w-4 h-4" /> {t('nav.admin')}
+                      </button>
+                    )}
+                    <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
+                      <button onClick={() => { signOut(); setUserMenuOpen(false); }}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30">
+                        <LogOut className="w-4 h-4" /> {t('common.signOut') || 'Sign Out'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2">
+                <button
+                  onClick={() => onNavigate('auth')}
+                  className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 text-sm px-3 py-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98]"
+                >
+                  {t('common.signIn')}
+                </button>
+                <button
+                  onClick={() => onNavigate('auth')}
+                  className="inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 text-sm px-3 py-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 active:scale-[0.98]"
+                >
+                  {t('common.signUp')}
+                </button>
+              </div>
+            )}
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -144,7 +205,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
         <div
           className={cn(
             'md:hidden overflow-hidden transition-all duration-300 ease-out',
-            mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            mobileMenuOpen ? 'max-h-[80vh] overflow-y-auto opacity-100' : 'max-h-0 opacity-0'
           )}
         >
           <div className="border-t border-gray-200 dark:border-gray-800 py-4 space-y-1">
@@ -162,21 +223,40 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
                 {t(`nav.${key}`)}
               </button>
             ))}
-            <div className="flex sm:hidden items-center gap-2 px-4 pt-4 border-t border-gray-200 dark:border-gray-800 mt-4">
+            {isAuthenticated && user?.role === 'admin' && (
+              <button
+                onClick={() => { onNavigate('admin'); setMobileMenuOpen(false); }}
+                className="flex items-center gap-2 w-full px-4 py-3 rounded-xl text-base font-medium text-violet-600 dark:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/30"
+              >
+                <Shield className="w-4 h-4" /> Admin
+              </button>
+            )}
+            <div className="flex sm:hidden flex-wrap items-center gap-2 px-4 pt-4 border-t border-gray-200 dark:border-gray-800 mt-4">
               <ThemeSwitch />
               <LanguageSwitch />
-              <button
-                onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}
-                className="flex-1 inline-flex items-center justify-center font-medium rounded-xl text-sm px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98]"
-              >
-                {t('common.signIn')}
-              </button>
-              <button
-                onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}
-                className="flex-1 inline-flex items-center justify-center font-medium rounded-xl text-sm px-3 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 active:scale-[0.98]"
-              >
-                {t('common.signUp')}
-              </button>
+              {isAuthenticated ? (
+                <button
+                  onClick={() => { signOut(); setMobileMenuOpen(false); }}
+                  className="flex-1 inline-flex items-center justify-center font-medium rounded-xl text-sm px-3 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 active:scale-[0.98]"
+                >
+                  {t('common.signOut') || 'Sign Out'}
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}
+                    className="flex-1 inline-flex items-center justify-center font-medium rounded-xl text-sm px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:scale-[0.98]"
+                  >
+                    {t('common.signIn')}
+                  </button>
+                  <button
+                    onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}
+                    className="flex-1 inline-flex items-center justify-center font-medium rounded-xl text-sm px-3 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 active:scale-[0.98]"
+                  >
+                    {t('common.signUp')}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

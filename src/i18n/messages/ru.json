@@ -1,0 +1,240 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "Платформа, где собираются, создаются, находятся и используются инструменты со всего мира",
+    "getStarted": "Начать",
+    "learnMore": "Узнать больше",
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться",
+    "signOut": "Выйти",
+    "language": "Язык",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "Поиск",
+    "searchPlaceholder": "Поиск инструментов...",
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "retry": "Повторить",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущий",
+    "viewAll": "Показать все",
+    "free": "Бесплатно",
+    "popular": "Популярное",
+    "new": "Новое",
+    "theme": "Тема",
+    "dark": "Тёмная",
+    "offwhite": "Мягкая",
+    "light": "Светлая",
+    "official": "Официальный",
+    "trending": "🔥 В тренде",
+    "freemium": "Условно-бесплатный"
+  },
+  "nav": {
+    "home": "Главная",
+    "discover": "Обзор",
+    "workspace": "Рабочее пространство",
+    "creator": "Создатель",
+    "studio": "Tool Studio",
+    "admin": "Администрация",
+    "account": "Аккаунт",
+    "billing": "Оплата"
+  },
+  "home": {
+    "hero": {
+      "title": "Добро пожаловать во вселенную инструментов",
+      "subtitle": "Платформа нового поколения для программного обеспечения, SaaS, ИИ и инструментов автоматизации",
+      "cta": "Исследовать инструменты",
+      "ctaSecondary": "Стать создателем"
+    },
+    "features": {
+      "title": "Что можно делать с Toolverse",
+      "marketplace": {
+        "title": "Маркетплейс",
+        "description": "Находите и мгновенно используйте лучшие инструменты со всего мира"
+      },
+      "workspace": {
+        "title": "Универсальное рабочее пространство",
+        "description": "Все инструменты в одном месте. Единый вход, унифицированные данные"
+      },
+      "creator": {
+        "title": "Экономика создателей",
+        "description": "Публикуйте свои инструменты для всего мира и получайте доход"
+      },
+      "api": {
+        "title": "API платформы",
+        "description": "Аутентификация, биллинг, хранилище. Стройте всё с помощью API"
+      }
+    },
+    "stats": {
+      "tools": "Инструменты",
+      "creators": "Создатели",
+      "users": "Пользователи",
+      "countries": "Страны"
+    },
+    "categories": {
+      "title": "Поиск по категориям",
+      "ai": "ИИ",
+      "productivity": "Продуктивность",
+      "finance": "Финансы",
+      "marketing": "Маркетинг",
+      "development": "Разработка",
+      "creatorTools": "Создатель",
+      "automation": "Автоматизация",
+      "analytics": "Аналитика"
+    },
+    "officialTools": {
+      "title": "Официальные инструменты",
+      "subtitle": "Попробуйте официальные инструменты от Toolverse"
+    },
+    "cta": {
+      "title": "Давайте вместе создадим вселенную инструментов",
+      "subtitle": "Присоединяйтесь как создатель и стройте интернет-слой программного обеспечения нового поколения",
+      "button": "Начать сейчас"
+    }
+  },
+  "marketplace": {
+    "title": "Обзор",
+    "subtitle": "Найдите лучшие инструменты",
+    "trending": "В тренде",
+    "newTools": "Новые инструменты",
+    "featured": "Рекомендуемые",
+    "categories": "Категории",
+    "reviews": "Отзывы",
+    "rating": "Рейтинг",
+    "install": "Установить",
+    "installed": "Установлено",
+    "pricing": "Цены",
+    "filters": "Фильтры",
+    "sortBy": "Сортировка",
+    "allCategories": "Все категории",
+    "results": "результатов",
+    "noResults": "Инструменты не найдены"
+  },
+  "workspace": {
+    "title": "Рабочее пространство",
+    "dashboard": "Панель управления",
+    "projects": "Проекты",
+    "files": "Файлы",
+    "data": "Данные",
+    "tools": "Инструменты",
+    "recentActivity": "Недавняя активность",
+    "quickActions": "Быстрые действия",
+    "myTools": "Мои инструменты",
+    "favorites": "Избранное",
+    "noProjects": "Проектов пока нет",
+    "createProject": "Создать проект"
+  },
+  "creator": {
+    "title": "Портал создателей",
+    "subtitle": "Создавайте инструменты и делитесь с миром",
+    "toolRegistration": "Регистрация инструмента",
+    "pricing": "Ценообразование",
+    "analytics": "Аналитика",
+    "updates": "Обновления",
+    "revenue": "Доход",
+    "publish": "Опубликовать",
+    "draft": "Черновик",
+    "published": "Опубликовано",
+    "totalRevenue": "Общий доход",
+    "monthlyRevenue": "Доход за месяц",
+    "totalUsers": "Всего пользователей",
+    "activeUsers": "Активные пользователи",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "Создавайте инструменты на платформе Toolverse с помощью SDK",
+      "install": "Установить",
+      "docs": "Документация"
+    }
+  },
+  "auth": {
+    "signInTitle": "Войти в Toolverse",
+    "signUpTitle": "Зарегистрироваться в Toolverse",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "forgotPassword": "Забыли пароль?",
+    "orContinueWith": "Или продолжить через",
+    "google": "Продолжить с Google",
+    "apple": "Продолжить с Apple",
+    "github": "Продолжить с GitHub",
+    "agreeTerms": "Я принимаю условия использования",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?"
+  },
+  "billing": {
+    "title": "Оплата и тарифы",
+    "currentPlan": "Текущий тариф",
+    "upgrade": "Улучшить",
+    "subscription": "Подписка",
+    "usage": "Использование",
+    "revenueShare": "Доля дохода",
+    "payouts": "Выплаты",
+    "plans": {
+      "free": {
+        "name": "Бесплатный",
+        "price": "$0",
+        "description": "Идеально для личного использования"
+      },
+      "pro": {
+        "name": "Про",
+        "price": "$14.99",
+        "period": "/мес",
+        "description": "Для профессионалов"
+      },
+      "team": {
+        "name": "Команда",
+        "price": "$39.99",
+        "period": "/мес",
+        "description": "Для командной работы"
+      },
+      "enterprise": {
+        "name": "Корпоративный",
+        "price": "Свяжитесь с нами",
+        "description": "Для крупных организаций"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "Инструмент управления и анализа присутствия на базе ИИ"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "Платформа прогнозной аналитики на базе ИИ"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "Инструмент поиска, анализа и управления патентной информацией"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "Навигатор управления и оптимизации долгов"
+    }
+  },
+  "footer": {
+    "product": "Продукт",
+    "company": "Компания",
+    "resources": "Ресурсы",
+    "legal": "Правовая информация",
+    "about": "О Toolverse",
+    "blog": "Блог",
+    "careers": "Вакансии",
+    "contact": "Контакты",
+    "documentation": "Документация",
+    "apiReference": "Справочник API",
+    "sdkGuide": "Руководство по SDK",
+    "community": "Сообщество",
+    "terms": "Условия использования",
+    "privacy": "Политика конфиденциальности",
+    "cookies": "Политика файлов cookie",
+    "copyright": "© 2026 Toolverse. Все права защищены."
+  }
+}

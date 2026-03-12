@@ -70,6 +70,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ fontFamily: 'var(--font-geist-sans), "Hiragino Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans KR", sans-serif' }}
       >
         {children}
       </body>

@@ -14,9 +14,10 @@ export default function Card({ children, className, hover = false, padding = 'md
   return (
     <div
       onClick={onClick}
+      {...(onClick ? { role: 'button' as const, tabIndex: 0 } : {})}
       className={cn(
         'bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800',
-        hover && 'hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-gray-900/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer',
+        hover && 'hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-black/30 hover:-translate-y-1 transition-all duration-300 cursor-pointer',
         {
           'p-0': padding === 'none',
           'p-4': padding === 'sm',

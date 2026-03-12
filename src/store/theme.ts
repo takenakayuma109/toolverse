@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type Theme = 'dark' | 'offwhite' | 'light';
+export type Theme = 'universe' | 'earth' | 'light';
 
 interface ThemeState {
   theme: Theme;
@@ -8,7 +8,7 @@ interface ThemeState {
 }
 
 export const useThemeStore = create<ThemeState>((set) => ({
-  theme: 'dark',
+  theme: 'universe',
   setTheme: (theme) => {
     set({ theme });
     if (typeof window !== 'undefined') {
@@ -20,8 +20,8 @@ export const useThemeStore = create<ThemeState>((set) => ({
 
 export function applyTheme(theme: Theme) {
   const root = document.documentElement;
-  root.setAttribute('data-theme', theme);
-  if (theme === 'dark') {
+  root.setAttribute('data-theme', theme === 'universe' ? 'dark' : theme === 'earth' ? 'offwhite' : 'light');
+  if (theme === 'universe') {
     root.classList.add('dark');
   } else {
     root.classList.remove('dark');
@@ -31,8 +31,11 @@ export function applyTheme(theme: Theme) {
 export function getInitialTheme(): Theme {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('toolverse-theme') as Theme;
-    if (saved === 'dark' || saved === 'offwhite' || saved === 'light') return saved;
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    if (saved === 'universe' || saved === 'earth' || saved === 'light') return saved;
+    const legacy = localStorage.getItem('toolverse-theme');
+    if (legacy === 'dark') return 'universe';
+    if (legacy === 'offwhite') return 'earth';
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'universe';
   }
-  return 'dark';
+  return 'universe';
 }

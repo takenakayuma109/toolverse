@@ -92,8 +92,12 @@ body {
 [data-theme="offwhite"] .bg-white\/80 { background-color: rgba(245, 240, 235, 0.85) !important; }
 
 /* Inputs & interactive */
-[data-theme="offwhite"] input { background-color: var(--ow-card) !important; border-color: var(--ow-border) !important; color: #3d3530 !important; }
+[data-theme="offwhite"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) { background-color: var(--ow-card) !important; border-color: var(--ow-border) !important; color: #3d3530 !important; }
 [data-theme="offwhite"] input::placeholder { color: var(--ow-muted) !important; }
+[data-theme="offwhite"] select {
+  background-color: var(--ow-card);
+  border-color: #d5cec4;
+}
 
 /* Card component */
 [data-theme="offwhite"] .rounded-2xl.border.border-gray-100 {
@@ -183,6 +187,14 @@ body {
   scrollbar-width: none;
 }
 .hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
 
