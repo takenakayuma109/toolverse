@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLocaleStore, getInitialLocale } from '@/store/locale';
+import { useThemeStore, getInitialTheme, applyTheme } from '@/store/theme';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileNav from '@/components/layout/MobileNav';
@@ -23,12 +24,16 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
   const [isInitialized, setIsInitialized] = useState(false);
   const setLocale = useLocaleStore((s) => s.setLocale);
+  const setTheme = useThemeStore((s) => s.setTheme);
 
   useEffect(() => {
     const initialLocale = getInitialLocale();
     setLocale(initialLocale);
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
     setIsInitialized(true);
-  }, [setLocale]);
+  }, [setLocale, setTheme]);
 
   useEffect(() => {
     const handler = (e: CustomEvent<{ page: PageView }>) => {

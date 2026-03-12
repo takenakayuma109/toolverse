@@ -27,7 +27,11 @@
     "viewAll": "すべて見る",
     "free": "無料",
     "popular": "人気",
-    "new": "新着"
+    "new": "新着",
+    "theme": "テーマ",
+    "dark": "ダーク",
+    "offwhite": "やさしい",
+    "light": "ライト"
   },
   "nav": {
     "home": "ホーム",

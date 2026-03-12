@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
+import ThemeSwitch from '@/components/ui/ThemeSwitch';
 import Input from '@/components/ui/Input';
 import { Menu, X, Search, Sparkles } from 'lucide-react';
 
@@ -111,6 +112,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-2">
+            <ThemeSwitch className="hidden sm:inline-flex" />
             <LanguageSwitch className="hidden sm:inline-flex" />
 
             <div className="hidden sm:flex items-center gap-2">
@@ -161,6 +163,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
               </button>
             ))}
             <div className="flex sm:hidden items-center gap-2 px-4 pt-4 border-t border-gray-200 dark:border-gray-800 mt-4">
+              <ThemeSwitch />
               <LanguageSwitch />
               <button
                 onClick={() => { onNavigate('auth'); setMobileMenuOpen(false); }}

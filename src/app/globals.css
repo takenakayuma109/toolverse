@@ -13,8 +13,33 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ── Light Mode (default) ── */
+:root[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+}
+
+/* ── Off-White Mode ── warm, low-contrast, easy on the eyes ── */
+:root[data-theme="offwhite"] {
+  --background: #f5f0eb;
+  --foreground: #3d3530;
+
+  --ow-surface: #ece5dd;
+  --ow-surface-hover: #e3dbd2;
+  --ow-border: #d9d0c7;
+  --ow-muted: #8a7f74;
+  --ow-card: #faf6f1;
+  --ow-card-hover: #f0eae3;
+}
+
+/* ── Dark Mode ── */
+:root[data-theme="dark"] {
+  --background: #030014;
+  --foreground: #ededed;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --background: #030014;
     --foreground: #ededed;
   }
@@ -31,7 +56,67 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.3s ease;
 }
+
+/* ────────────────────────────────────────────
+   Off-White overrides for Tailwind classes
+   Uses [data-theme="offwhite"] selector
+   ──────────────────────────────────────────── */
+
+/* Backgrounds */
+[data-theme="offwhite"] .bg-white { background-color: var(--ow-card) !important; }
+[data-theme="offwhite"] .bg-gray-50 { background-color: var(--ow-surface) !important; }
+[data-theme="offwhite"] .bg-gray-100 { background-color: var(--ow-surface) !important; }
+
+/* Card & surface backgrounds */
+[data-theme="offwhite"] .bg-gradient-to-b.from-gray-50 { background: linear-gradient(to bottom, var(--ow-surface), var(--ow-card)) !important; }
+
+/* Text colors */
+[data-theme="offwhite"] .text-gray-900 { color: #3d3530 !important; }
+[data-theme="offwhite"] .text-gray-800 { color: #4a423b !important; }
+[data-theme="offwhite"] .text-gray-700 { color: #5c534b !important; }
+[data-theme="offwhite"] .text-gray-600 { color: #6e645b !important; }
+[data-theme="offwhite"] .text-gray-500 { color: var(--ow-muted) !important; }
+[data-theme="offwhite"] .text-gray-400 { color: #9e9489 !important; }
+
+/* Borders */
+[data-theme="offwhite"] .border-gray-100 { border-color: var(--ow-border) !important; }
+[data-theme="offwhite"] .border-gray-200 { border-color: var(--ow-border) !important; }
+[data-theme="offwhite"] .border-gray-200\/50 { border-color: rgba(217, 208, 199, 0.5) !important; }
+
+/* Header backdrop */
+[data-theme="offwhite"] .bg-white\/80 { background-color: rgba(245, 240, 235, 0.85) !important; }
+
+/* Mobile nav */
+[data-theme="offwhite"] .bg-white\/80 { background-color: rgba(245, 240, 235, 0.85) !important; }
+
+/* Inputs & interactive */
+[data-theme="offwhite"] input { background-color: var(--ow-card) !important; border-color: var(--ow-border) !important; color: #3d3530 !important; }
+[data-theme="offwhite"] input::placeholder { color: var(--ow-muted) !important; }
+
+/* Card component */
+[data-theme="offwhite"] .rounded-2xl.border.border-gray-100 {
+  background-color: var(--ow-card) !important;
+  border-color: var(--ow-border) !important;
+}
+
+/* Hover states */
+[data-theme="offwhite"] .hover\:bg-gray-100:hover { background-color: var(--ow-surface-hover) !important; }
+
+/* Violet accents stay the same - they look great on warm backgrounds */
+/* Active violet tones shifted slightly warmer */
+[data-theme="offwhite"] .text-violet-600 { color: #7c5cbf !important; }
+[data-theme="offwhite"] .bg-violet-50 { background-color: rgba(124, 92, 191, 0.08) !important; }
+[data-theme="offwhite"] .bg-violet-100 { background-color: rgba(124, 92, 191, 0.12) !important; }
+
+/* Code blocks */
+[data-theme="offwhite"] pre {
+  background-color: #3d3530 !important;
+  color: #e8e0d8 !important;
+}
+
+/* ──────────── Animations ──────────── */
 
 @keyframes float {
   0%, 100% { transform: translateY(0px) rotate(0deg); }

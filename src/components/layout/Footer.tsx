@@ -2,6 +2,7 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
+import ThemeSwitch from '@/components/ui/ThemeSwitch';
 import { Sparkles } from 'lucide-react';
 
 const FOOTER_LINKS = {
@@ -134,7 +135,10 @@ export default function Footer() {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             {t('footer.copyright')}
           </p>
-          <LanguageSwitch />
+          <div className="flex items-center gap-2">
+            <ThemeSwitch />
+            <LanguageSwitch />
+          </div>
         </div>
       </div>
     </footer>

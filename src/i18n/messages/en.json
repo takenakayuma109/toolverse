@@ -27,7 +27,11 @@
     "viewAll": "View All",
     "free": "Free",
     "popular": "Popular",
-    "new": "New"
+    "new": "New",
+    "theme": "Theme",
+    "dark": "Dark",
+    "offwhite": "Soft",
+    "light": "Light"
   },
   "nav": {
     "home": "Home",
