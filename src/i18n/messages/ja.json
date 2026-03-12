@@ -1,0 +1,231 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "世界中のツールが集まり、作られ、発見され、利用されるプラットフォーム",
+    "getStarted": "始めましょう",
+    "learnMore": "もっと詳しく",
+    "signIn": "ログイン",
+    "signUp": "新規登録",
+    "signOut": "ログアウト",
+    "language": "言語",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "検索",
+    "searchPlaceholder": "ツールを検索...",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "create": "作成",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "viewAll": "すべて見る",
+    "free": "無料",
+    "popular": "人気",
+    "new": "新着"
+  },
+  "nav": {
+    "home": "ホーム",
+    "discover": "ディスカバー",
+    "workspace": "ワークスペース",
+    "creator": "クリエイター",
+    "account": "アカウント",
+    "billing": "課金"
+  },
+  "home": {
+    "hero": {
+      "title": "ツールの宇宙へようこそ",
+      "subtitle": "ソフトウェア、SaaS、AI、自動化ツールが集まる次世代プラットフォーム",
+      "cta": "ツールを探す",
+      "ctaSecondary": "クリエイターになる"
+    },
+    "features": {
+      "title": "Toolverseでできること",
+      "marketplace": {
+        "title": "マーケットプレイス",
+        "description": "世界中の優れたツールを発見し、すぐに利用できます"
+      },
+      "workspace": {
+        "title": "ユニバーサルワークスペース",
+        "description": "すべてのツールを一つの空間で。シングルログイン、統一されたデータ"
+      },
+      "creator": {
+        "title": "クリエイターエコノミー",
+        "description": "あなたのツールを世界に公開し、収益を得ましょう"
+      },
+      "api": {
+        "title": "プラットフォームAPI",
+        "description": "認証、課金、ストレージ。すべてAPIで構築できます"
+      }
+    },
+    "stats": {
+      "tools": "ツール数",
+      "creators": "クリエイター",
+      "users": "ユーザー",
+      "countries": "対応国"
+    },
+    "categories": {
+      "title": "カテゴリで探す",
+      "ai": "AI",
+      "productivity": "生産性",
+      "finance": "ファイナンス",
+      "marketing": "マーケティング",
+      "development": "開発",
+      "creatorTools": "クリエイター",
+      "automation": "自動化",
+      "analytics": "分析"
+    },
+    "officialTools": {
+      "title": "公式ツール",
+      "subtitle": "Toolverseが提供する公式ツールをお試しください"
+    },
+    "cta": {
+      "title": "ツールの宇宙を一緒に作ろう",
+      "subtitle": "クリエイターとして参加し、次世代のSoftware Internet Layerを構築しましょう",
+      "button": "今すぐ始める"
+    }
+  },
+  "marketplace": {
+    "title": "ディスカバー",
+    "subtitle": "最高のツールを見つけよう",
+    "trending": "トレンド",
+    "newTools": "新着ツール",
+    "featured": "注目",
+    "categories": "カテゴリ",
+    "reviews": "レビュー",
+    "rating": "評価",
+    "install": "インストール",
+    "installed": "インストール済み",
+    "pricing": "料金",
+    "filters": "フィルター",
+    "sortBy": "並べ替え",
+    "allCategories": "すべてのカテゴリ",
+    "results": "件の結果",
+    "noResults": "ツールが見つかりませんでした"
+  },
+  "workspace": {
+    "title": "ワークスペース",
+    "dashboard": "ダッシュボード",
+    "projects": "プロジェクト",
+    "files": "ファイル",
+    "data": "データ",
+    "tools": "ツール",
+    "recentActivity": "最近のアクティビティ",
+    "quickActions": "クイックアクション",
+    "myTools": "マイツール",
+    "favorites": "お気に入り",
+    "noProjects": "プロジェクトがまだありません",
+    "createProject": "プロジェクトを作成"
+  },
+  "creator": {
+    "title": "クリエイターポータル",
+    "subtitle": "ツールを作り、世界に届ける",
+    "toolRegistration": "ツール登録",
+    "pricing": "料金設定",
+    "analytics": "アナリティクス",
+    "updates": "アップデート",
+    "revenue": "収益",
+    "publish": "公開する",
+    "draft": "下書き",
+    "published": "公開中",
+    "totalRevenue": "合計収益",
+    "monthlyRevenue": "今月の収益",
+    "totalUsers": "合計ユーザー",
+    "activeUsers": "アクティブユーザー",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "SDKを使ってToolverseプラットフォーム上にツールを構築しましょう",
+      "install": "インストール",
+      "docs": "ドキュメント"
+    }
+  },
+  "auth": {
+    "signInTitle": "Toolverseにログイン",
+    "signUpTitle": "Toolverseに登録",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "confirmPassword": "パスワード確認",
+    "forgotPassword": "パスワードを忘れた方",
+    "orContinueWith": "または以下でログイン",
+    "google": "Googleで続ける",
+    "apple": "Appleで続ける",
+    "github": "GitHubで続ける",
+    "agreeTerms": "利用規約に同意します",
+    "alreadyHaveAccount": "アカウントをお持ちの方",
+    "dontHaveAccount": "アカウントをお持ちでない方"
+  },
+  "billing": {
+    "title": "課金・プラン",
+    "currentPlan": "現在のプラン",
+    "upgrade": "アップグレード",
+    "subscription": "サブスクリプション",
+    "usage": "利用量",
+    "revenueShare": "レベニューシェア",
+    "payouts": "支払い",
+    "plans": {
+      "free": {
+        "name": "フリー",
+        "price": "¥0",
+        "description": "個人利用に最適"
+      },
+      "pro": {
+        "name": "プロ",
+        "price": "¥1,980",
+        "period": "/月",
+        "description": "プロフェッショナル向け"
+      },
+      "team": {
+        "name": "チーム",
+        "price": "¥4,980",
+        "period": "/月",
+        "description": "チームでの利用に"
+      },
+      "enterprise": {
+        "name": "エンタープライズ",
+        "price": "お問い合わせ",
+        "description": "大規模組織向け"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AIを活用したプレゼンス管理・分析ツール"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI搭載の先見分析プラットフォーム"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "特許情報の検索・分析・管理ツール"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "債務管理・最適化ナビゲーター"
+    }
+  },
+  "footer": {
+    "product": "プロダクト",
+    "company": "企業情報",
+    "resources": "リソース",
+    "legal": "法的情報",
+    "about": "Toolverseについて",
+    "blog": "ブログ",
+    "careers": "採用情報",
+    "contact": "お問い合わせ",
+    "documentation": "ドキュメント",
+    "apiReference": "APIリファレンス",
+    "sdkGuide": "SDKガイド",
+    "community": "コミュニティ",
+    "terms": "利用規約",
+    "privacy": "プライバシーポリシー",
+    "cookies": "Cookieポリシー",
+    "copyright": "© 2026 Toolverse. All rights reserved."
+  }
+}

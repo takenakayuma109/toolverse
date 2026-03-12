@@ -1,0 +1,231 @@
+{
+  "common": {
+    "appName": "Toolverse",
+    "tagline": "The Universe of Tools",
+    "description": "A platform where the world's tools are gathered, created, discovered, and used",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "language": "Language",
+    "japanese": "日本語",
+    "english": "English",
+    "search": "Search",
+    "searchPlaceholder": "Search tools...",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "viewAll": "View All",
+    "free": "Free",
+    "popular": "Popular",
+    "new": "New"
+  },
+  "nav": {
+    "home": "Home",
+    "discover": "Discover",
+    "workspace": "Workspace",
+    "creator": "Creator",
+    "account": "Account",
+    "billing": "Billing"
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to the Universe of Tools",
+      "subtitle": "The next-generation platform for Software, SaaS, AI, and Automation tools",
+      "cta": "Explore Tools",
+      "ctaSecondary": "Become a Creator"
+    },
+    "features": {
+      "title": "What You Can Do with Toolverse",
+      "marketplace": {
+        "title": "Marketplace",
+        "description": "Discover and instantly use the best tools from around the world"
+      },
+      "workspace": {
+        "title": "Universal Workspace",
+        "description": "All tools in one space. Single login, unified data layer"
+      },
+      "creator": {
+        "title": "Creator Economy",
+        "description": "Publish your tools to the world and earn revenue"
+      },
+      "api": {
+        "title": "Platform APIs",
+        "description": "Auth, billing, storage. Build everything with APIs"
+      }
+    },
+    "stats": {
+      "tools": "Tools",
+      "creators": "Creators",
+      "users": "Users",
+      "countries": "Countries"
+    },
+    "categories": {
+      "title": "Browse by Category",
+      "ai": "AI",
+      "productivity": "Productivity",
+      "finance": "Finance",
+      "marketing": "Marketing",
+      "development": "Development",
+      "creatorTools": "Creator",
+      "automation": "Automation",
+      "analytics": "Analytics"
+    },
+    "officialTools": {
+      "title": "Official Tools",
+      "subtitle": "Try the official tools provided by Toolverse"
+    },
+    "cta": {
+      "title": "Let's Build the Universe of Tools Together",
+      "subtitle": "Join as a creator and build the next-generation Software Internet Layer",
+      "button": "Get Started Now"
+    }
+  },
+  "marketplace": {
+    "title": "Discover",
+    "subtitle": "Find the best tools",
+    "trending": "Trending",
+    "newTools": "New Tools",
+    "featured": "Featured",
+    "categories": "Categories",
+    "reviews": "Reviews",
+    "rating": "Rating",
+    "install": "Install",
+    "installed": "Installed",
+    "pricing": "Pricing",
+    "filters": "Filters",
+    "sortBy": "Sort By",
+    "allCategories": "All Categories",
+    "results": "results",
+    "noResults": "No tools found"
+  },
+  "workspace": {
+    "title": "Workspace",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "files": "Files",
+    "data": "Data",
+    "tools": "Tools",
+    "recentActivity": "Recent Activity",
+    "quickActions": "Quick Actions",
+    "myTools": "My Tools",
+    "favorites": "Favorites",
+    "noProjects": "No projects yet",
+    "createProject": "Create Project"
+  },
+  "creator": {
+    "title": "Creator Portal",
+    "subtitle": "Build tools, deliver to the world",
+    "toolRegistration": "Tool Registration",
+    "pricing": "Pricing",
+    "analytics": "Analytics",
+    "updates": "Updates",
+    "revenue": "Revenue",
+    "publish": "Publish",
+    "draft": "Draft",
+    "published": "Published",
+    "totalRevenue": "Total Revenue",
+    "monthlyRevenue": "Monthly Revenue",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "sdk": {
+      "title": "Creator SDK",
+      "description": "Build tools on the Toolverse platform using the SDK",
+      "install": "Install",
+      "docs": "Documentation"
+    }
+  },
+  "auth": {
+    "signInTitle": "Sign in to Toolverse",
+    "signUpTitle": "Sign up for Toolverse",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot password?",
+    "orContinueWith": "Or continue with",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "github": "Continue with GitHub",
+    "agreeTerms": "I agree to the Terms of Service",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?"
+  },
+  "billing": {
+    "title": "Billing & Plans",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "subscription": "Subscription",
+    "usage": "Usage",
+    "revenueShare": "Revenue Share",
+    "payouts": "Payouts",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "description": "Perfect for personal use"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$14.99",
+        "period": "/mo",
+        "description": "For professionals"
+      },
+      "team": {
+        "name": "Team",
+        "price": "$39.99",
+        "period": "/mo",
+        "description": "For team collaboration"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Contact Us",
+        "description": "For large organizations"
+      }
+    }
+  },
+  "tools": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI-powered presence management and analytics tool"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI-powered foresight analytics platform"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "Patent information search, analysis, and management tool"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "Debt management and optimization navigator"
+    }
+  },
+  "footer": {
+    "product": "Product",
+    "company": "Company",
+    "resources": "Resources",
+    "legal": "Legal",
+    "about": "About Toolverse",
+    "blog": "Blog",
+    "careers": "Careers",
+    "contact": "Contact",
+    "documentation": "Documentation",
+    "apiReference": "API Reference",
+    "sdkGuide": "SDK Guide",
+    "community": "Community",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "copyright": "© 2026 Toolverse. All rights reserved."
+  }
+}
