@@ -32,16 +32,28 @@ import {
   Clock,
   FileText,
   ChevronDown,
+  ChevronRight,
+  ChevronLeft,
   Sparkles,
   Webhook,
   Key,
   Save,
   ExternalLink,
+  Globe,
+  Link,
+  Shield,
+  CreditCard,
+  Percent,
+  Lock,
+  AlertCircle,
+  CheckCircle2,
+  CircleDot,
+  Zap,
 } from 'lucide-react';
 
 type StudioTab = 'tools' | 'sdk' | 'revenue' | 'settings';
-
 type ToolStatus = 'published' | 'draft' | 'review';
+type WizardStep = 1 | 2 | 3 | 4;
 
 interface MyTool extends Tool {
   status: ToolStatus;
@@ -81,33 +93,113 @@ sdk.registerAction('analyze', async (input) => {
 sdk.listen({ port: 3001 });`;
 
 const STATUS_CONFIG: Record<ToolStatus, { label: string; variant: 'success' | 'warning' | 'info' }> = {
-  published: { label: 'Published', variant: 'success' },
-  draft: { label: 'Draft', variant: 'warning' },
-  review: { label: 'Under Review', variant: 'info' },
+  published: { label: '公開中', variant: 'success' },
+  draft: { label: '下書き', variant: 'warning' },
+  review: { label: '審査中', variant: 'info' },
 };
 
 const PRICING_TYPES = [
-  { value: 'free', label: 'Free' },
-  { value: 'freemium', label: 'Freemium' },
-  { value: 'paid', label: 'Paid (One-time)' },
-  { value: 'subscription', label: 'Subscription' },
+  { value: 'free', label: '無料', desc: 'すべての機能を無料で提供' },
+  { value: 'freemium', label: 'フリーミアム', desc: '基本無料 + プレミアム機能' },
+  { value: 'paid', label: '買い切り', desc: '一度の支払いで永続利用' },
+  { value: 'subscription', label: 'サブスクリプション', desc: '月額・年額の定期課金' },
 ] as const;
+
+const AUTH_METHODS = [
+  { value: 'toolverse', label: 'Toolverse認証 (推奨)', desc: 'Toolverseのシングルサインオンを利用', icon: Shield },
+  { value: 'oauth', label: 'OAuth 2.0', desc: '独自のOAuth認証と連携', icon: Lock },
+  { value: 'apikey', label: 'APIキー', desc: 'APIキーベースの認証', icon: Key },
+  { value: 'none', label: '認証なし', desc: '誰でもアクセス可能', icon: Globe },
+] as const;
+
+interface WizardFormData {
+  // Step 1: Basic Info
+  name: string;
+  description: string;
+  longDescription: string;
+  category: ToolCategory | '';
+  tags: string;
+  // Step 2: Service Settings
+  serviceUrl: string;
+  apiEndpoint: string;
+  authMethod: string;
+  oauthClientId: string;
+  oauthRedirectUri: string;
+  webhookUrl: string;
+  webhookEvents: string[];
+  sandboxUrl: string;
+  // Step 3: Pricing & Billing
+  pricingType: 'free' | 'freemium' | 'paid' | 'subscription';
+  monthlyPrice: string;
+  yearlyPrice: string;
+  freeTrialDays: string;
+  freePlanLimits: string;
+  stripeConnected: boolean;
+  revenueShare: number;
+  // Step 4: Review & Publish
+  privacyPolicyUrl: string;
+  termsUrl: string;
+  supportEmail: string;
+  supportUrl: string;
+  visibility: 'public' | 'unlisted' | 'private';
+}
+
+const WIZARD_STEPS = [
+  { step: 1 as WizardStep, title: '基本情報', desc: 'アプリ名・説明・カテゴリ', icon: Package },
+  { step: 2 as WizardStep, title: 'サービス設定', desc: 'URL・API・認証', icon: Globe },
+  { step: 3 as WizardStep, title: '料金・決済', desc: 'プラン・Toolverse決済', icon: CreditCard },
+  { step: 4 as WizardStep, title: 'レビュー・公開', desc: '審査情報・公開設定', icon: CheckCircle2 },
+];
 
 export default function ToolStudioPage() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<StudioTab>('tools');
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [wizardStep, setWizardStep] = useState<WizardStep>(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
+  const [apiKeyVisible, setApiKeyVisible] = useState(false);
+  const [webhookUrl, setWebhookUrlState] = useState('https://');
+
+  const [formData, setFormData] = useState<WizardFormData>({
     name: '',
     description: '',
-    category: '' as ToolCategory | '',
-    pricingType: 'free' as 'free' | 'freemium' | 'paid' | 'subscription',
-    price: '',
+    longDescription: '',
+    category: '',
     tags: '',
+    serviceUrl: '',
+    apiEndpoint: '',
+    authMethod: 'toolverse',
+    oauthClientId: '',
+    oauthRedirectUri: '',
+    webhookUrl: '',
+    webhookEvents: ['install', 'payment'],
+    sandboxUrl: '',
+    pricingType: 'free',
+    monthlyPrice: '',
+    yearlyPrice: '',
+    freeTrialDays: '',
+    freePlanLimits: '',
+    stripeConnected: false,
+    revenueShare: 70,
+    privacyPolicyUrl: '',
+    termsUrl: '',
+    supportEmail: '',
+    supportUrl: '',
+    visibility: 'public',
   });
-  const [webhookUrl, setWebhookUrl] = useState('https://');
-  const [apiKeyVisible, setApiKeyVisible] = useState(false);
+
+  const updateForm = <K extends keyof WizardFormData>(key: K, value: WizardFormData[K]) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const toggleWebhookEvent = (event: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      webhookEvents: prev.webhookEvents.includes(event)
+        ? prev.webhookEvents.filter((e) => e !== event)
+        : [...prev.webhookEvents, event],
+    }));
+  };
 
   const copyCmd = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -115,19 +207,502 @@ export default function ToolStudioPage() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const openWizard = () => {
+    setWizardStep(1);
+    setShowUploadModal(true);
+  };
+
   const tabs: { id: StudioTab; label: string; icon: typeof Package }[] = [
-    { id: 'tools', label: 'My Tools', icon: Package },
-    { id: 'sdk', label: 'SDK Integration', icon: Code2 },
-    { id: 'revenue', label: 'Revenue', icon: DollarSign },
-    { id: 'settings', label: 'Settings', icon: Settings },
+    { id: 'tools', label: 'マイツール', icon: Package },
+    { id: 'sdk', label: 'SDK連携', icon: Code2 },
+    { id: 'revenue', label: '収益', icon: DollarSign },
+    { id: 'settings', label: '設定', icon: Settings },
   ];
 
   const stats = [
-    { label: 'Published Tools', value: MOCK_STATS.publishedTools.toString(), icon: Package, gradient: 'from-violet-500 to-indigo-500' },
-    { label: 'Total Users', value: formatNumber(MOCK_STATS.totalUsers), icon: Users, gradient: 'from-blue-500 to-cyan-500' },
-    { label: 'Monthly Revenue', value: formatCurrency(MOCK_STATS.monthlyRevenue), icon: DollarSign, gradient: 'from-emerald-500 to-green-500' },
-    { label: 'Avg Rating', value: `${MOCK_STATS.avgRating} ★`, icon: Star, gradient: 'from-amber-500 to-orange-500' },
+    { label: '公開ツール', value: MOCK_STATS.publishedTools.toString(), icon: Package, gradient: 'from-violet-500 to-indigo-500' },
+    { label: '総ユーザー', value: formatNumber(MOCK_STATS.totalUsers), icon: Users, gradient: 'from-blue-500 to-cyan-500' },
+    { label: '月間収益', value: formatCurrency(MOCK_STATS.monthlyRevenue), icon: DollarSign, gradient: 'from-emerald-500 to-green-500' },
+    { label: '平均評価', value: `${MOCK_STATS.avgRating} ★`, icon: Star, gradient: 'from-amber-500 to-orange-500' },
   ];
+
+  // ── Wizard Step Renderers ──
+
+  const renderStep1 = () => (
+    <div className="space-y-5">
+      <Input
+        label="アプリ名 *"
+        placeholder="例: My Awesome App"
+        value={formData.name}
+        onChange={(e) => updateForm('name', e.target.value)}
+      />
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">概要説明 *</label>
+        <textarea
+          rows={2}
+          placeholder="アプリの概要を1〜2文で..."
+          value={formData.description}
+          onChange={(e) => updateForm('description', e.target.value)}
+          className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
+        />
+      </div>
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">詳細説明</label>
+        <textarea
+          rows={4}
+          placeholder="機能や特徴を詳しく説明..."
+          value={formData.longDescription}
+          onChange={(e) => updateForm('longDescription', e.target.value)}
+          className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
+        />
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">カテゴリ *</label>
+          <div className="relative">
+            <select
+              value={formData.category}
+              onChange={(e) => updateForm('category', e.target.value as ToolCategory)}
+              className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all appearance-none"
+            >
+              <option value="">カテゴリを選択...</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>{cat.icon} {cat.id.charAt(0).toUpperCase() + cat.id.slice(1)}</option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+        </div>
+
+        <Input
+          label="タグ"
+          placeholder="AI, 生産性, ライティング"
+          value={formData.tags}
+          onChange={(e) => updateForm('tags', e.target.value)}
+          icon={<Tag className="w-4 h-4" />}
+        />
+      </div>
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">アイコン</label>
+        <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
+          <div className="w-14 h-14 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mb-3">
+            <Image className="w-7 h-7 text-violet-500" />
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">ドラッグ＆ドロップまたはクリック</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, SVG（512×512推奨）</p>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">スクリーンショット</label>
+        <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
+          <div className="w-14 h-14 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-3">
+            <Upload className="w-7 h-7 text-indigo-500" />
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400">スクリーンショットをアップロード（最大6枚）</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG — 1280×720推奨</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderStep2 = () => (
+    <div className="space-y-5">
+      <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-medium text-blue-800 dark:text-blue-300">ウェブアプリの接続</p>
+            <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+              Toolverseはウェブアプリのプラットフォームです。あなたのアプリのURLを登録し、ユーザーがToolverse経由でアクセスできるようにします。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <Input
+        label="サービスURL *"
+        placeholder="https://your-app.com"
+        value={formData.serviceUrl}
+        onChange={(e) => updateForm('serviceUrl', e.target.value)}
+        icon={<Link className="w-4 h-4" />}
+      />
+
+      <Input
+        label="サンドボックス/デモURL"
+        placeholder="https://demo.your-app.com"
+        value={formData.sandboxUrl}
+        onChange={(e) => updateForm('sandboxUrl', e.target.value)}
+        icon={<Globe className="w-4 h-4" />}
+      />
+
+      <Input
+        label="APIエンドポイント"
+        placeholder="https://api.your-app.com/v1"
+        value={formData.apiEndpoint}
+        onChange={(e) => updateForm('apiEndpoint', e.target.value)}
+        icon={<Code2 className="w-4 h-4" />}
+      />
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">認証方式 *</label>
+        <div className="space-y-2">
+          {AUTH_METHODS.map((method) => (
+            <button
+              key={method.value}
+              onClick={() => updateForm('authMethod', method.value)}
+              className={cn(
+                'w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left',
+                formData.authMethod === method.value
+                  ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/20'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+              )}
+            >
+              <div className={cn(
+                'w-10 h-10 rounded-lg flex items-center justify-center shrink-0',
+                formData.authMethod === method.value
+                  ? 'bg-violet-100 dark:bg-violet-900/30'
+                  : 'bg-gray-100 dark:bg-gray-800'
+              )}>
+                <method.icon className={cn('w-5 h-5', formData.authMethod === method.value ? 'text-violet-600' : 'text-gray-500')} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className={cn('text-sm font-medium', formData.authMethod === method.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
+                  {method.label}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{method.desc}</p>
+              </div>
+              <div className={cn(
+                'w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0',
+                formData.authMethod === method.value ? 'border-violet-500 bg-violet-500' : 'border-gray-300 dark:border-gray-600'
+              )}>
+                {formData.authMethod === method.value && <Check className="w-3 h-3 text-white" />}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {formData.authMethod === 'oauth' && (
+        <div className="space-y-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">OAuth 2.0 設定</p>
+          <Input
+            label="Client ID"
+            placeholder="your-oauth-client-id"
+            value={formData.oauthClientId}
+            onChange={(e) => updateForm('oauthClientId', e.target.value)}
+          />
+          <Input
+            label="リダイレクトURI"
+            placeholder="https://your-app.com/callback"
+            value={formData.oauthRedirectUri}
+            onChange={(e) => updateForm('oauthRedirectUri', e.target.value)}
+          />
+        </div>
+      )}
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Webhook URL</label>
+        <Input
+          placeholder="https://your-server.com/webhook/toolverse"
+          value={formData.webhookUrl}
+          onChange={(e) => updateForm('webhookUrl', e.target.value)}
+          icon={<Webhook className="w-4 h-4" />}
+        />
+        <div className="flex flex-wrap gap-2 mt-3">
+          {['install', 'uninstall', 'payment', 'review', 'subscription.created', 'subscription.cancelled'].map((event) => (
+            <button
+              key={event}
+              onClick={() => toggleWebhookEvent(event)}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-medium transition-all border',
+                formData.webhookEvents.includes(event)
+                  ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700'
+                  : 'bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700'
+              )}
+            >
+              {event}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderStep3 = () => (
+    <div className="space-y-5">
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">料金モデル *</label>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {PRICING_TYPES.map((pt) => (
+            <button
+              key={pt.value}
+              onClick={() => updateForm('pricingType', pt.value)}
+              className={cn(
+                'p-4 rounded-xl border-2 text-left transition-all',
+                formData.pricingType === pt.value
+                  ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/20'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+              )}
+            >
+              <p className={cn('text-sm font-semibold', formData.pricingType === pt.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
+                {pt.label}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{pt.desc}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {(formData.pricingType === 'subscription' || formData.pricingType === 'freemium') && (
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Input
+            label="月額料金（円）"
+            type="number"
+            placeholder="980"
+            value={formData.monthlyPrice}
+            onChange={(e) => updateForm('monthlyPrice', e.target.value)}
+            icon={<DollarSign className="w-4 h-4" />}
+          />
+          <Input
+            label="年額料金（円）（オプション）"
+            type="number"
+            placeholder="9800"
+            value={formData.yearlyPrice}
+            onChange={(e) => updateForm('yearlyPrice', e.target.value)}
+            icon={<DollarSign className="w-4 h-4" />}
+          />
+        </div>
+      )}
+
+      {formData.pricingType === 'paid' && (
+        <Input
+          label="販売価格（円）"
+          type="number"
+          placeholder="4980"
+          value={formData.monthlyPrice}
+          onChange={(e) => updateForm('monthlyPrice', e.target.value)}
+          icon={<DollarSign className="w-4 h-4" />}
+        />
+      )}
+
+      {(formData.pricingType === 'subscription' || formData.pricingType === 'paid') && (
+        <Input
+          label="無料トライアル期間（日数）"
+          type="number"
+          placeholder="14"
+          value={formData.freeTrialDays}
+          onChange={(e) => updateForm('freeTrialDays', e.target.value)}
+          icon={<Clock className="w-4 h-4" />}
+        />
+      )}
+
+      {formData.pricingType === 'freemium' && (
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">無料プランの制限事項</label>
+          <textarea
+            rows={3}
+            placeholder="例: 月間1,000リクエストまで、基本機能のみ利用可能..."
+            value={formData.freePlanLimits}
+            onChange={(e) => updateForm('freePlanLimits', e.target.value)}
+            className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
+          />
+        </div>
+      )}
+
+      {/* Toolverse Payment Connection */}
+      {formData.pricingType !== 'free' && (
+        <div className="p-5 rounded-xl border-2 border-gray-200 dark:border-gray-700 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 flex items-center justify-center">
+              <CreditCard className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">Toolverse決済</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Toolverseの統合決済で安全にお支払いを受け取れます</p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50">
+            <div className="flex items-center gap-3">
+              <div className={cn(
+                'w-8 h-8 rounded-full flex items-center justify-center',
+                formData.stripeConnected ? 'bg-emerald-100 dark:bg-emerald-900/30' : 'bg-amber-100 dark:bg-amber-900/30'
+              )}>
+                {formData.stripeConnected
+                  ? <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  : <AlertCircle className="w-5 h-5 text-amber-600" />}
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  {formData.stripeConnected ? '決済アカウント接続済み' : '決済アカウント未接続'}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {formData.stripeConnected ? 'Stripe Connect でリンク済み' : '売上を受け取るにはアカウント接続が必要です'}
+                </p>
+              </div>
+            </div>
+            <Button
+              size="sm"
+              variant={formData.stripeConnected ? 'outline' : 'primary'}
+              onClick={() => updateForm('stripeConnected', !formData.stripeConnected)}
+              className="shrink-0"
+            >
+              {formData.stripeConnected ? '設定変更' : '接続する'}
+            </Button>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">レベニューシェア</p>
+              <p className="text-sm font-bold text-violet-600 dark:text-violet-400">クリエイター {formData.revenueShare}% / Toolverse {100 - formData.revenueShare}%</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Percent className="w-4 h-4 text-gray-400 shrink-0" />
+              <input
+                type="range"
+                min={50}
+                max={90}
+                step={5}
+                value={formData.revenueShare}
+                onChange={(e) => updateForm('revenueShare', Number(e.target.value))}
+                className="flex-1 h-2 rounded-full appearance-none bg-gray-200 dark:bg-gray-700 accent-violet-600"
+              />
+            </div>
+            <p className="text-xs text-gray-400 dark:text-gray-500">
+              ※ Toolverseプラットフォーム手数料には決済処理手数料（3.6%）が含まれます
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  const renderStep4 = () => (
+    <div className="space-y-5">
+      <div className="p-4 rounded-xl bg-violet-50 dark:bg-violet-950/20 border border-violet-200 dark:border-violet-800">
+        <p className="text-sm font-medium text-violet-800 dark:text-violet-300">公開前の最終確認</p>
+        <p className="text-xs text-violet-600 dark:text-violet-400 mt-1">
+          以下の情報を入力して審査に提出してください。審査は通常1〜3営業日で完了します。
+        </p>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-4">
+        <Input
+          label="プライバシーポリシーURL *"
+          placeholder="https://your-app.com/privacy"
+          value={formData.privacyPolicyUrl}
+          onChange={(e) => updateForm('privacyPolicyUrl', e.target.value)}
+          icon={<Shield className="w-4 h-4" />}
+        />
+        <Input
+          label="利用規約URL *"
+          placeholder="https://your-app.com/terms"
+          value={formData.termsUrl}
+          onChange={(e) => updateForm('termsUrl', e.target.value)}
+          icon={<FileText className="w-4 h-4" />}
+        />
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-4">
+        <Input
+          label="サポートメール *"
+          placeholder="support@your-app.com"
+          value={formData.supportEmail}
+          onChange={(e) => updateForm('supportEmail', e.target.value)}
+        />
+        <Input
+          label="サポートURL"
+          placeholder="https://your-app.com/support"
+          value={formData.supportUrl}
+          onChange={(e) => updateForm('supportUrl', e.target.value)}
+          icon={<ExternalLink className="w-4 h-4" />}
+        />
+      </div>
+
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">公開設定</label>
+        <div className="space-y-2">
+          {[
+            { value: 'public', label: '公開', desc: 'マーケットプレイスに表示され、全ユーザーが利用可能', icon: Globe },
+            { value: 'unlisted', label: '限定公開', desc: 'リンクを知っているユーザーのみアクセス可能', icon: Link },
+            { value: 'private', label: '非公開', desc: '自分のみアクセス可能（テスト用）', icon: Lock },
+          ].map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => updateForm('visibility', opt.value as 'public' | 'unlisted' | 'private')}
+              className={cn(
+                'w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all',
+                formData.visibility === opt.value
+                  ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/20'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+              )}
+            >
+              <opt.icon className={cn('w-5 h-5 shrink-0', formData.visibility === opt.value ? 'text-violet-600' : 'text-gray-400')} />
+              <div className="flex-1 min-w-0">
+                <p className={cn('text-sm font-medium', formData.visibility === opt.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
+                  {opt.label}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{opt.desc}</p>
+              </div>
+              <div className={cn(
+                'w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0',
+                formData.visibility === opt.value ? 'border-violet-500 bg-violet-500' : 'border-gray-300 dark:border-gray-600'
+              )}>
+                {formData.visibility === opt.value && <Check className="w-3 h-3 text-white" />}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Summary */}
+      <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
+        <p className="text-sm font-semibold text-gray-900 dark:text-white">登録内容サマリー</p>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">アプリ名</p>
+            <p className="font-medium text-gray-900 dark:text-white">{formData.name || '(未入力)'}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">カテゴリ</p>
+            <p className="font-medium text-gray-900 dark:text-white">{formData.category || '(未選択)'}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">サービスURL</p>
+            <p className="font-medium text-gray-900 dark:text-white truncate">{formData.serviceUrl || '(未入力)'}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">認証方式</p>
+            <p className="font-medium text-gray-900 dark:text-white">{AUTH_METHODS.find((m) => m.value === formData.authMethod)?.label}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">料金モデル</p>
+            <p className="font-medium text-gray-900 dark:text-white">{PRICING_TYPES.find((p) => p.value === formData.pricingType)?.label}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 dark:text-gray-400">公開設定</p>
+            <p className="font-medium text-gray-900 dark:text-white">
+              {formData.visibility === 'public' ? '公開' : formData.visibility === 'unlisted' ? '限定公開' : '非公開'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderStepContent = () => {
+    switch (wizardStep) {
+      case 1: return renderStep1();
+      case 2: return renderStep2();
+      case 3: return renderStep3();
+      case 4: return renderStep4();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
@@ -146,12 +721,12 @@ export default function ToolStudioPage() {
               </h1>
             </div>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              Build, publish, and manage your tools on Toolverse.
+              ウェブアプリの開発・公開・管理をToolverseで。
             </p>
           </div>
-          <Button size="lg" className="gap-2 shrink-0" onClick={() => setShowUploadModal(true)}>
-            <Upload className="w-5 h-5" />
-            Upload New Tool
+          <Button size="lg" className="gap-2 shrink-0" onClick={openWizard}>
+            <Plus className="w-5 h-5" />
+            新しいアプリを登録
           </Button>
         </div>
 
@@ -214,21 +789,15 @@ export default function ToolStudioPage() {
                           <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5" />{tool.rating}</span>
                           {tool.monthlyRevenue > 0 && (
                             <span className="flex items-center gap-1 text-emerald-500">
-                              <TrendingUp className="w-3.5 h-3.5" />{formatCurrency(tool.monthlyRevenue)}/mo
+                              <TrendingUp className="w-3.5 h-3.5" />{formatCurrency(tool.monthlyRevenue)}/月
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-4 pb-4 sm:p-5 sm:border-l border-gray-100 dark:border-gray-800">
-                      <Button variant="outline" size="sm" className="gap-1.5">
-                        <Edit className="w-3.5 h-3.5" />
-                        Edit
-                      </Button>
-                      <Button variant="ghost" size="sm" className="gap-1.5">
-                        <BarChart3 className="w-3.5 h-3.5" />
-                        Analytics
-                      </Button>
+                      <Button variant="outline" size="sm" className="gap-1.5"><Edit className="w-3.5 h-3.5" />編集</Button>
+                      <Button variant="ghost" size="sm" className="gap-1.5"><BarChart3 className="w-3.5 h-3.5" />分析</Button>
                       <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30">
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
@@ -245,29 +814,25 @@ export default function ToolStudioPage() {
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <Terminal className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Quick Start</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">クイックスタート</h2>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                Install the Toolverse SDK to integrate your tool with the platform.
+                Toolverse SDKをインストールしてプラットフォームと連携しましょう。
               </p>
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Install</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">インストール</p>
                   <div className="relative">
-                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-sm overflow-x-auto pr-12">
-                      {SDK_INSTALL}
-                    </pre>
+                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-sm overflow-x-auto pr-12">{SDK_INSTALL}</pre>
                     <button onClick={() => copyCmd(SDK_INSTALL, 'install')} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-800 transition-colors">
                       {copiedId === 'install' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Integration Example</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">使用例</p>
                   <div className="relative">
-                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-xs overflow-x-auto max-h-64 overflow-y-auto leading-relaxed pr-12">
-                      {SDK_SNIPPET}
-                    </pre>
+                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-xs overflow-x-auto max-h-64 overflow-y-auto leading-relaxed pr-12">{SDK_SNIPPET}</pre>
                     <button onClick={() => copyCmd(SDK_SNIPPET, 'snippet')} className="absolute right-3 top-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
                       {copiedId === 'snippet' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
                     </button>
@@ -278,14 +843,14 @@ export default function ToolStudioPage() {
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Resources</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">リソース</h2>
               </div>
               <div className="space-y-3">
                 {[
-                  { label: 'API Reference', desc: 'Complete SDK documentation', icon: Code2 },
-                  { label: 'Authentication Guide', desc: 'OAuth2 and API key setup', icon: Key },
-                  { label: 'Webhooks', desc: 'Real-time event notifications', icon: Webhook },
-                  { label: 'Rate Limits', desc: 'Usage quotas and throttling', icon: Clock },
+                  { label: 'APIリファレンス', desc: 'SDK完全ドキュメント', icon: Code2 },
+                  { label: '認証ガイド', desc: 'OAuth2・APIキーの設定', icon: Key },
+                  { label: 'Webhook', desc: 'リアルタイムイベント通知', icon: Webhook },
+                  { label: 'レート制限', desc: '利用上限とスロットリング', icon: Clock },
                 ].map((item) => (
                   <button key={item.label} className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
@@ -302,7 +867,7 @@ export default function ToolStudioPage() {
               <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <Button variant="outline" fullWidth className="gap-2">
                   <ExternalLink className="w-4 h-4" />
-                  Open Full Documentation
+                  ドキュメントを開く
                 </Button>
               </div>
             </Card>
@@ -313,9 +878,9 @@ export default function ToolStudioPage() {
           <div className="space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">
               {[
-                { label: 'Total Earnings', value: formatCurrency(842000), change: '+12.3%', up: true },
-                { label: 'This Month', value: formatCurrency(84200), change: '+8.7%', up: true },
-                { label: 'Pending Payout', value: formatCurrency(42100), change: 'Next: Mar 15', up: false },
+                { label: '累計収益', value: formatCurrency(842000), change: '+12.3%', up: true },
+                { label: '今月の収益', value: formatCurrency(84200), change: '+8.7%', up: true },
+                { label: '次回振込予定', value: formatCurrency(42100), change: '3月15日', up: false },
               ].map((s) => (
                 <Card key={s.label} padding="lg">
                   <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
@@ -325,17 +890,16 @@ export default function ToolStudioPage() {
               ))}
             </div>
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Revenue Over Time</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">収益推移</h2>
               <div className="h-72 rounded-xl bg-gradient-to-br from-violet-500/5 to-indigo-500/5 flex items-center justify-center border-2 border-dashed border-gray-200 dark:border-gray-700">
                 <div className="text-center">
                   <BarChart3 className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-                  <p className="text-sm text-gray-400 dark:text-gray-500">Revenue chart visualization</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-600 mt-1">Integrate with Chart.js or Recharts</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">収益グラフ</p>
                 </div>
               </div>
             </Card>
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Revenue by Tool</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">ツール別収益</h2>
               <div className="space-y-3">
                 {MOCK_MY_TOOLS.filter((t) => t.monthlyRevenue > 0).map((tool) => (
                   <div key={tool.id} className="flex items-center gap-4">
@@ -360,65 +924,36 @@ export default function ToolStudioPage() {
         {activeTab === 'settings' && (
           <div className="space-y-6 max-w-2xl">
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Creator Profile</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">クリエイタープロフィール</h2>
               <div className="space-y-4">
-                <Input label="Display Name" defaultValue="AI Labs" />
+                <Input label="表示名" defaultValue="AI Labs" />
                 <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Bio</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">自己紹介</label>
                   <textarea
                     rows={3}
-                    defaultValue="Building next-generation AI tools for professionals."
+                    defaultValue="次世代のAIツールを開発しています。"
                     className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
                   />
                 </div>
-                <Input label="Website" defaultValue="https://ailabs.example.com" />
+                <Input label="ウェブサイト" defaultValue="https://ailabs.example.com" />
               </div>
               <div className="mt-6 flex justify-end">
-                <Button className="gap-2"><Save className="w-4 h-4" />Save Profile</Button>
-              </div>
-            </Card>
-
-            <Card padding="lg">
-              <div className="flex items-center gap-2 mb-4">
-                <Webhook className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Webhook Configuration</h2>
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                Receive real-time notifications for installs, uninstalls, reviews, and payments.
-              </p>
-              <div className="space-y-3">
-                <Input
-                  label="Webhook URL"
-                  value={webhookUrl}
-                  onChange={(e) => setWebhookUrl(e.target.value)}
-                  placeholder="https://your-server.com/webhook"
-                />
-                <div className="flex flex-wrap gap-2">
-                  {['install', 'uninstall', 'review', 'payment'].map((event) => (
-                    <label key={event} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-gray-800 text-sm cursor-pointer">
-                      <input type="checkbox" defaultChecked className="rounded border-gray-300 text-violet-600 focus:ring-violet-500" />
-                      <span className="text-gray-700 dark:text-gray-300 capitalize">{event}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-              <div className="mt-4 flex justify-end">
-                <Button variant="outline" className="gap-2"><Save className="w-4 h-4" />Save Webhook</Button>
+                <Button className="gap-2"><Save className="w-4 h-4" />プロフィールを保存</Button>
               </div>
             </Card>
 
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <Key className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">API Keys</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">APIキー</h2>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                Manage your API keys for SDK integration and tool management.
+                SDK連携・ツール管理用のAPIキーです。
               </p>
               <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800">
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">Production Key</p>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">本番キー</p>
                     <p className="text-sm font-mono text-gray-900 dark:text-gray-100 truncate">
                       {apiKeyVisible ? 'tv_prod_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' : 'tv_prod_••••••••••••••••••••••••••'}
                     </p>
@@ -434,128 +969,104 @@ export default function ToolStudioPage() {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                <Button variant="danger" size="sm" className="gap-2">Regenerate Key</Button>
+                <Button variant="danger" size="sm" className="gap-2">キーを再生成</Button>
               </div>
             </Card>
           </div>
         )}
       </div>
 
-      {/* Upload Modal */}
+      {/* ── Wizard Modal ── */}
       {showUploadModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowUploadModal(false)} />
-          <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between p-6 pb-4 border-b border-gray-100 dark:border-gray-800 rounded-t-2xl shrink-0">
+          <div className="relative w-full max-w-3xl max-h-[90vh] flex flex-col bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800" onClick={(e) => e.stopPropagation()}>
+
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 pb-0 shrink-0">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Upload New Tool</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Fill in the details to publish your tool.</p>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">新しいアプリを登録</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">4ステップでToolverseに公開できます</p>
               </div>
               <button onClick={() => setShowUploadModal(false)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
 
-            <div className="p-6 space-y-5 overflow-y-auto flex-1">
-              <Input
-                label="Tool Name"
-                placeholder="My Awesome Tool"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              />
-
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Description</label>
-                <textarea
-                  rows={3}
-                  placeholder="Describe what your tool does..."
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
-                />
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Category</label>
-                  <div className="relative">
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value as ToolCategory })}
-                      className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all appearance-none"
+            {/* Step Indicator */}
+            <div className="px-6 pt-5 pb-4 shrink-0">
+              <div className="flex items-center gap-2">
+                {WIZARD_STEPS.map((step, i) => (
+                  <div key={step.step} className="flex items-center flex-1 min-w-0">
+                    <button
+                      onClick={() => setWizardStep(step.step)}
+                      className="flex items-center gap-2 min-w-0"
                     >
-                      <option value="">Select category...</option>
-                      {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>{cat.icon} {cat.id.charAt(0).toUpperCase() + cat.id.slice(1)}</option>
-                      ))}
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <div className={cn(
+                        'w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm font-bold transition-all',
+                        wizardStep === step.step
+                          ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/30'
+                          : wizardStep > step.step
+                            ? 'bg-emerald-500 text-white'
+                            : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                      )}>
+                        {wizardStep > step.step ? <Check className="w-4 h-4" /> : step.step}
+                      </div>
+                      <div className="hidden sm:block min-w-0">
+                        <p className={cn(
+                          'text-xs font-medium truncate',
+                          wizardStep === step.step ? 'text-violet-600 dark:text-violet-400' : 'text-gray-500 dark:text-gray-400'
+                        )}>
+                          {step.title}
+                        </p>
+                      </div>
+                    </button>
+                    {i < WIZARD_STEPS.length - 1 && (
+                      <div className={cn(
+                        'flex-1 h-0.5 mx-2 rounded-full',
+                        wizardStep > step.step ? 'bg-emerald-500' : 'bg-gray-200 dark:bg-gray-700'
+                      )} />
+                    )}
                   </div>
-                </div>
-
-                <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Pricing Model</label>
-                  <div className="relative">
-                    <select
-                      value={formData.pricingType}
-                      onChange={(e) => setFormData({ ...formData, pricingType: e.target.value as typeof formData.pricingType })}
-                      className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all appearance-none"
-                    >
-                      {PRICING_TYPES.map((pt) => (
-                        <option key={pt.value} value={pt.value}>{pt.label}</option>
-                      ))}
-                    </select>
-                    <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  </div>
-                </div>
+                ))}
               </div>
-
-              {(formData.pricingType === 'paid' || formData.pricingType === 'subscription') && (
-                <Input
-                  label={formData.pricingType === 'subscription' ? 'Monthly Price (JPY)' : 'Price (JPY)'}
-                  type="number"
-                  placeholder="980"
-                  value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                  icon={<DollarSign className="w-4 h-4" />}
-                />
-              )}
-
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Icon</label>
-                <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
-                  <div className="w-14 h-14 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mb-3">
-                    <Image className="w-7 h-7 text-violet-500" />
-                  </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Drop icon here or click to upload</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, SVG up to 512x512</p>
-                </div>
-              </div>
-
-              <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Screenshots</label>
-                <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
-                  <div className="w-14 h-14 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-3">
-                    <Upload className="w-7 h-7 text-indigo-500" />
-                  </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Upload screenshots (up to 6)</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG — 1280x720 recommended</p>
-                </div>
-              </div>
-
-              <Input
-                label="Tags"
-                placeholder="AI, Productivity, Writing (comma-separated)"
-                value={formData.tags}
-                onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                icon={<Tag className="w-4 h-4" />}
-              />
             </div>
 
-            <div className="flex items-center justify-end gap-3 p-6 pt-4 border-t border-gray-100 dark:border-gray-800 rounded-b-2xl shrink-0">
-              <Button variant="ghost" onClick={() => setShowUploadModal(false)}>Cancel</Button>
-              <Button variant="outline" className="gap-2"><FileText className="w-4 h-4" />Save as Draft</Button>
-              <Button className="gap-2"><Upload className="w-4 h-4" />Publish Tool</Button>
+            {/* Content */}
+            <div className="px-6 pb-4 overflow-y-auto flex-1">
+              {renderStepContent()}
+            </div>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between gap-3 p-6 pt-4 border-t border-gray-100 dark:border-gray-800 shrink-0">
+              <div>
+                {wizardStep > 1 && (
+                  <Button variant="ghost" onClick={() => setWizardStep((wizardStep - 1) as WizardStep)} className="gap-1">
+                    <ChevronLeft className="w-4 h-4" />
+                    前へ
+                  </Button>
+                )}
+              </div>
+              <div className="flex items-center gap-3">
+                <Button variant="ghost" onClick={() => setShowUploadModal(false)}>キャンセル</Button>
+                {wizardStep < 4 ? (
+                  <Button onClick={() => setWizardStep((wizardStep + 1) as WizardStep)} className="gap-1">
+                    次へ
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                ) : (
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="gap-2">
+                      <FileText className="w-4 h-4" />
+                      下書き保存
+                    </Button>
+                    <Button className="gap-2">
+                      <Upload className="w-4 h-4" />
+                      審査に提出
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
