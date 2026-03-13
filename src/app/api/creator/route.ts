@@ -53,7 +53,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the creator profile and upgrade the user role in a transaction
-    const creator = await prisma.$transaction(async (tx) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const creator = await prisma.$transaction(async (tx: any) => {
       // Upgrade user role to creator (unless they're already an admin)
       const user = await tx.user.findUnique({ where: { id: userId } });
       if (user && user.role === 'USER') {

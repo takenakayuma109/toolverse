@@ -87,9 +87,9 @@ export async function POST(request: NextRequest) {
       : creatorProfile.tier === 'VERIFIED' ? 0.90
       : 0.85;
 
-    const lifetimeEarnings = payments.reduce((sum, p) => sum + Number(p.amount), 0);
+    const lifetimeEarnings = payments.reduce((sum: number, p: { amount: unknown }) => sum + Number(p.amount), 0);
     const lifetimeCreatorShare = Math.floor(lifetimeEarnings * tierShare);
-    const totalPayoutsProcessed = payouts.reduce((sum, p) => sum + Number(p.amount), 0);
+    const totalPayoutsProcessed = payouts.reduce((sum: number, p: { amount: unknown }) => sum + Number(p.amount), 0);
     const availableBalance = lifetimeCreatorShare - totalPayoutsProcessed;
 
     if (amount > availableBalance) {

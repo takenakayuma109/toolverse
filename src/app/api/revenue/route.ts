@@ -51,13 +51,13 @@ export async function GET() {
       orderBy: { requestedAt: 'desc' },
     });
 
-    const lifetimeEarnings = payments.reduce((sum, p) => sum + Number(p.amount), 0);
+    const lifetimeEarnings = payments.reduce((sum: number, p: { amount: unknown }) => sum + Number(p.amount), 0);
     const totalPayouts = payouts
-      .filter((p) => p.status === 'COMPLETED')
-      .reduce((sum, p) => sum + Number(p.amount), 0);
+      .filter((p: { status: string }) => p.status === 'COMPLETED')
+      .reduce((sum: number, p: { amount: unknown }) => sum + Number(p.amount), 0);
     const pendingPayouts = payouts
-      .filter((p) => p.status === 'PENDING' || p.status === 'PROCESSING')
-      .reduce((sum, p) => sum + Number(p.amount), 0);
+      .filter((p: { status: string }) => p.status === 'PENDING' || p.status === 'PROCESSING')
+      .reduce((sum: number, p: { amount: unknown }) => sum + Number(p.amount), 0);
 
     const tierShare = creatorProfile.tier === 'EARLY' ? 0.95
       : creatorProfile.tier === 'VERIFIED' ? 0.90
