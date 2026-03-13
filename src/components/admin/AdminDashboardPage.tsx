@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn, formatNumber } from '@/lib/utils';
+// Fallback mock data — replace with API fetch from /api/tools when available
 import { communityTools } from '@/lib/mock-data';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -16,7 +17,6 @@ import {
   ShieldCheck,
   Settings,
   Server,
-  TrendingUp,
   AlertTriangle,
   CheckCircle2,
   XCircle,
@@ -33,7 +33,6 @@ import {
   Ban,
   Flag,
   Eye,
-  ChevronRight,
   Zap,
   Cpu,
   HardDrive,
@@ -107,7 +106,7 @@ const STATUS_COLORS = {
 };
 
 export default function AdminDashboardPage() {
-  const { t } = useTranslation();
+  const { } = useTranslation();
   const [activeSection, setActiveSection] = useState<AdminSection>('overview');
   const [userSearch, setUserSearch] = useState('');
 

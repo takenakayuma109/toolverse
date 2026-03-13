@@ -1,14 +1,38 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import ToolCard from '@/components/ui/ToolCard';
-import { allTools } from '@/lib/mock-data';
+import { allTools as fallbackTools } from '@/lib/mock-data';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import type { Tool } from '@/types';
 
 export default function TrendingSection() {
   const { t } = useTranslation();
-  const trendingTools = allTools.filter((tool) => tool.isTrending);
+
+  // Try to fetch real trending data from API; fall back to mock data
+  const [trendingTools, setTrendingTools] = useState<Tool[]>(
+    fallbackTools.filter((tool) => tool.isTrending),
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchTrending() {
+      try {
+        const res = await fetch('/api/tools?isTrending=true');
+        if (!res.ok) return;
+        const data: Tool[] = await res.json();
+        if (!cancelled && data.length > 0) {
+          setTrendingTools(data);
+        }
+      } catch {
+        // API not available yet — keep using fallback mock data
+      }
+    }
+    fetchTrending();
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">

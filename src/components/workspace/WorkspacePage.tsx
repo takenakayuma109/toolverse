@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
+// Fallback mock data — replace with API fetch from /api/tools when available
 import { allTools } from '@/lib/mock-data';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -55,7 +56,7 @@ const installedTools = allTools.slice(0, 6);
 export default function WorkspacePage() {
   const { t } = useTranslation();
   const [activeNav, setActiveNav] = useState('dashboard');
-  const [mobileTab, setMobileTab] = useState('dashboard');
+  const [, setMobileTab] = useState('dashboard');
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">

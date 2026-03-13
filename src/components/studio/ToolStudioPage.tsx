@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn, formatNumber, formatCurrency } from '@/lib/utils';
+// Fallback mock data — replace with API fetch from /api/tools when available
 import { communityTools, categories } from '@/lib/mock-data';
 import type { Tool, ToolCategory } from '@/types';
 import Card from '@/components/ui/Card';
@@ -22,7 +23,7 @@ import {
   Terminal,
   Copy,
   Check,
-  Image,
+  Image as ImageIcon,
   Tag,
   Settings,
   Code2,
@@ -47,8 +48,6 @@ import {
   Lock,
   AlertCircle,
   CheckCircle2,
-  CircleDot,
-  Zap,
 } from 'lucide-react';
 
 type StudioTab = 'tools' | 'sdk' | 'revenue' | 'settings';
@@ -92,24 +91,24 @@ sdk.registerAction('analyze', async (input) => {
 // Start listening
 sdk.listen({ port: 3001 });`;
 
-const STATUS_CONFIG: Record<ToolStatus, { label: string; variant: 'success' | 'warning' | 'info' }> = {
-  published: { label: '公開中', variant: 'success' },
-  draft: { label: '下書き', variant: 'warning' },
-  review: { label: '審査中', variant: 'info' },
+const STATUS_CONFIG: Record<ToolStatus, { labelKey: string; variant: 'success' | 'warning' | 'info' }> = {
+  published: { labelKey: 'studio.status.published', variant: 'success' },
+  draft: { labelKey: 'studio.status.draft', variant: 'warning' },
+  review: { labelKey: 'studio.status.review', variant: 'info' },
 };
 
 const PRICING_TYPES = [
-  { value: 'free', label: '無料', desc: 'すべての機能を無料で提供' },
-  { value: 'freemium', label: 'フリーミアム', desc: '基本無料 + プレミアム機能' },
-  { value: 'paid', label: '買い切り', desc: '一度の支払いで永続利用' },
-  { value: 'subscription', label: 'サブスクリプション', desc: '月額・年額の定期課金' },
+  { value: 'free', labelKey: 'studio.pricing.free', descKey: 'studio.pricing.freeDesc' },
+  { value: 'freemium', labelKey: 'studio.pricing.freemium', descKey: 'studio.pricing.freemiumDesc' },
+  { value: 'paid', labelKey: 'studio.pricing.paid', descKey: 'studio.pricing.paidDesc' },
+  { value: 'subscription', labelKey: 'studio.pricing.subscription', descKey: 'studio.pricing.subscriptionDesc' },
 ] as const;
 
 const AUTH_METHODS = [
-  { value: 'toolverse', label: 'Toolverse認証 (推奨)', desc: 'Toolverseのシングルサインオンを利用', icon: Shield },
-  { value: 'oauth', label: 'OAuth 2.0', desc: '独自のOAuth認証と連携', icon: Lock },
-  { value: 'apikey', label: 'APIキー', desc: 'APIキーベースの認証', icon: Key },
-  { value: 'none', label: '認証なし', desc: '誰でもアクセス可能', icon: Globe },
+  { value: 'toolverse', labelKey: 'studio.auth.toolverse', descKey: 'studio.auth.toolverseDesc', icon: Shield },
+  { value: 'oauth', labelKey: 'studio.auth.oauth', descKey: 'studio.auth.oauthDesc', icon: Lock },
+  { value: 'apikey', labelKey: 'studio.auth.apikey', descKey: 'studio.auth.apikeyDesc', icon: Key },
+  { value: 'none', labelKey: 'studio.auth.none', descKey: 'studio.auth.noneDesc', icon: Globe },
 ] as const;
 
 interface WizardFormData {
@@ -145,10 +144,10 @@ interface WizardFormData {
 }
 
 const WIZARD_STEPS = [
-  { step: 1 as WizardStep, title: '基本情報', desc: 'アプリ名・説明・カテゴリ', icon: Package },
-  { step: 2 as WizardStep, title: 'サービス設定', desc: 'URL・API・認証', icon: Globe },
-  { step: 3 as WizardStep, title: '料金・決済', desc: 'プラン・Toolverse決済', icon: CreditCard },
-  { step: 4 as WizardStep, title: 'レビュー・公開', desc: '審査情報・公開設定', icon: CheckCircle2 },
+  { step: 1 as WizardStep, titleKey: 'studio.wizard.step1', descKey: 'studio.wizard.step1Desc', icon: Package },
+  { step: 2 as WizardStep, titleKey: 'studio.wizard.step2', descKey: 'studio.wizard.step2Desc', icon: Globe },
+  { step: 3 as WizardStep, titleKey: 'studio.wizard.step3', descKey: 'studio.wizard.step3Desc', icon: CreditCard },
+  { step: 4 as WizardStep, titleKey: 'studio.wizard.step4', descKey: 'studio.wizard.step4Desc', icon: CheckCircle2 },
 ];
 
 export default function ToolStudioPage() {
@@ -158,7 +157,7 @@ export default function ToolStudioPage() {
   const [wizardStep, setWizardStep] = useState<WizardStep>(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [apiKeyVisible, setApiKeyVisible] = useState(false);
-  const [webhookUrl, setWebhookUrlState] = useState('https://');
+  // webhookUrl state removed — will be re-added when webhook settings UI is implemented
 
   const [formData, setFormData] = useState<WizardFormData>({
     name: '',
@@ -212,18 +211,18 @@ export default function ToolStudioPage() {
     setShowUploadModal(true);
   };
 
-  const tabs: { id: StudioTab; label: string; icon: typeof Package }[] = [
-    { id: 'tools', label: 'マイツール', icon: Package },
-    { id: 'sdk', label: 'SDK連携', icon: Code2 },
-    { id: 'revenue', label: '収益', icon: DollarSign },
-    { id: 'settings', label: '設定', icon: Settings },
+  const tabs: { id: StudioTab; labelKey: string; icon: typeof Package }[] = [
+    { id: 'tools', labelKey: 'studio.tabs.tools', icon: Package },
+    { id: 'sdk', labelKey: 'studio.tabs.sdk', icon: Code2 },
+    { id: 'revenue', labelKey: 'studio.tabs.revenue', icon: DollarSign },
+    { id: 'settings', labelKey: 'studio.tabs.settings', icon: Settings },
   ];
 
   const stats = [
-    { label: '公開ツール', value: MOCK_STATS.publishedTools.toString(), icon: Package, gradient: 'from-violet-500 to-indigo-500' },
-    { label: '総ユーザー', value: formatNumber(MOCK_STATS.totalUsers), icon: Users, gradient: 'from-blue-500 to-cyan-500' },
-    { label: '月間収益', value: formatCurrency(MOCK_STATS.monthlyRevenue), icon: DollarSign, gradient: 'from-emerald-500 to-green-500' },
-    { label: '平均評価', value: `${MOCK_STATS.avgRating} ★`, icon: Star, gradient: 'from-amber-500 to-orange-500' },
+    { labelKey: 'studio.stats.publishedTools', value: MOCK_STATS.publishedTools.toString(), icon: Package, gradient: 'from-violet-500 to-indigo-500' },
+    { labelKey: 'studio.stats.totalUsers', value: formatNumber(MOCK_STATS.totalUsers), icon: Users, gradient: 'from-blue-500 to-cyan-500' },
+    { labelKey: 'studio.stats.monthlyRevenue', value: formatCurrency(MOCK_STATS.monthlyRevenue), icon: DollarSign, gradient: 'from-emerald-500 to-green-500' },
+    { labelKey: 'studio.stats.avgRating', value: `${MOCK_STATS.avgRating} ★`, icon: Star, gradient: 'from-amber-500 to-orange-500' },
   ];
 
   // ── Wizard Step Renderers ──
@@ -231,17 +230,17 @@ export default function ToolStudioPage() {
   const renderStep1 = () => (
     <div className="space-y-5">
       <Input
-        label="アプリ名 *"
-        placeholder="例: My Awesome App"
+        label={`${t('studio.form.appName')} *`}
+        placeholder="e.g. My Awesome App"
         value={formData.name}
         onChange={(e) => updateForm('name', e.target.value)}
       />
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">概要説明 *</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.summaryDescription')} *</label>
         <textarea
           rows={2}
-          placeholder="アプリの概要を1〜2文で..."
+          placeholder={t('studio.form.summaryPlaceholder')}
           value={formData.description}
           onChange={(e) => updateForm('description', e.target.value)}
           className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
@@ -249,10 +248,10 @@ export default function ToolStudioPage() {
       </div>
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">詳細説明</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.detailedDescription')}</label>
         <textarea
           rows={4}
-          placeholder="機能や特徴を詳しく説明..."
+          placeholder={t('studio.form.detailedPlaceholder')}
           value={formData.longDescription}
           onChange={(e) => updateForm('longDescription', e.target.value)}
           className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
@@ -261,14 +260,14 @@ export default function ToolStudioPage() {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">カテゴリ *</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.category')} *</label>
           <div className="relative">
             <select
               value={formData.category}
               onChange={(e) => updateForm('category', e.target.value as ToolCategory)}
               className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all appearance-none"
             >
-              <option value="">カテゴリを選択...</option>
+              <option value="">{t('studio.form.categoryPlaceholder')}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{cat.icon} {cat.id.charAt(0).toUpperCase() + cat.id.slice(1)}</option>
               ))}
@@ -278,8 +277,8 @@ export default function ToolStudioPage() {
         </div>
 
         <Input
-          label="タグ"
-          placeholder="AI, 生産性, ライティング"
+          label={t('studio.form.tags')}
+          placeholder={t('studio.form.tagsPlaceholder')}
           value={formData.tags}
           onChange={(e) => updateForm('tags', e.target.value)}
           icon={<Tag className="w-4 h-4" />}
@@ -287,24 +286,24 @@ export default function ToolStudioPage() {
       </div>
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">アイコン</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.icon')}</label>
         <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
           <div className="w-14 h-14 rounded-xl bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center mb-3">
-            <Image className="w-7 h-7 text-violet-500" />
+            <ImageIcon className="w-7 h-7 text-violet-500" />
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">ドラッグ＆ドロップまたはクリック</p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, SVG（512×512推奨）</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t('studio.form.iconDragDrop')}</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{t('studio.form.iconHint')}</p>
         </div>
       </div>
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">スクリーンショット</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.screenshots')}</label>
         <div className="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl p-6 flex flex-col items-center justify-center hover:border-violet-400 dark:hover:border-violet-600 transition-colors cursor-pointer">
           <div className="w-14 h-14 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-3">
             <Upload className="w-7 h-7 text-indigo-500" />
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">スクリーンショットをアップロード（最大6枚）</p>
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">PNG, JPG — 1280×720推奨</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t('studio.form.screenshotsDesc')}</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{t('studio.form.screenshotsHint')}</p>
         </div>
       </div>
     </div>
@@ -316,16 +315,16 @@ export default function ToolStudioPage() {
         <div className="flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-blue-500 mt-0.5 shrink-0" />
           <div>
-            <p className="text-sm font-medium text-blue-800 dark:text-blue-300">ウェブアプリの接続</p>
+            <p className="text-sm font-medium text-blue-800 dark:text-blue-300">{t('studio.webAppConnection')}</p>
             <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
-              Toolverseはウェブアプリのプラットフォームです。あなたのアプリのURLを登録し、ユーザーがToolverse経由でアクセスできるようにします。
+              {t('studio.webAppConnectionDesc')}
             </p>
           </div>
         </div>
       </div>
 
       <Input
-        label="サービスURL *"
+        label={`${t('studio.form.serviceUrl')} *`}
         placeholder="https://your-app.com"
         value={formData.serviceUrl}
         onChange={(e) => updateForm('serviceUrl', e.target.value)}
@@ -333,7 +332,7 @@ export default function ToolStudioPage() {
       />
 
       <Input
-        label="サンドボックス/デモURL"
+        label={t('studio.form.sandboxUrl')}
         placeholder="https://demo.your-app.com"
         value={formData.sandboxUrl}
         onChange={(e) => updateForm('sandboxUrl', e.target.value)}
@@ -341,7 +340,7 @@ export default function ToolStudioPage() {
       />
 
       <Input
-        label="APIエンドポイント"
+        label={t('studio.form.apiEndpoint')}
         placeholder="https://api.your-app.com/v1"
         value={formData.apiEndpoint}
         onChange={(e) => updateForm('apiEndpoint', e.target.value)}
@@ -349,7 +348,7 @@ export default function ToolStudioPage() {
       />
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">認証方式 *</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('studio.auth.title')} *</label>
         <div className="space-y-2">
           {AUTH_METHODS.map((method) => (
             <button
@@ -372,9 +371,9 @@ export default function ToolStudioPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className={cn('text-sm font-medium', formData.authMethod === method.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
-                  {method.label}
+                  {t(method.labelKey)}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{method.desc}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{t(method.descKey)}</p>
               </div>
               <div className={cn(
                 'w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0',
@@ -389,7 +388,7 @@ export default function ToolStudioPage() {
 
       {formData.authMethod === 'oauth' && (
         <div className="space-y-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">OAuth 2.0 設定</p>
+          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('studio.auth.oauthSettings')}</p>
           <Input
             label="Client ID"
             placeholder="your-oauth-client-id"
@@ -397,7 +396,7 @@ export default function ToolStudioPage() {
             onChange={(e) => updateForm('oauthClientId', e.target.value)}
           />
           <Input
-            label="リダイレクトURI"
+            label="Redirect URI"
             placeholder="https://your-app.com/callback"
             value={formData.oauthRedirectUri}
             onChange={(e) => updateForm('oauthRedirectUri', e.target.value)}
@@ -406,7 +405,7 @@ export default function ToolStudioPage() {
       )}
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Webhook URL</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.webhookUrl')}</label>
         <Input
           placeholder="https://your-server.com/webhook/toolverse"
           value={formData.webhookUrl}
@@ -436,7 +435,7 @@ export default function ToolStudioPage() {
   const renderStep3 = () => (
     <div className="space-y-5">
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">料金モデル *</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('studio.pricing.title')} *</label>
         <div className="grid sm:grid-cols-2 gap-3">
           {PRICING_TYPES.map((pt) => (
             <button
@@ -450,9 +449,9 @@ export default function ToolStudioPage() {
               )}
             >
               <p className={cn('text-sm font-semibold', formData.pricingType === pt.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
-                {pt.label}
+                {t(pt.labelKey)}
               </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{pt.desc}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t(pt.descKey)}</p>
             </button>
           ))}
         </div>
@@ -461,7 +460,7 @@ export default function ToolStudioPage() {
       {(formData.pricingType === 'subscription' || formData.pricingType === 'freemium') && (
         <div className="grid sm:grid-cols-2 gap-4">
           <Input
-            label="月額料金（円）"
+            label={t('studio.pricing.monthlyPrice')}
             type="number"
             placeholder="980"
             value={formData.monthlyPrice}
@@ -469,7 +468,7 @@ export default function ToolStudioPage() {
             icon={<DollarSign className="w-4 h-4" />}
           />
           <Input
-            label="年額料金（円）（オプション）"
+            label={t('studio.pricing.yearlyPrice')}
             type="number"
             placeholder="9800"
             value={formData.yearlyPrice}
@@ -481,7 +480,7 @@ export default function ToolStudioPage() {
 
       {formData.pricingType === 'paid' && (
         <Input
-          label="販売価格（円）"
+          label={t('studio.pricing.salePrice')}
           type="number"
           placeholder="4980"
           value={formData.monthlyPrice}
@@ -492,7 +491,7 @@ export default function ToolStudioPage() {
 
       {(formData.pricingType === 'subscription' || formData.pricingType === 'paid') && (
         <Input
-          label="無料トライアル期間（日数）"
+          label={t('studio.pricing.freeTrialDays')}
           type="number"
           placeholder="14"
           value={formData.freeTrialDays}
@@ -503,10 +502,10 @@ export default function ToolStudioPage() {
 
       {formData.pricingType === 'freemium' && (
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">無料プランの制限事項</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.pricing.freePlanLimits')}</label>
           <textarea
             rows={3}
-            placeholder="例: 月間1,000リクエストまで、基本機能のみ利用可能..."
+            placeholder={t('studio.pricing.freePlanLimitsPlaceholder')}
             value={formData.freePlanLimits}
             onChange={(e) => updateForm('freePlanLimits', e.target.value)}
             className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
@@ -522,8 +521,8 @@ export default function ToolStudioPage() {
               <CreditCard className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">Toolverse決済</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">Toolverseの統合決済で安全にお支払いを受け取れます</p>
+              <p className="text-sm font-semibold text-gray-900 dark:text-white">{t('studio.payment.title')}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{t('studio.payment.description')}</p>
             </div>
           </div>
 
@@ -539,10 +538,10 @@ export default function ToolStudioPage() {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  {formData.stripeConnected ? '決済アカウント接続済み' : '決済アカウント未接続'}
+                  {formData.stripeConnected ? t('studio.payment.connected') : t('studio.payment.notConnected')}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {formData.stripeConnected ? 'Stripe Connect でリンク済み' : '売上を受け取るにはアカウント接続が必要です'}
+                  {formData.stripeConnected ? t('studio.payment.connectedVia') : t('studio.payment.notConnectedDesc')}
                 </p>
               </div>
             </div>
@@ -552,14 +551,14 @@ export default function ToolStudioPage() {
               onClick={() => updateForm('stripeConnected', !formData.stripeConnected)}
               className="shrink-0"
             >
-              {formData.stripeConnected ? '設定変更' : '接続する'}
+              {formData.stripeConnected ? t('studio.payment.changeSettings') : t('studio.payment.connect')}
             </Button>
           </div>
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">レベニューシェア</p>
-              <p className="text-sm font-bold text-violet-600 dark:text-violet-400">クリエイター {formData.revenueShare}% / Toolverse {100 - formData.revenueShare}%</p>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('studio.payment.revenueShare')}</p>
+              <p className="text-sm font-bold text-violet-600 dark:text-violet-400">{t('studio.payment.creatorShare')} {formData.revenueShare}% / Toolverse {100 - formData.revenueShare}%</p>
             </div>
             <div className="flex items-center gap-3">
               <Percent className="w-4 h-4 text-gray-400 shrink-0" />
@@ -574,7 +573,7 @@ export default function ToolStudioPage() {
               />
             </div>
             <p className="text-xs text-gray-400 dark:text-gray-500">
-              ※ Toolverseプラットフォーム手数料には決済処理手数料（3.6%）が含まれます
+              {t('studio.payment.platformFee')}
             </p>
           </div>
         </div>
@@ -585,22 +584,22 @@ export default function ToolStudioPage() {
   const renderStep4 = () => (
     <div className="space-y-5">
       <div className="p-4 rounded-xl bg-violet-50 dark:bg-violet-950/20 border border-violet-200 dark:border-violet-800">
-        <p className="text-sm font-medium text-violet-800 dark:text-violet-300">公開前の最終確認</p>
+        <p className="text-sm font-medium text-violet-800 dark:text-violet-300">{t('studio.review.title')}</p>
         <p className="text-xs text-violet-600 dark:text-violet-400 mt-1">
-          以下の情報を入力して審査に提出してください。審査は通常1〜3営業日で完了します。
+          {t('studio.review.description')}
         </p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
         <Input
-          label="プライバシーポリシーURL *"
+          label={`${t('studio.form.privacyPolicyUrl')} *`}
           placeholder="https://your-app.com/privacy"
           value={formData.privacyPolicyUrl}
           onChange={(e) => updateForm('privacyPolicyUrl', e.target.value)}
           icon={<Shield className="w-4 h-4" />}
         />
         <Input
-          label="利用規約URL *"
+          label={`${t('studio.form.termsUrl')} *`}
           placeholder="https://your-app.com/terms"
           value={formData.termsUrl}
           onChange={(e) => updateForm('termsUrl', e.target.value)}
@@ -610,13 +609,13 @@ export default function ToolStudioPage() {
 
       <div className="grid sm:grid-cols-2 gap-4">
         <Input
-          label="サポートメール *"
+          label={`${t('studio.form.supportEmail')} *`}
           placeholder="support@your-app.com"
           value={formData.supportEmail}
           onChange={(e) => updateForm('supportEmail', e.target.value)}
         />
         <Input
-          label="サポートURL"
+          label={t('studio.form.supportUrl')}
           placeholder="https://your-app.com/support"
           value={formData.supportUrl}
           onChange={(e) => updateForm('supportUrl', e.target.value)}
@@ -625,12 +624,12 @@ export default function ToolStudioPage() {
       </div>
 
       <div className="w-full">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">公開設定</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('studio.review.visibility')}</label>
         <div className="space-y-2">
           {[
-            { value: 'public', label: '公開', desc: 'マーケットプレイスに表示され、全ユーザーが利用可能', icon: Globe },
-            { value: 'unlisted', label: '限定公開', desc: 'リンクを知っているユーザーのみアクセス可能', icon: Link },
-            { value: 'private', label: '非公開', desc: '自分のみアクセス可能（テスト用）', icon: Lock },
+            { value: 'public', labelKey: 'studio.review.public', descKey: 'studio.review.publicDesc', icon: Globe },
+            { value: 'unlisted', labelKey: 'studio.review.unlisted', descKey: 'studio.review.unlistedDesc', icon: Link },
+            { value: 'private', labelKey: 'studio.review.private', descKey: 'studio.review.privateDesc', icon: Lock },
           ].map((opt) => (
             <button
               key={opt.value}
@@ -645,9 +644,9 @@ export default function ToolStudioPage() {
               <opt.icon className={cn('w-5 h-5 shrink-0', formData.visibility === opt.value ? 'text-violet-600' : 'text-gray-400')} />
               <div className="flex-1 min-w-0">
                 <p className={cn('text-sm font-medium', formData.visibility === opt.value ? 'text-violet-700 dark:text-violet-300' : 'text-gray-900 dark:text-white')}>
-                  {opt.label}
+                  {t(opt.labelKey)}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{opt.desc}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{t(opt.descKey)}</p>
               </div>
               <div className={cn(
                 'w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0',
@@ -662,32 +661,32 @@ export default function ToolStudioPage() {
 
       {/* Summary */}
       <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 space-y-3">
-        <p className="text-sm font-semibold text-gray-900 dark:text-white">登録内容サマリー</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-white">{t('studio.review.summary')}</p>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
-            <p className="text-gray-500 dark:text-gray-400">アプリ名</p>
-            <p className="font-medium text-gray-900 dark:text-white">{formData.name || '(未入力)'}</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.review.appName')}</p>
+            <p className="font-medium text-gray-900 dark:text-white">{formData.name || t('studio.review.notEntered')}</p>
           </div>
           <div>
-            <p className="text-gray-500 dark:text-gray-400">カテゴリ</p>
-            <p className="font-medium text-gray-900 dark:text-white">{formData.category || '(未選択)'}</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.form.category')}</p>
+            <p className="font-medium text-gray-900 dark:text-white">{formData.category || t('studio.review.notSelected')}</p>
           </div>
           <div>
-            <p className="text-gray-500 dark:text-gray-400">サービスURL</p>
-            <p className="font-medium text-gray-900 dark:text-white truncate">{formData.serviceUrl || '(未入力)'}</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.form.serviceUrl')}</p>
+            <p className="font-medium text-gray-900 dark:text-white truncate">{formData.serviceUrl || t('studio.review.notEntered')}</p>
           </div>
           <div>
-            <p className="text-gray-500 dark:text-gray-400">認証方式</p>
-            <p className="font-medium text-gray-900 dark:text-white">{AUTH_METHODS.find((m) => m.value === formData.authMethod)?.label}</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.review.authMethod')}</p>
+            <p className="font-medium text-gray-900 dark:text-white">{t(AUTH_METHODS.find((m) => m.value === formData.authMethod)?.labelKey ?? '')}</p>
           </div>
           <div>
-            <p className="text-gray-500 dark:text-gray-400">料金モデル</p>
-            <p className="font-medium text-gray-900 dark:text-white">{PRICING_TYPES.find((p) => p.value === formData.pricingType)?.label}</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.review.pricingModel')}</p>
+            <p className="font-medium text-gray-900 dark:text-white">{t(PRICING_TYPES.find((p) => p.value === formData.pricingType)?.labelKey ?? '')}</p>
           </div>
           <div>
-            <p className="text-gray-500 dark:text-gray-400">公開設定</p>
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.review.visibility')}</p>
             <p className="font-medium text-gray-900 dark:text-white">
-              {formData.visibility === 'public' ? '公開' : formData.visibility === 'unlisted' ? '限定公開' : '非公開'}
+              {t(`studio.review.${formData.visibility}`)}
             </p>
           </div>
         </div>
@@ -721,26 +720,26 @@ export default function ToolStudioPage() {
               </h1>
             </div>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-              ウェブアプリの開発・公開・管理をToolverseで。
+              {t('studio.subtitle')}
             </p>
           </div>
           <Button size="lg" className="gap-2 shrink-0" onClick={openWizard}>
             <Plus className="w-5 h-5" />
-            新しいアプリを登録
+            {t('studio.registerNew')}
           </Button>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {stats.map((stat) => (
-            <Card key={stat.label} padding="md" className="overflow-hidden relative">
+            <Card key={stat.labelKey} padding="md" className="overflow-hidden relative">
               <div className={cn('absolute top-0 right-0 w-20 h-20 rounded-full -translate-y-1/2 translate-x-1/2 bg-gradient-to-br opacity-15', stat.gradient)} />
               <div className="relative">
                 <div className={cn('w-10 h-10 rounded-lg bg-gradient-to-r flex items-center justify-center mb-3', stat.gradient)}>
                   <stat.icon className="w-5 h-5 text-white" />
                 </div>
                 <p className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</p>
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">{stat.label}</p>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">{t(stat.labelKey)}</p>
               </div>
             </Card>
           ))}
@@ -760,7 +759,7 @@ export default function ToolStudioPage() {
               )}
             >
               <tab.icon className="w-4 h-4" />
-              {tab.label}
+              {t(tab.labelKey)}
             </button>
           ))}
         </div>
@@ -780,7 +779,7 @@ export default function ToolStudioPage() {
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="font-semibold text-gray-900 dark:text-white truncate">{tool.name}</h3>
-                          <Badge variant={statusInfo.variant} size="sm">{statusInfo.label}</Badge>
+                          <Badge variant={statusInfo.variant} size="sm">{t(statusInfo.labelKey)}</Badge>
                         </div>
                         <p className="text-sm text-gray-500 dark:text-gray-400 truncate mt-0.5">{tool.description}</p>
                         <div className="flex items-center gap-4 mt-2 text-xs text-gray-400 dark:text-gray-500">
@@ -789,15 +788,15 @@ export default function ToolStudioPage() {
                           <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5" />{tool.rating}</span>
                           {tool.monthlyRevenue > 0 && (
                             <span className="flex items-center gap-1 text-emerald-500">
-                              <TrendingUp className="w-3.5 h-3.5" />{formatCurrency(tool.monthlyRevenue)}/月
+                              <TrendingUp className="w-3.5 h-3.5" />{formatCurrency(tool.monthlyRevenue)}{t('studio.actions.perMonth')}
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-4 pb-4 sm:p-5 sm:border-l border-gray-100 dark:border-gray-800">
-                      <Button variant="outline" size="sm" className="gap-1.5"><Edit className="w-3.5 h-3.5" />編集</Button>
-                      <Button variant="ghost" size="sm" className="gap-1.5"><BarChart3 className="w-3.5 h-3.5" />分析</Button>
+                      <Button variant="outline" size="sm" className="gap-1.5"><Edit className="w-3.5 h-3.5" />{t('studio.actions.edit')}</Button>
+                      <Button variant="ghost" size="sm" className="gap-1.5"><BarChart3 className="w-3.5 h-3.5" />{t('studio.actions.analytics')}</Button>
                       <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30">
                         <Trash2 className="w-3.5 h-3.5" />
                       </Button>
@@ -814,14 +813,14 @@ export default function ToolStudioPage() {
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <Terminal className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">クイックスタート</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.quickStart')}</h2>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                Toolverse SDKをインストールしてプラットフォームと連携しましょう。
+                {t('studio.sdk.quickStartDesc')}
               </p>
               <div className="space-y-4">
                 <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">インストール</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.install')}</p>
                   <div className="relative">
                     <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-sm overflow-x-auto pr-12">{SDK_INSTALL}</pre>
                     <button onClick={() => copyCmd(SDK_INSTALL, 'install')} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-800 transition-colors">
@@ -830,7 +829,7 @@ export default function ToolStudioPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">使用例</p>
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.example')}</p>
                   <div className="relative">
                     <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-xs overflow-x-auto max-h-64 overflow-y-auto leading-relaxed pr-12">{SDK_SNIPPET}</pre>
                     <button onClick={() => copyCmd(SDK_SNIPPET, 'snippet')} className="absolute right-3 top-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
@@ -843,22 +842,22 @@ export default function ToolStudioPage() {
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <FileText className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">リソース</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.resources')}</h2>
               </div>
               <div className="space-y-3">
                 {[
-                  { label: 'APIリファレンス', desc: 'SDK完全ドキュメント', icon: Code2 },
-                  { label: '認証ガイド', desc: 'OAuth2・APIキーの設定', icon: Key },
-                  { label: 'Webhook', desc: 'リアルタイムイベント通知', icon: Webhook },
-                  { label: 'レート制限', desc: '利用上限とスロットリング', icon: Clock },
+                  { labelKey: 'studio.sdk.apiReference', descKey: 'studio.sdk.apiReferenceDesc', icon: Code2 },
+                  { labelKey: 'studio.sdk.authGuide', descKey: 'studio.sdk.authGuideDesc', icon: Key },
+                  { labelKey: 'studio.sdk.webhook', descKey: 'studio.sdk.webhookDesc', icon: Webhook },
+                  { labelKey: 'studio.sdk.rateLimit', descKey: 'studio.sdk.rateLimitDesc', icon: Clock },
                 ].map((item) => (
-                  <button key={item.label} className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group">
+                  <button key={item.labelKey} className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group">
                     <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
                       <item.icon className="w-5 h-5 text-violet-600 dark:text-violet-400" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 dark:text-white text-sm">{item.label}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">{t(item.labelKey)}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{t(item.descKey)}</p>
                     </div>
                     <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-violet-500 transition-colors shrink-0" />
                   </button>
@@ -867,7 +866,7 @@ export default function ToolStudioPage() {
               <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <Button variant="outline" fullWidth className="gap-2">
                   <ExternalLink className="w-4 h-4" />
-                  ドキュメントを開く
+                  {t('studio.sdk.openDocs')}
                 </Button>
               </div>
             </Card>
@@ -878,28 +877,28 @@ export default function ToolStudioPage() {
           <div className="space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">
               {[
-                { label: '累計収益', value: formatCurrency(842000), change: '+12.3%', up: true },
-                { label: '今月の収益', value: formatCurrency(84200), change: '+8.7%', up: true },
-                { label: '次回振込予定', value: formatCurrency(42100), change: '3月15日', up: false },
+                { labelKey: 'studio.revenue.lifetimeEarnings', value: formatCurrency(842000), change: '+12.3%', up: true },
+                { labelKey: 'studio.revenue.thisMonth', value: formatCurrency(84200), change: '+8.7%', up: true },
+                { labelKey: 'studio.revenue.nextPayout', value: formatCurrency(42100), change: '3月15日', up: false },
               ].map((s) => (
-                <Card key={s.label} padding="lg">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
+                <Card key={s.labelKey} padding="lg">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t(s.labelKey)}</p>
                   <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{s.value}</p>
                   <p className={cn('text-xs mt-1', s.up ? 'text-emerald-500' : 'text-gray-400')}>{s.change}</p>
                 </Card>
               ))}
             </div>
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">収益推移</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('studio.revenue.chart')}</h2>
               <div className="h-72 rounded-xl bg-gradient-to-br from-violet-500/5 to-indigo-500/5 flex items-center justify-center border-2 border-dashed border-gray-200 dark:border-gray-700">
                 <div className="text-center">
                   <BarChart3 className="w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3" />
-                  <p className="text-sm text-gray-400 dark:text-gray-500">収益グラフ</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">{t('studio.revenue.chartPlaceholder')}</p>
                 </div>
               </div>
             </Card>
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">ツール別収益</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('studio.revenue.byTool')}</h2>
               <div className="space-y-3">
                 {MOCK_MY_TOOLS.filter((t) => t.monthlyRevenue > 0).map((tool) => (
                   <div key={tool.id} className="flex items-center gap-4">
@@ -924,36 +923,36 @@ export default function ToolStudioPage() {
         {activeTab === 'settings' && (
           <div className="space-y-6 max-w-2xl">
             <Card padding="lg">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">クリエイタープロフィール</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t('studio.settings.creatorProfile')}</h2>
               <div className="space-y-4">
-                <Input label="表示名" defaultValue="AI Labs" />
+                <Input label={t('studio.settings.displayName')} defaultValue="AI Labs" />
                 <div className="w-full">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">自己紹介</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.settings.bio')}</label>
                   <textarea
                     rows={3}
-                    defaultValue="次世代のAIツールを開発しています。"
+                    defaultValue=""
                     className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all resize-none"
                   />
                 </div>
-                <Input label="ウェブサイト" defaultValue="https://ailabs.example.com" />
+                <Input label={t('studio.settings.website')} defaultValue="https://ailabs.example.com" />
               </div>
               <div className="mt-6 flex justify-end">
-                <Button className="gap-2"><Save className="w-4 h-4" />プロフィールを保存</Button>
+                <Button className="gap-2"><Save className="w-4 h-4" />{t('studio.settings.saveProfile')}</Button>
               </div>
             </Card>
 
             <Card padding="lg">
               <div className="flex items-center gap-2 mb-4">
                 <Key className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">APIキー</h2>
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.settings.apiKey')}</h2>
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                SDK連携・ツール管理用のAPIキーです。
+                {t('studio.settings.apiKeyDesc')}
               </p>
               <div className="p-4 rounded-xl bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800">
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">本番キー</p>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">{t('studio.settings.productionKey')}</p>
                     <p className="text-sm font-mono text-gray-900 dark:text-gray-100 truncate">
                       {apiKeyVisible ? 'tv_prod_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' : 'tv_prod_••••••••••••••••••••••••••'}
                     </p>
@@ -969,7 +968,7 @@ export default function ToolStudioPage() {
                 </div>
               </div>
               <div className="mt-4 flex justify-end">
-                <Button variant="danger" size="sm" className="gap-2">キーを再生成</Button>
+                <Button variant="danger" size="sm" className="gap-2">{t('studio.settings.regenerateKey')}</Button>
               </div>
             </Card>
           </div>
@@ -985,8 +984,8 @@ export default function ToolStudioPage() {
             {/* Header */}
             <div className="flex items-center justify-between p-6 pb-0 shrink-0">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">新しいアプリを登録</h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">4ステップでToolverseに公開できます</p>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('studio.wizard.title')}</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{t('studio.wizard.subtitle')}</p>
               </div>
               <button onClick={() => setShowUploadModal(false)} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <X className="w-5 h-5 text-gray-500" />
@@ -1017,7 +1016,7 @@ export default function ToolStudioPage() {
                           'text-xs font-medium truncate',
                           wizardStep === step.step ? 'text-violet-600 dark:text-violet-400' : 'text-gray-500 dark:text-gray-400'
                         )}>
-                          {step.title}
+                          {t(step.titleKey)}
                         </p>
                       </div>
                     </button>
@@ -1043,26 +1042,26 @@ export default function ToolStudioPage() {
                 {wizardStep > 1 && (
                   <Button variant="ghost" onClick={() => setWizardStep((wizardStep - 1) as WizardStep)} className="gap-1">
                     <ChevronLeft className="w-4 h-4" />
-                    前へ
+                    {t('studio.wizard.previous')}
                   </Button>
                 )}
               </div>
               <div className="flex items-center gap-3">
-                <Button variant="ghost" onClick={() => setShowUploadModal(false)}>キャンセル</Button>
+                <Button variant="ghost" onClick={() => setShowUploadModal(false)}>{t('common.cancel')}</Button>
                 {wizardStep < 4 ? (
                   <Button onClick={() => setWizardStep((wizardStep + 1) as WizardStep)} className="gap-1">
-                    次へ
+                    {t('studio.wizard.next')}
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 ) : (
                   <div className="flex gap-2">
                     <Button variant="outline" className="gap-2">
                       <FileText className="w-4 h-4" />
-                      下書き保存
+                      {t('studio.wizard.saveDraft')}
                     </Button>
                     <Button className="gap-2">
                       <Upload className="w-4 h-4" />
-                      審査に提出
+                      {t('studio.wizard.submitReview')}
                     </Button>
                   </div>
                 )}

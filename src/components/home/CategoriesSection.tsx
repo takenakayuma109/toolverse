@@ -1,7 +1,9 @@
 'use client';
 
 import { useTranslation } from '@/hooks/useTranslation';
+import { useThemeStore } from '@/store/theme';
 import { cn } from '@/lib/utils';
+// Fallback categories — replace with API fetch when /api/categories is available
 import { categories } from '@/lib/mock-data';
 
 const categoryI18nKeyMap: Record<string, string> = {
@@ -16,6 +18,9 @@ interface CategoriesSectionProps {
 
 export default function CategoriesSection({ onNavigate }: CategoriesSectionProps) {
   const { t } = useTranslation();
+  const theme = useThemeStore((s) => s.theme);
+  const isDark = theme === 'universe';
+  const isEarth = theme === 'earth';
 
   const getCategoryName = (id: string) => {
     const key = categoryI18nKeyMap[id] ?? id;
@@ -23,42 +28,55 @@ export default function CategoriesSection({ onNavigate }: CategoriesSectionProps
   };
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-gray-50 dark:bg-gray-900/50">
+    <section className={cn(
+      'px-4 sm:px-6 lg:px-8 py-20 md:py-28',
+      isDark ? 'bg-gray-950/50' : isEarth ? 'bg-gray-50/50' : 'bg-gray-50'
+    )}>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
-          {t('home.categories.title')}
-        </h2>
+        <div className="text-center mb-12">
+          <span className={cn(
+            'inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-4',
+            isDark ? 'bg-violet-950/50 text-violet-300 border border-violet-800/50' :
+            isEarth ? 'bg-violet-100/50 text-violet-700 border border-violet-200' :
+            'bg-violet-50 text-violet-600 border border-violet-200'
+          )}>
+            CATEGORIES
+          </span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            {t('home.categories.title')}
+          </h2>
+        </div>
 
-        <div className="mt-10 overflow-x-auto -mx-4 sm:mx-0 scrollbar-hide">
-          <div className="flex md:grid md:grid-cols-4 gap-4 md:gap-6 min-w-max md:min-w-0 px-4 sm:px-0">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => onNavigate?.('discover')}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-5">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => onNavigate?.('discover')}
+              className={cn(
+                'group flex flex-col items-center gap-3 p-5 sm:p-6 rounded-2xl',
+                'transition-all duration-300 hover:-translate-y-1',
+                'focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2',
+                isDark ? 'bg-gray-900/60 border border-gray-800 hover:border-gray-700 hover:shadow-lg hover:shadow-violet-500/5' :
+                isEarth ? 'bg-white/70 border border-gray-200 hover:border-gray-300 hover:shadow-md' :
+                'bg-white border border-gray-100 hover:border-gray-200 hover:shadow-lg'
+              )}
+            >
+              <div
                 className={cn(
-                  'flex items-center gap-4 p-5 rounded-2xl min-w-[200px] md:min-w-0',
-                  'bg-gradient-to-br dark:bg-gray-800/80',
-                  'border border-gray-100 dark:border-gray-700',
-                  'hover:shadow-lg hover:scale-[1.02] transition-all duration-300',
-                  'focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2'
+                  'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl',
+                  'bg-gradient-to-br shadow-lg',
+                  'border border-white/20 dark:border-white/5',
+                  'group-hover:scale-110 transition-transform duration-300',
+                  cat.color
                 )}
               >
-                <div
-                  className={cn(
-                    'w-12 h-12 rounded-xl flex items-center justify-center text-2xl',
-                    'bg-gradient-to-br shadow-lg shadow-black/10 dark:shadow-black/30',
-                    'border border-white/20 dark:border-white/5 ring-1 ring-black/5 dark:ring-white/5',
-                    cat.color
-                  )}
-                >
-                  {cat.icon}
-                </div>
-                <span className="font-semibold text-gray-900 dark:text-white truncate">
-                  {getCategoryName(cat.id)}
-                </span>
-              </button>
-            ))}
-          </div>
+                {cat.icon}
+              </div>
+              <span className="font-medium text-sm text-gray-700 dark:text-gray-200 text-center">
+                {getCategoryName(cat.id)}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     </section>

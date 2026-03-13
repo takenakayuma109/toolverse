@@ -51,7 +51,11 @@
       "title": "مرحباً بك في عالم الأدوات",
       "subtitle": "منصة الجيل التالي للبرمجيات والخدمات السحابية والذكاء الاصطناعي وأدوات الأتمتة",
       "cta": "استكشف الأدوات",
-      "ctaSecondary": "كن منشئاً"
+      "ctaSecondary": "كن منشئاً",
+      "badge": "متاح الآن للمنشئين",
+      "trust1": "أمان على مستوى المؤسسات",
+      "trust2": "اتفاقية مستوى خدمة 99.9%",
+      "trust3": "شبكة CDN عالمية"
     },
     "features": {
       "title": "ما يمكنك فعله مع Toolverse",
@@ -70,6 +74,14 @@
       "api": {
         "title": "واجهات برمجة المنصة",
         "description": "المصادقة والفوترة والتخزين. ابنِ كل شيء باستخدام الواجهات البرمجية"
+      },
+      "infrastructure": {
+        "title": "بنية تحتية مُدارة",
+        "description": "حوسبة قابلة للتوسع تلقائياً، وشبكة CDN عالمية، وقواعد بيانات مُدارة لتتفرغ لبناء منتجك"
+      },
+      "security": {
+        "title": "أمان المؤسسات",
+        "description": "متوافق مع SOC 2، تشفير شامل، وتحكم دقيق في الوصول لفرق بأي حجم"
       }
     },
     "stats": {
@@ -87,11 +99,83 @@
       "development": "التطوير",
       "creatorTools": "المنشئ",
       "automation": "الأتمتة",
-      "analytics": "التحليلات"
+      "analytics": "البيانات والتحليلات",
+      "security": "الأمن السيبراني",
+      "healthcare": "الرعاية الصحية والتقنية الحيوية",
+      "education": "التعليم وتكنولوجيا التعليم",
+      "ecommerce": "التجارة الإلكترونية والتجزئة",
+      "communication": "الاتصالات",
+      "iot": "إنترنت الأشياء والروبوتات",
+      "media": "الإعلام والترفيه",
+      "logistics": "اللوجستيات وسلسلة التوريد"
     },
     "officialTools": {
       "title": "الأدوات الرسمية",
       "subtitle": "جرّب الأدوات الرسمية المقدمة من Toolverse"
+    },
+    "pricing": {
+      "badge": "الأسعار والخطط",
+      "title": "أسعار شفافة وقابلة للتوسع",
+      "subtitle": "ابدأ مجاناً، وتوسع مع نموك. بدون رسوم مخفية أو مفاجآت.",
+      "popular": "الأكثر شعبية",
+      "strengths": {
+        "instant": {
+          "title": "نشر فوري",
+          "description": "انشر تطبيقك وابدأ في قبول المدفوعات خلال دقائق"
+        },
+        "secure": {
+          "title": "متوافق مع PCI-DSS",
+          "description": "أمان بمستوى البنوك مع تشفير شامل لجميع المعاملات"
+        },
+        "global": {
+          "title": "انتشار عالمي",
+          "description": "اقبل المدفوعات بأكثر من 135 عملة من مستخدمين في أكثر من 190 دولة"
+        },
+        "flexible": {
+          "title": "فوترة مرنة",
+          "description": "اشتراكات، دفع لمرة واحدة، حسب الاستخدام — اختر النموذج المناسب"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "مجاني",
+          "price": "$0",
+          "description": "للأفراد والمشاريع الجانبية",
+          "f1": "حتى 5 تطبيقات منشورة",
+          "f2": "1,000 مستخدم نشط شهرياً",
+          "f3": "دعم المجتمع"
+        },
+        "pro": {
+          "name": "احترافي",
+          "price": "$14.99",
+          "period": "/شهر",
+          "description": "للمطورين المحترفين",
+          "f1": "تطبيقات منشورة غير محدودة",
+          "f2": "50,000 مستخدم نشط شهرياً",
+          "f3": "دعم أولوية وتحليلات",
+          "f4": "نطاق مخصص وعلامة تجارية"
+        },
+        "team": {
+          "name": "فريق",
+          "price": "$39.99",
+          "period": "/شهر",
+          "description": "للفرق والمؤسسات",
+          "f1": "كل ما في الخطة الاحترافية",
+          "f2": "مستخدمون نشطون شهرياً غير محدودين",
+          "f3": "تعاون الفريق والأدوار",
+          "f4": "اتفاقية مستوى خدمة ودعم مخصص"
+        }
+      },
+      "paymentTitle": "نظام دفع متكامل",
+      "paymentSubtitle": "مدعوم ببنية تحتية رائدة للمدفوعات. اقبل المدفوعات عالمياً بدون إعداد.",
+      "payment": {
+        "stripe": "بطاقات، محافظ رقمية، تحويلات بنكية",
+        "applepay": "دفع فوري عبر الهاتف",
+        "googlepay": "دفع سريع على أندرويد"
+      },
+      "pci": "متوافق مع PCI-DSS المستوى 1",
+      "currencies": "أكثر من 135 عملة مدعومة",
+      "creatorPayout": "مدفوعات أسبوعية للمنشئين"
     },
     "cta": {
       "title": "لنبنِ معاً عالم الأدوات",
@@ -104,12 +188,120 @@
     "subtitle": "اعثر على أفضل الأدوات",
     "trending": "الرائج",
     "newTools": "أدوات جديدة",
-    "featured": "مميز",
+    "featured": {
+      "ai": {
+        "tag": "اختيار الشهر",
+        "title": "AI Writer Pro",
+        "subtitle": "أنشئ محتوى بسرعة فائقة باستخدام الذكاء الاصطناعي"
+      },
+      "productivity": {
+        "tag": "اختيار المحررين",
+        "title": "TaskFlow",
+        "subtitle": "إدارة ذكية للمهام بالذكاء الاصطناعي"
+      },
+      "finance": {
+        "tag": "تطبيق مجاني شائع",
+        "title": "FinTrack",
+        "subtitle": "إدارة أموالك ببساطة"
+      },
+      "marketing": {
+        "tag": "إصدار جديد",
+        "title": "MarketSense",
+        "subtitle": "تحليلات تسويقية في الوقت الفعلي"
+      },
+      "development": {
+        "tag": "تحديث رئيسي",
+        "title": "CodePilot",
+        "subtitle": "البرمجة الثنائية بالذكاء الاصطناعي للمطورين"
+      },
+      "creator": {
+        "tag": "مميز",
+        "title": "DesignStudio",
+        "subtitle": "أداة تصميم بالذكاء الاصطناعي للمبدعين"
+      },
+      "automation": {
+        "tag": "رائج الآن",
+        "title": "AutoFlow",
+        "subtitle": "أنشئ سير عمل بدون كود"
+      },
+      "analytics": {
+        "tag": "أساسي",
+        "title": "DataLens",
+        "subtitle": "تصور بيانات متقدم"
+      },
+      "security": {
+        "tag": "أمن سيبراني",
+        "title": "أدوات الأمن السيبراني",
+        "subtitle": "احمِ بنيتك التحتية وبياناتك"
+      },
+      "healthcare": {
+        "tag": "رعاية صحية",
+        "title": "حلول الرعاية الصحية",
+        "subtitle": "تطبيقات الصحة الرقمية والتقنية الحيوية"
+      },
+      "education": {
+        "tag": "تعليم",
+        "title": "منصة تعليمية",
+        "subtitle": "إدارة التعلم وأدوات التعليم"
+      },
+      "ecommerce": {
+        "tag": "تجارة إلكترونية",
+        "title": "حلول التجارة",
+        "subtitle": "أنشئ ووسّع أعمالك عبر الإنترنت"
+      },
+      "communication": {
+        "tag": "اتصالات",
+        "title": "المراسلة والتعاون",
+        "subtitle": "اربط فرقك وعملاءك بسلاسة"
+      },
+      "iot": {
+        "tag": "إنترنت الأشياء والروبوتات",
+        "title": "الأجهزة المتصلة",
+        "subtitle": "إدارة أساطيل IoT ومنصات الروبوتات"
+      },
+      "media": {
+        "tag": "إعلام",
+        "title": "المحتوى والإعلام",
+        "subtitle": "أنشئ المحتوى ووزّعه وحقق أرباحاً منه"
+      },
+      "logistics": {
+        "tag": "لوجستيات",
+        "title": "أدوات سلسلة التوريد",
+        "subtitle": "تحسين اللوجستيات والعمليات"
+      },
+      "today": {
+        "tag": "اختيار اليوم",
+        "title": "SENRIGAN",
+        "subtitle": "منصة تحليلات استشرافية بالذكاء الاصطناعي"
+      },
+      "trending": {
+        "tag": "رائج",
+        "title": "AI Writer Pro",
+        "subtitle": "التطبيق الأكثر شعبية هذا الأسبوع"
+      },
+      "webapps": {
+        "tag": "تطبيقات ويب",
+        "title": "Toolverse تطبيقات ويب",
+        "subtitle": "اكتشف تطبيقات ويب قوية — بدون تثبيت"
+      },
+      "official": {
+        "tag": "رسمي",
+        "title": "PresenceVision",
+        "subtitle": "أداة إدارة الحضور الرسمية من Toolverse بالذكاء الاصطناعي"
+      }
+    },
     "categories": "الفئات",
     "reviews": "المراجعات",
     "rating": "التقييم",
+    "view": "عرض",
     "install": "تثبيت",
     "installed": "مُثبَّت",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "رسمي",
+    "essential": "أساسي",
+    "apps": "تطبيقات",
+    "selectedByEditors": "اختيار محرري Toolverse",
     "pricing": "الأسعار",
     "filters": "التصفية",
     "sortBy": "ترتيب حسب",
@@ -166,7 +358,39 @@
     "github": "المتابعة مع GitHub",
     "agreeTerms": "أوافق على شروط الخدمة",
     "alreadyHaveAccount": "لديك حساب بالفعل؟",
-    "dontHaveAccount": "ليس لديك حساب؟"
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "loginSuccess": "تم تسجيل الدخول بنجاح",
+    "redirecting": "جارٍ إعادة التوجيه...",
+    "name": "الاسم",
+    "agreeTermsLong": "بالمتابعة، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "عنوان بريد إلكتروني غير صالح",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordWeak": "يجب أن تكون كلمة المرور 8 أحرف على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام ورموز خاصة",
+    "rateLimited": "محاولات كثيرة جداً. يرجى الانتظار لحظة.",
+    "nameRequired": "الاسم مطلوب",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "forgotPasswordTitle": "إعادة تعيين كلمة المرور",
+    "forgotPasswordDescription": "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة المرور.",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "resetLinkSent": "إذا كان هناك حساب بهذا البريد الإلكتروني، فقد تم إرسال رابط إعادة تعيين كلمة المرور.",
+    "backToSignIn": "العودة إلى تسجيل الدخول",
+    "resetPasswordTitle": "تعيين كلمة مرور جديدة",
+    "resetPasswordDescription": "أدخل كلمة المرور الجديدة أدناه.",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "resetPasswordSuccess": "تمت إعادة تعيين كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول.",
+    "resetTokenExpired": "انتهت صلاحية رابط إعادة التعيين. يرجى طلب رابط جديد.",
+    "resetTokenInvalid": "رابط إعادة تعيين غير صالح. يرجى طلب رابط جديد.",
+    "emailNotVerified": "يرجى التحقق من بريدك الإلكتروني للمتابعة.",
+    "verificationSent": "تم إرسال بريد التحقق. يرجى التحقق من صندوق الوارد.",
+    "verificationSuccess": "تم التحقق من بريدك الإلكتروني بنجاح!",
+    "verificationExpired": "انتهت صلاحية رابط التحقق. يرجى طلب رابط جديد.",
+    "verificationInvalid": "رابط تحقق غير صالح. يرجى طلب رابط جديد.",
+    "verificationError": "حدث خطأ أثناء التحقق. يرجى المحاولة مرة أخرى.",
+    "resendVerification": "إعادة إرسال بريد التحقق",
+    "resendVerificationSuccess": "تمت إعادة إرسال بريد التحقق."
   },
   "billing": {
     "title": "الفواتير والخطط",
@@ -176,6 +400,8 @@
     "usage": "الاستخدام",
     "revenueShare": "مشاركة الإيرادات",
     "payouts": "المدفوعات",
+    "paymentMethods": "طرق الدفع",
+    "billingHistory": "سجل الفواتير",
     "plans": {
       "free": {
         "name": "مجاني",
@@ -219,6 +445,56 @@
       "description": "ملاح لإدارة الديون وتحسينها"
     }
   },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "إدارة وتحليل الحضور بالذكاء الاصطناعي"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "منصة تحليلات استشرافية بالذكاء الاصطناعي"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "بحث وتحليل وإدارة البراءات"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "ملاح لإدارة الديون وتحسينها"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "مساعد كتابة متقدم بالذكاء الاصطناعي للمحترفين"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "إدارة ذكية للمهام مع ترتيب الأولويات بالذكاء الاصطناعي"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "مساعد البرمجة الثنائية ومراجعة الكود بالذكاء الاصطناعي"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "تحليلات تسويقية في الوقت الفعلي ورؤى"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "منشئ أتمتة سير العمل بدون كود"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "تتبع الشؤون المالية الشخصية والميزانية"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "أداة تصميم بالذكاء الاصطناعي للمبدعين"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "تصور وتحليل بيانات متقدم"
+    }
+  },
   "footer": {
     "product": "المنتج",
     "company": "الشركة",
@@ -236,5 +512,169 @@
     "privacy": "سياسة الخصوصية",
     "cookies": "سياسة ملفات تعريف الارتباط",
     "copyright": "© 2026 Toolverse. جميع الحقوق محفوظة."
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "تطوير ونشر وإدارة تطبيقات الويب على Toolverse.",
+    "registerNew": "تسجيل تطبيق جديد",
+    "tabs": {
+      "tools": "أدواتي",
+      "sdk": "تكامل SDK",
+      "revenue": "الإيرادات",
+      "settings": "الإعدادات"
+    },
+    "stats": {
+      "publishedTools": "الأدوات المنشورة",
+      "totalUsers": "إجمالي المستخدمين",
+      "monthlyRevenue": "الإيرادات الشهرية",
+      "avgRating": "متوسط التقييم"
+    },
+    "status": {
+      "published": "منشور",
+      "draft": "مسودة",
+      "review": "قيد المراجعة"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "analytics": "تحليلات",
+      "perMonth": "/شهر"
+    },
+    "pricing": {
+      "title": "نموذج التسعير",
+      "free": "مجاني",
+      "freeDesc": "جميع الميزات متاحة مجاناً",
+      "freemium": "مجاني جزئياً",
+      "freemiumDesc": "خطة أساسية مجانية + ميزات متميزة",
+      "paid": "شراء لمرة واحدة",
+      "paidDesc": "دفعة واحدة للوصول الدائم",
+      "subscription": "اشتراك",
+      "subscriptionDesc": "فوترة شهرية أو سنوية متكررة",
+      "monthlyPrice": "السعر الشهري",
+      "yearlyPrice": "السعر السنوي (اختياري)",
+      "salePrice": "سعر البيع",
+      "freeTrialDays": "فترة التجربة المجانية (بالأيام)",
+      "freePlanLimits": "قيود الخطة المجانية",
+      "freePlanLimitsPlaceholder": "مثال: حتى 1,000 طلب شهرياً، الميزات الأساسية فقط..."
+    },
+    "auth": {
+      "title": "طريقة المصادقة",
+      "toolverse": "مصادقة Toolverse (موصى بها)",
+      "toolverseDesc": "استخدم تسجيل الدخول الموحد من Toolverse",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "التكامل مع مزود OAuth الخاص بك",
+      "oauthSettings": "إعدادات OAuth 2.0",
+      "apikey": "مفتاح API",
+      "apikeyDesc": "مصادقة قائمة على مفتاح API",
+      "none": "بدون مصادقة",
+      "noneDesc": "متاح للجميع"
+    },
+    "form": {
+      "appName": "اسم التطبيق",
+      "summaryDescription": "الملخص",
+      "summaryPlaceholder": "صف تطبيقك في جملة أو اثنتين...",
+      "detailedDescription": "الوصف التفصيلي",
+      "detailedPlaceholder": "صف الميزات والتفاصيل...",
+      "category": "الفئة",
+      "categoryPlaceholder": "اختر فئة...",
+      "tags": "العلامات",
+      "tagsPlaceholder": "ذكاء اصطناعي، إنتاجية، كتابة",
+      "icon": "الأيقونة",
+      "iconDragDrop": "اسحب وأفلت أو انقر",
+      "iconHint": "PNG، SVG (512×512 موصى به)",
+      "screenshots": "لقطات الشاشة",
+      "screenshotsDesc": "حمّل لقطات شاشة (حتى 6)",
+      "screenshotsHint": "PNG، JPG — 1280×720 موصى به",
+      "serviceUrl": "رابط الخدمة",
+      "sandboxUrl": "رابط التجربة / العرض التوضيحي",
+      "apiEndpoint": "نقطة نهاية API",
+      "webhookUrl": "رابط Webhook",
+      "privacyPolicyUrl": "رابط سياسة الخصوصية",
+      "termsUrl": "رابط شروط الخدمة",
+      "supportEmail": "بريد الدعم الإلكتروني",
+      "supportUrl": "رابط الدعم"
+    },
+    "wizard": {
+      "title": "تسجيل تطبيق جديد",
+      "subtitle": "انشر على Toolverse في 4 خطوات",
+      "step1": "المعلومات الأساسية",
+      "step1Desc": "اسم التطبيق والوصف والفئة",
+      "step2": "إعدادات الخدمة",
+      "step2Desc": "الروابط وAPI والمصادقة",
+      "step3": "التسعير والفوترة",
+      "step3Desc": "الخطط ومدفوعات Toolverse",
+      "step4": "المراجعة والنشر",
+      "step4Desc": "مراجعة المعلومات والرؤية",
+      "previous": "السابق",
+      "next": "التالي",
+      "saveDraft": "حفظ كمسودة",
+      "submitReview": "تقديم للمراجعة"
+    },
+    "webAppConnection": "ربط تطبيق الويب",
+    "webAppConnectionDesc": "Toolverse هو منصة تطبيقات ويب. سجّل رابط تطبيقك ليتمكن المستخدمون من الوصول إليه عبر Toolverse.",
+    "payment": {
+      "title": "مدفوعات Toolverse",
+      "description": "استلم المدفوعات بأمان عبر نظام الفوترة المتكامل من Toolverse",
+      "connected": "حساب الدفع متصل",
+      "connectedVia": "مرتبط عبر Stripe Connect",
+      "notConnected": "حساب الدفع غير متصل",
+      "notConnectedDesc": "اربط حساباً لاستلام الأرباح",
+      "changeSettings": "تغيير الإعدادات",
+      "connect": "ربط",
+      "revenueShare": "مشاركة الإيرادات",
+      "creatorShare": "المنشئ",
+      "platformFee": "* تشمل رسوم منصة Toolverse رسوم معالجة الدفع (3.6%)"
+    },
+    "review": {
+      "title": "المراجعة النهائية قبل النشر",
+      "description": "أدخل المعلومات أدناه وقدّمها للمراجعة. تكتمل المراجعات عادةً خلال 1-3 أيام عمل.",
+      "visibility": "الرؤية",
+      "public": "عام",
+      "publicDesc": "مرئي في السوق ومتاح لجميع المستخدمين",
+      "unlisted": "غير مدرج",
+      "unlistedDesc": "متاح فقط للمستخدمين الذين لديهم الرابط",
+      "private": "خاص",
+      "privateDesc": "متاح لك فقط (للاختبار)",
+      "summary": "ملخص التسجيل",
+      "appName": "اسم التطبيق",
+      "notEntered": "(لم يتم الإدخال)",
+      "notSelected": "(لم يتم الاختيار)",
+      "authMethod": "طريقة المصادقة",
+      "pricingModel": "نموذج التسعير"
+    },
+    "sdk": {
+      "quickStart": "البدء السريع",
+      "quickStartDesc": "ثبّت Toolverse SDK وتكامل مع المنصة.",
+      "install": "تثبيت",
+      "example": "مثال",
+      "resources": "الموارد",
+      "apiReference": "مرجع API",
+      "apiReferenceDesc": "توثيق SDK الكامل",
+      "authGuide": "دليل المصادقة",
+      "authGuideDesc": "إعداد OAuth2 ومفتاح API",
+      "webhook": "Webhooks",
+      "webhookDesc": "إشعارات الأحداث في الوقت الفعلي",
+      "rateLimit": "حدود الاستخدام",
+      "rateLimitDesc": "حدود الاستخدام والتقييد",
+      "openDocs": "فتح التوثيق"
+    },
+    "revenue": {
+      "lifetimeEarnings": "الأرباح الإجمالية",
+      "thisMonth": "هذا الشهر",
+      "nextPayout": "الدفعة التالية",
+      "chart": "اتجاه الإيرادات",
+      "chartPlaceholder": "رسم الإيرادات البياني",
+      "byTool": "الإيرادات حسب الأداة"
+    },
+    "settings": {
+      "creatorProfile": "ملف المنشئ",
+      "displayName": "الاسم المعروض",
+      "bio": "النبذة التعريفية",
+      "website": "الموقع الإلكتروني",
+      "saveProfile": "حفظ الملف الشخصي",
+      "apiKey": "مفتاح API",
+      "apiKeyDesc": "مفتاح API لتكامل SDK وإدارة الأدوات.",
+      "productionKey": "مفتاح الإنتاج",
+      "regenerateKey": "إعادة إنشاء المفتاح"
+    }
   }
 }

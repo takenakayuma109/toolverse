@@ -49,27 +49,39 @@
   "home": {
     "hero": {
       "title": "ツールの宇宙へようこそ",
-      "subtitle": "Webアプリ、SaaS、AI、自動化ツールが集まる次世代プラットフォーム",
-      "cta": "ツールを探す",
-      "ctaSecondary": "クリエイターになる"
+      "subtitle": "Webアプリ、SaaS、AI、自動化ツールが集結するエンタープライズ対応プラットフォーム",
+      "cta": "プラットフォームを探索",
+      "ctaSecondary": "開発を始める",
+      "badge": "クリエイター募集中",
+      "trust1": "エンタープライズ級セキュリティ",
+      "trust2": "99.9% 稼働率保証",
+      "trust3": "グローバルCDN配信"
     },
     "features": {
-      "title": "Toolverseでできること",
+      "title": "スケールのために構築、すべての人のために設計",
       "marketplace": {
-        "title": "マーケットプレイス",
-        "description": "世界中の優れたツールを発見し、すぐに利用できます"
+        "title": "グローバルマーケットプレイス",
+        "description": "世界中の開発者・企業が提供する最高のWebアプリを発見・評価・導入"
       },
       "workspace": {
-        "title": "ユニバーサルワークスペース",
-        "description": "すべてのツールを一つの空間で。シングルログイン、統一されたデータ"
+        "title": "統合ワークスペース",
+        "description": "シングルサインオン、統合課金、シームレスなデータ連携ですべてのツールに一括アクセス"
       },
       "creator": {
         "title": "クリエイターエコノミー",
-        "description": "あなたのツールを世界に公開し、収益を得ましょう"
+        "description": "アプリをグローバルに公開し、サブスクリプションを管理、最大95%のレベニューシェアを獲得"
       },
       "api": {
         "title": "プラットフォームAPI",
-        "description": "認証、課金、ストレージ。すべてAPIで構築できます"
+        "description": "認証・課金・ストレージ・分析 — 迅速なアプリ開発のためのエンタープライズ対応API"
+      },
+      "infrastructure": {
+        "title": "マネージドインフラ",
+        "description": "オートスケーリング、グローバルCDN、マネージドDBで、プロダクト開発に集中"
+      },
+      "security": {
+        "title": "エンタープライズセキュリティ",
+        "description": "SOC 2準拠、エンドツーエンド暗号化、あらゆる規模のチーム向けアクセス制御"
       }
     },
     "stats": {
@@ -80,22 +92,94 @@
     },
     "categories": {
       "title": "カテゴリで探す",
-      "ai": "AI",
+      "ai": "AI・機械学習",
       "productivity": "生産性",
-      "finance": "ファイナンス",
-      "marketing": "マーケティング",
-      "development": "開発",
-      "creatorTools": "クリエイター",
-      "automation": "自動化",
-      "analytics": "分析"
+      "finance": "FinTech・金融",
+      "marketing": "マーケティング・広告",
+      "development": "開発ツール",
+      "creatorTools": "クリエイター・デザイン",
+      "automation": "自動化・RPA",
+      "analytics": "データ・分析",
+      "security": "サイバーセキュリティ",
+      "healthcare": "ヘルスケア・BioTech",
+      "education": "教育・EdTech",
+      "ecommerce": "EC・リテール",
+      "communication": "コミュニケーション",
+      "iot": "IoT・ロボティクス",
+      "media": "メディア・エンタメ",
+      "logistics": "物流・サプライチェーン"
     },
     "officialTools": {
       "title": "公式ツール",
       "subtitle": "Toolverseが提供する公式ツールをお試しください"
     },
+    "pricing": {
+      "badge": "料金プラン",
+      "title": "透明でスケーラブルな料金体系",
+      "subtitle": "無料で始めて、成長に合わせてスケール。隠れた費用は一切ありません。",
+      "popular": "人気No.1",
+      "strengths": {
+        "instant": {
+          "title": "即時デプロイ",
+          "description": "アプリを公開し、数分で決済を開始。数週間は不要です"
+        },
+        "secure": {
+          "title": "PCI-DSS準拠",
+          "description": "すべての取引にエンドツーエンド暗号化を適用した銀行レベルのセキュリティ"
+        },
+        "global": {
+          "title": "グローバル対応",
+          "description": "190以上の国・135以上の通貨で決済を受け付け"
+        },
+        "flexible": {
+          "title": "柔軟な課金モデル",
+          "description": "サブスクリプション、買い切り、従量課金など、最適なモデルを選択"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "フリー",
+          "price": "¥0",
+          "description": "個人・サイドプロジェクト向け",
+          "f1": "最大5つのアプリを公開",
+          "f2": "月間1,000アクティブユーザー",
+          "f3": "コミュニティサポート"
+        },
+        "pro": {
+          "name": "プロ",
+          "price": "¥1,980",
+          "period": "/月",
+          "description": "プロフェッショナル開発者向け",
+          "f1": "アプリ公開数無制限",
+          "f2": "月間50,000アクティブユーザー",
+          "f3": "優先サポート・分析機能",
+          "f4": "カスタムドメイン・ブランディング"
+        },
+        "team": {
+          "name": "チーム",
+          "price": "¥4,980",
+          "period": "/月",
+          "description": "チーム・組織向け",
+          "f1": "プロの全機能を含む",
+          "f2": "アクティブユーザー数無制限",
+          "f3": "チームコラボレーション・ロール管理",
+          "f4": "SLA・専任サポート"
+        }
+      },
+      "paymentTitle": "統合決済システム",
+      "paymentSubtitle": "業界最高水準の決済インフラを搭載。セットアップ不要でグローバル決済に対応。",
+      "payment": {
+        "stripe": "カード・ウォレット・銀行振込",
+        "applepay": "ワンタップモバイル決済",
+        "googlepay": "Android高速チェックアウト"
+      },
+      "pci": "PCI-DSS Level 1 準拠",
+      "currencies": "135以上の通貨に対応",
+      "creatorPayout": "クリエイター週次振込"
+    },
     "cta": {
-      "title": "ツールの宇宙を一緒に作ろう",
-      "subtitle": "クリエイターとして参加し、次世代のSoftware Internet Layerを構築しましょう",
+      "title": "ソフトウェア流通の未来を共に構築しよう",
+      "subtitle": "Toolverseで次世代のWebアプリを構築する数千のクリエイターに参加しましょう",
       "button": "今すぐ始める"
     }
   },
@@ -144,6 +228,46 @@
         "tag": "必須アプリ",
         "title": "DataLens",
         "subtitle": "高度なデータ可視化ツール"
+      },
+      "security": {
+        "tag": "セキュリティ",
+        "title": "サイバーセキュリティツール",
+        "subtitle": "インフラとデータを保護"
+      },
+      "healthcare": {
+        "tag": "ヘルスケア",
+        "title": "ヘルスケアソリューション",
+        "subtitle": "デジタルヘルス・バイオテックアプリ"
+      },
+      "education": {
+        "tag": "教育",
+        "title": "EdTechプラットフォーム",
+        "subtitle": "学習管理・教育ツール"
+      },
+      "ecommerce": {
+        "tag": "EC",
+        "title": "コマースソリューション",
+        "subtitle": "オンラインビジネスを構築・拡大"
+      },
+      "communication": {
+        "tag": "コミュニケーション",
+        "title": "メッセージング＆コラボ",
+        "subtitle": "チームと顧客をシームレスに接続"
+      },
+      "iot": {
+        "tag": "IoT・ロボティクス",
+        "title": "コネクテッドデバイス",
+        "subtitle": "IoTフリート・ロボティクス管理"
+      },
+      "media": {
+        "tag": "メディア",
+        "title": "コンテンツ＆メディア",
+        "subtitle": "コンテンツの制作・配信・収益化"
+      },
+      "logistics": {
+        "tag": "物流",
+        "title": "サプライチェーンツール",
+        "subtitle": "物流・オペレーションを最適化"
       },
       "today": {
         "tag": "本日のおすすめ",
@@ -234,7 +358,39 @@
     "github": "GitHubで続ける",
     "agreeTerms": "利用規約に同意します",
     "alreadyHaveAccount": "アカウントをお持ちの方",
-    "dontHaveAccount": "アカウントをお持ちでない方"
+    "dontHaveAccount": "アカウントをお持ちでない方",
+    "loginSuccess": "ログイン成功",
+    "redirecting": "リダイレクト中...",
+    "name": "お名前",
+    "agreeTermsLong": "続行することで、利用規約とプライバシーポリシーに同意したものとみなされます。",
+    "emailRequired": "メールアドレスを入力してください",
+    "emailInvalid": "有効なメールアドレスを入力してください",
+    "passwordRequired": "パスワードを入力してください",
+    "passwordWeak": "パスワードは8文字以上で、大文字、小文字、数字、記号を含めてください",
+    "rateLimited": "試行回数が多すぎます。しばらくお待ちください。",
+    "nameRequired": "お名前を入力してください",
+    "passwordMismatch": "パスワードが一致しません",
+    "forgotPasswordTitle": "パスワードのリセット",
+    "forgotPasswordDescription": "メールアドレスを入力してください。パスワードリセット用のリンクをお送りします。",
+    "sendResetLink": "リセットリンクを送信",
+    "backToSignIn": "ログインに戻る",
+    "resetLinkSent": "該当するアカウントが存在する場合、パスワードリセット用のリンクを送信しました。",
+    "resetPasswordTitle": "新しいパスワードの設定",
+    "resetPasswordDescription": "新しいパスワードを入力してください。",
+    "newPassword": "新しいパスワード",
+    "confirmNewPassword": "新しいパスワード（確認）",
+    "resetPassword": "パスワードをリセット",
+    "resetPasswordSuccess": "パスワードがリセットされました。ログインしてください。",
+    "resetTokenExpired": "このリセットリンクは期限切れです。新しいリンクをリクエストしてください。",
+    "resetTokenInvalid": "無効なリセットリンクです。新しいリンクをリクエストしてください。",
+    "verificationSent": "確認メールを送信しました。受信トレイをご確認ください。",
+    "verificationSuccess": "メールアドレスの確認が完了しました！",
+    "verificationExpired": "確認リンクの有効期限が切れています。新しいリンクをリクエストしてください。",
+    "verificationInvalid": "無効な確認リンクです。新しいリンクをリクエストしてください。",
+    "verificationError": "確認中にエラーが発生しました。もう一度お試しください。",
+    "resendVerification": "確認メールを再送信",
+    "resendVerificationSuccess": "確認メールを再送信しました。",
+    "emailNotVerified": "メールアドレスを確認してから続行してください。"
   },
   "billing": {
     "title": "課金・プラン",
@@ -244,6 +400,8 @@
     "usage": "利用量",
     "revenueShare": "レベニューシェア",
     "payouts": "支払い",
+    "paymentMethods": "お支払い方法",
+    "billingHistory": "請求履歴",
     "plans": {
       "free": {
         "name": "フリー",
@@ -354,5 +512,169 @@
     "privacy": "プライバシーポリシー",
     "cookies": "Cookieポリシー",
     "copyright": "© 2026 Toolverse. All rights reserved."
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "ウェブアプリの開発・公開・管理をToolverseで。",
+    "registerNew": "新しいアプリを登録",
+    "tabs": {
+      "tools": "マイツール",
+      "sdk": "SDK連携",
+      "revenue": "収益",
+      "settings": "設定"
+    },
+    "stats": {
+      "publishedTools": "公開ツール",
+      "totalUsers": "総ユーザー",
+      "monthlyRevenue": "月間収益",
+      "avgRating": "平均評価"
+    },
+    "status": {
+      "published": "公開中",
+      "draft": "下書き",
+      "review": "審査中"
+    },
+    "actions": {
+      "edit": "編集",
+      "analytics": "分析",
+      "perMonth": "/月"
+    },
+    "pricing": {
+      "title": "料金モデル",
+      "free": "無料",
+      "freeDesc": "すべての機能を無料で提供",
+      "freemium": "フリーミアム",
+      "freemiumDesc": "基本無料 + プレミアム機能",
+      "paid": "買い切り",
+      "paidDesc": "一度の支払いで永続利用",
+      "subscription": "サブスクリプション",
+      "subscriptionDesc": "月額・年額の定期課金",
+      "monthlyPrice": "月額料金（円）",
+      "yearlyPrice": "年額料金（円）（オプション）",
+      "salePrice": "販売価格（円）",
+      "freeTrialDays": "無料トライアル期間（日数）",
+      "freePlanLimits": "無料プランの制限事項",
+      "freePlanLimitsPlaceholder": "例: 月間1,000リクエストまで、基本機能のみ利用可能..."
+    },
+    "auth": {
+      "title": "認証方式",
+      "toolverse": "Toolverse認証 (推奨)",
+      "toolverseDesc": "Toolverseのシングルサインオンを利用",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "独自のOAuth認証と連携",
+      "oauthSettings": "OAuth 2.0 設定",
+      "apikey": "APIキー",
+      "apikeyDesc": "APIキーベースの認証",
+      "none": "認証なし",
+      "noneDesc": "誰でもアクセス可能"
+    },
+    "form": {
+      "appName": "アプリ名",
+      "summaryDescription": "概要説明",
+      "summaryPlaceholder": "アプリの概要を1〜2文で...",
+      "detailedDescription": "詳細説明",
+      "detailedPlaceholder": "機能や特徴を詳しく説明...",
+      "category": "カテゴリ",
+      "categoryPlaceholder": "カテゴリを選択...",
+      "tags": "タグ",
+      "tagsPlaceholder": "AI, 生産性, ライティング",
+      "icon": "アイコン",
+      "iconDragDrop": "ドラッグ＆ドロップまたはクリック",
+      "iconHint": "PNG, SVG（512×512推奨）",
+      "screenshots": "スクリーンショット",
+      "screenshotsDesc": "スクリーンショットをアップロード（最大6枚）",
+      "screenshotsHint": "PNG, JPG — 1280×720推奨",
+      "serviceUrl": "サービスURL",
+      "sandboxUrl": "サンドボックス/デモURL",
+      "apiEndpoint": "APIエンドポイント",
+      "webhookUrl": "Webhook URL",
+      "privacyPolicyUrl": "プライバシーポリシーURL",
+      "termsUrl": "利用規約URL",
+      "supportEmail": "サポートメール",
+      "supportUrl": "サポートURL"
+    },
+    "wizard": {
+      "title": "新しいアプリを登録",
+      "subtitle": "4ステップでToolverseに公開できます",
+      "step1": "基本情報",
+      "step1Desc": "アプリ名・説明・カテゴリ",
+      "step2": "サービス設定",
+      "step2Desc": "URL・API・認証",
+      "step3": "料金・決済",
+      "step3Desc": "プラン・Toolverse決済",
+      "step4": "レビュー・公開",
+      "step4Desc": "審査情報・公開設定",
+      "previous": "前へ",
+      "next": "次へ",
+      "saveDraft": "下書き保存",
+      "submitReview": "審査に提出"
+    },
+    "webAppConnection": "ウェブアプリの接続",
+    "webAppConnectionDesc": "Toolverseはウェブアプリのプラットフォームです。あなたのアプリのURLを登録し、ユーザーがToolverse経由でアクセスできるようにします。",
+    "payment": {
+      "title": "Toolverse決済",
+      "description": "Toolverseの統合決済で安全にお支払いを受け取れます",
+      "connected": "決済アカウント接続済み",
+      "connectedVia": "Stripe Connect でリンク済み",
+      "notConnected": "決済アカウント未接続",
+      "notConnectedDesc": "売上を受け取るにはアカウント接続が必要です",
+      "changeSettings": "設定変更",
+      "connect": "接続する",
+      "revenueShare": "レベニューシェア",
+      "creatorShare": "クリエイター",
+      "platformFee": "※ Toolverseプラットフォーム手数料には決済処理手数料（3.6%）が含まれます"
+    },
+    "review": {
+      "title": "公開前の最終確認",
+      "description": "以下の情報を入力して審査に提出してください。審査は通常1〜3営業日で完了します。",
+      "visibility": "公開設定",
+      "public": "公開",
+      "publicDesc": "マーケットプレイスに表示され、全ユーザーが利用可能",
+      "unlisted": "限定公開",
+      "unlistedDesc": "リンクを知っているユーザーのみアクセス可能",
+      "private": "非公開",
+      "privateDesc": "自分のみアクセス可能（テスト用）",
+      "summary": "登録内容サマリー",
+      "appName": "アプリ名",
+      "notEntered": "(未入力)",
+      "notSelected": "(未選択)",
+      "authMethod": "認証方式",
+      "pricingModel": "料金モデル"
+    },
+    "sdk": {
+      "quickStart": "クイックスタート",
+      "quickStartDesc": "Toolverse SDKをインストールしてプラットフォームと連携しましょう。",
+      "install": "インストール",
+      "example": "使用例",
+      "resources": "リソース",
+      "apiReference": "APIリファレンス",
+      "apiReferenceDesc": "SDK完全ドキュメント",
+      "authGuide": "認証ガイド",
+      "authGuideDesc": "OAuth2・APIキーの設定",
+      "webhook": "Webhook",
+      "webhookDesc": "リアルタイムイベント通知",
+      "rateLimit": "レート制限",
+      "rateLimitDesc": "利用上限とスロットリング",
+      "openDocs": "ドキュメントを開く"
+    },
+    "revenue": {
+      "lifetimeEarnings": "累計収益",
+      "thisMonth": "今月の収益",
+      "nextPayout": "次回振込予定",
+      "chart": "収益推移",
+      "chartPlaceholder": "収益グラフ",
+      "byTool": "ツール別収益"
+    },
+    "settings": {
+      "creatorProfile": "クリエイタープロフィール",
+      "displayName": "表示名",
+      "bio": "自己紹介",
+      "website": "ウェブサイト",
+      "saveProfile": "プロフィールを保存",
+      "apiKey": "APIキー",
+      "apiKeyDesc": "SDK連携・ツール管理用のAPIキーです。",
+      "productionKey": "本番キー",
+      "regenerateKey": "キーを再生成"
+    }
   }
 }

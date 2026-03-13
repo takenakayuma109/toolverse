@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
+// Fallback mock data — replace with API fetch from /api/tools and /api/categories when available
 import { allTools, categories } from '@/lib/mock-data';
 import { formatNumber } from '@/lib/utils';
 import Badge from '@/components/ui/Badge';
@@ -25,6 +26,14 @@ const categoryIconStyles: Record<string, { bg: string; shadow: string }> = {
   creator: { bg: 'from-pink-500 to-rose-600', shadow: 'shadow-pink-500/40' },
   automation: { bg: 'from-amber-500 to-yellow-600', shadow: 'shadow-amber-500/40' },
   analytics: { bg: 'from-indigo-500 to-blue-600', shadow: 'shadow-indigo-500/40' },
+  security: { bg: 'from-red-500 to-rose-700', shadow: 'shadow-red-500/40' },
+  healthcare: { bg: 'from-teal-500 to-cyan-600', shadow: 'shadow-teal-500/40' },
+  education: { bg: 'from-sky-500 to-blue-600', shadow: 'shadow-sky-500/40' },
+  ecommerce: { bg: 'from-fuchsia-500 to-pink-600', shadow: 'shadow-fuchsia-500/40' },
+  communication: { bg: 'from-green-500 to-emerald-600', shadow: 'shadow-green-500/40' },
+  iot: { bg: 'from-cyan-500 to-teal-600', shadow: 'shadow-cyan-500/40' },
+  media: { bg: 'from-rose-500 to-orange-500', shadow: 'shadow-rose-500/40' },
+  logistics: { bg: 'from-purple-500 to-indigo-600', shadow: 'shadow-purple-500/40' },
 };
 
 // Featured content keys for each section (references i18n keys)
@@ -37,6 +46,14 @@ const featuredSections: Record<string, { toolId: string; gradient: string }> = {
   creator: { toolId: 'design-studio', gradient: 'from-pink-600 via-rose-600 to-red-600' },
   automation: { toolId: 'auto-flow', gradient: 'from-amber-600 via-yellow-600 to-orange-600' },
   analytics: { toolId: 'data-lens', gradient: 'from-indigo-600 via-blue-600 to-cyan-600' },
+  security: { toolId: 'presence-vision', gradient: 'from-red-600 via-rose-600 to-pink-600' },
+  healthcare: { toolId: 'presence-vision', gradient: 'from-teal-600 via-cyan-600 to-sky-600' },
+  education: { toolId: 'presence-vision', gradient: 'from-sky-600 via-blue-600 to-indigo-600' },
+  ecommerce: { toolId: 'presence-vision', gradient: 'from-fuchsia-600 via-pink-600 to-rose-600' },
+  communication: { toolId: 'presence-vision', gradient: 'from-green-600 via-emerald-600 to-teal-600' },
+  iot: { toolId: 'presence-vision', gradient: 'from-cyan-600 via-teal-600 to-green-600' },
+  media: { toolId: 'design-studio', gradient: 'from-rose-600 via-orange-600 to-amber-600' },
+  logistics: { toolId: 'presence-vision', gradient: 'from-purple-600 via-indigo-600 to-blue-600' },
   today: { toolId: 'senrigan', gradient: 'from-violet-600 via-indigo-600 to-purple-600' },
   trending: { toolId: 'ai-writer-pro', gradient: 'from-rose-600 via-pink-600 to-fuchsia-600' },
   webapps: { toolId: 'presence-vision', gradient: 'from-cyan-600 via-blue-600 to-indigo-600' },
@@ -69,10 +86,10 @@ export default function MarketplacePage() {
   const [activeSection, setActiveSection] = useState<SidebarSection>('today');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const getCategoryName = (id: string) => {
+  const getCategoryName = useCallback((id: string) => {
     const key = categoryI18nKeyMap[id] ?? id;
     return t(`home.categories.${key}`);
-  };
+  }, [t]);
 
   // Get translated tool name and description
   const getToolName = (tool: Tool) => {
@@ -93,7 +110,7 @@ export default function MarketplacePage() {
     if (activeSection === 'webapps') return t('marketplace.webApps');
     if (activeSection === 'official') return t('marketplace.official');
     return getCategoryName(activeSection);
-  }, [activeSection, t]);
+  }, [activeSection, t, getCategoryName]);
 
   const filteredTools = useMemo(() => {
     let tools: Tool[] = [...allTools];

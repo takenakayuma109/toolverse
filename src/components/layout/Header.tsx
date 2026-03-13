@@ -7,9 +7,9 @@ import { cn } from '@/lib/utils';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import ThemeSwitch from '@/components/ui/ThemeSwitch';
 import Input from '@/components/ui/Input';
-import { Menu, X, Search, Sparkles, Upload, Shield, User, LogOut, CreditCard } from 'lucide-react';
+import { Menu, X, Search, Sparkles, Upload, Shield, User, LogOut, CreditCard, Wallet } from 'lucide-react';
 
-type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin';
+type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin' | 'wallet';
 
 const NAV_ITEMS = [
   { key: 'home' },
@@ -67,6 +67,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
           <button
             onClick={() => onNavigate('home')}
             className="flex items-center gap-2 shrink-0 group"
+            aria-label={t('nav.home')}
           >
             <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 via-indigo-500 to-purple-600 shadow-lg shadow-violet-500/30 transition-transform duration-200 group-hover:scale-105">
               <Sparkles className="h-5 w-5 text-white" strokeWidth={2} />
@@ -132,6 +133,7 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label="User menu"
                 >
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
                     {user.name.charAt(0)}
@@ -158,6 +160,10 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
                     <button onClick={() => { onNavigate('billing'); setUserMenuOpen(false); }}
                       className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
                       <CreditCard className="w-4 h-4" /> {t('nav.billing') || 'Billing'}
+                    </button>
+                    <button onClick={() => { onNavigate('wallet' as PageView); setUserMenuOpen(false); }}
+                      className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <Wallet className="w-4 h-4" /> Creator Wallet
                     </button>
                     {user.role === 'admin' && (
                       <button onClick={() => { onNavigate('admin'); setUserMenuOpen(false); }}

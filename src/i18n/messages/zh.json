@@ -51,7 +51,11 @@
       "title": "欢迎来到工具的宇宙",
       "subtitle": "汇聚软件、SaaS、AI和自动化工具的下一代平台",
       "cta": "探索工具",
-      "ctaSecondary": "成为创作者"
+      "ctaSecondary": "成为创作者",
+      "badge": "创作者通道已开放",
+      "trust1": "企业级安全保障",
+      "trust2": "99.9% 可用性 SLA",
+      "trust3": "全球 CDN 加速"
     },
     "features": {
       "title": "Toolverse 能做什么",
@@ -70,6 +74,14 @@
       "api": {
         "title": "平台 API",
         "description": "认证、计费、存储。一切通过 API 构建"
+      },
+      "infrastructure": {
+        "title": "托管基础设施",
+        "description": "自动扩展计算、全球 CDN 和托管数据库，让您专注于产品开发"
+      },
+      "security": {
+        "title": "企业级安全",
+        "description": "SOC 2 合规、端到端加密和精细化访问控制，适用于任何规模的团队"
       }
     },
     "stats": {
@@ -87,11 +99,83 @@
       "development": "开发",
       "creatorTools": "创作者",
       "automation": "自动化",
-      "analytics": "分析"
+      "analytics": "数据・分析",
+      "security": "网络安全",
+      "healthcare": "医疗・生物科技",
+      "education": "教育・EdTech",
+      "ecommerce": "电商・零售",
+      "communication": "通讯",
+      "iot": "IoT・机器人",
+      "media": "媒体・娱乐",
+      "logistics": "物流・供应链"
     },
     "officialTools": {
       "title": "官方工具",
       "subtitle": "体验 Toolverse 提供的官方工具"
+    },
+    "pricing": {
+      "badge": "价格与方案",
+      "title": "透明、可扩展的定价",
+      "subtitle": "免费起步，随需扩展。无隐藏费用，无意外收费。",
+      "popular": "最受欢迎",
+      "strengths": {
+        "instant": {
+          "title": "即时部署",
+          "description": "发布应用并在数分钟内开始收款"
+        },
+        "secure": {
+          "title": "PCI-DSS 合规",
+          "description": "银行级安全，所有交易端到端加密"
+        },
+        "global": {
+          "title": "全球覆盖",
+          "description": "支持 135+ 种货币，覆盖 190+ 个国家的用户"
+        },
+        "flexible": {
+          "title": "灵活计费",
+          "description": "订阅、一次性付费、按量计费——选择适合您的模式"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "免费版",
+          "price": "$0",
+          "description": "适合个人和副业项目",
+          "f1": "最多发布 5 个应用",
+          "f2": "每月 1,000 活跃用户",
+          "f3": "社区支持"
+        },
+        "pro": {
+          "name": "专业版",
+          "price": "$14.99",
+          "period": "/月",
+          "description": "面向专业开发者",
+          "f1": "无限发布应用",
+          "f2": "每月 50,000 活跃用户",
+          "f3": "优先支持和数据分析",
+          "f4": "自定义域名和品牌"
+        },
+        "team": {
+          "name": "团队版",
+          "price": "$39.99",
+          "period": "/月",
+          "description": "面向团队和组织",
+          "f1": "包含专业版全部功能",
+          "f2": "无限月活跃用户",
+          "f3": "团队协作和角色管理",
+          "f4": "SLA 和专属支持"
+        }
+      },
+      "paymentTitle": "集成支付系统",
+      "paymentSubtitle": "基于业界领先的支付基础设施，零配置即可全球收款。",
+      "payment": {
+        "stripe": "银行卡、电子钱包、银行转账",
+        "applepay": "一键移动支付",
+        "googlepay": "Android 快捷结账"
+      },
+      "pci": "PCI-DSS Level 1 合规",
+      "currencies": "支持 135+ 种货币",
+      "creatorPayout": "每周创作者结算"
     },
     "cta": {
       "title": "一起构建工具的宇宙",
@@ -104,12 +188,120 @@
     "subtitle": "找到最好的工具",
     "trending": "热门趋势",
     "newTools": "最新工具",
-    "featured": "精选推荐",
+    "featured": {
+      "ai": {
+        "tag": "本月推荐",
+        "title": "AI Writer Pro",
+        "subtitle": "用AI的力量超高速创建内容"
+      },
+      "productivity": {
+        "tag": "编辑精选",
+        "title": "TaskFlow",
+        "subtitle": "AI自动判断优先级的任务管理"
+      },
+      "finance": {
+        "tag": "热门免费应用",
+        "title": "FinTrack",
+        "subtitle": "让家庭财务管理更简单"
+      },
+      "marketing": {
+        "tag": "最新发布",
+        "title": "MarketSense",
+        "subtitle": "实时营销分析与洞察"
+      },
+      "development": {
+        "tag": "重大更新",
+        "title": "CodePilot",
+        "subtitle": "为现代开发者打造的AI结对编程"
+      },
+      "creator": {
+        "tag": "精选应用",
+        "title": "DesignStudio",
+        "subtitle": "面向创作者的AI设计工具"
+      },
+      "automation": {
+        "tag": "热度飙升",
+        "title": "AutoFlow",
+        "subtitle": "无需代码即可构建工作流"
+      },
+      "analytics": {
+        "tag": "必备应用",
+        "title": "DataLens",
+        "subtitle": "高级数据可视化工具"
+      },
+      "security": {
+        "tag": "安全",
+        "title": "网络安全工具",
+        "subtitle": "保护您的基础设施和数据"
+      },
+      "healthcare": {
+        "tag": "医疗健康",
+        "title": "医疗健康解决方案",
+        "subtitle": "数字健康和生物科技应用"
+      },
+      "education": {
+        "tag": "教育",
+        "title": "EdTech 平台",
+        "subtitle": "学习管理和教育工具"
+      },
+      "ecommerce": {
+        "tag": "电子商务",
+        "title": "商务解决方案",
+        "subtitle": "构建并扩展您的在线业务"
+      },
+      "communication": {
+        "tag": "通讯",
+        "title": "消息与协作",
+        "subtitle": "无缝连接团队和客户"
+      },
+      "iot": {
+        "tag": "IoT 与机器人",
+        "title": "智能设备",
+        "subtitle": "管理 IoT 设备群和机器人平台"
+      },
+      "media": {
+        "tag": "媒体",
+        "title": "内容与媒体",
+        "subtitle": "创作、分发和变现内容"
+      },
+      "logistics": {
+        "tag": "物流",
+        "title": "供应链工具",
+        "subtitle": "优化物流和运营"
+      },
+      "today": {
+        "tag": "今日推荐",
+        "title": "SENRIGAN",
+        "subtitle": "AI驱动的前瞻分析平台"
+      },
+      "trending": {
+        "tag": "热门趋势",
+        "title": "AI Writer Pro",
+        "subtitle": "本周最受欢迎的网页应用"
+      },
+      "webapps": {
+        "tag": "网页应用",
+        "title": "Toolverse 网页应用",
+        "subtitle": "无需安装，探索强大的网页应用"
+      },
+      "official": {
+        "tag": "官方",
+        "title": "PresenceVision",
+        "subtitle": "Toolverse官方AI出席管理工具"
+      }
+    },
     "categories": "分类",
     "reviews": "评价",
     "rating": "评分",
+    "view": "查看",
     "install": "安装",
     "installed": "已安装",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "官方",
+    "essential": "推荐",
+    "apps": "应用",
+    "selectedByEditors": "Toolverse编辑精选",
     "pricing": "定价",
     "filters": "筛选",
     "sortBy": "排序方式",
@@ -166,7 +358,39 @@
     "github": "使用 GitHub 登录",
     "agreeTerms": "我同意服务条款",
     "alreadyHaveAccount": "已有账户？",
-    "dontHaveAccount": "没有账户？"
+    "dontHaveAccount": "没有账户？",
+    "loginSuccess": "登录成功",
+    "redirecting": "正在重定向...",
+    "name": "姓名",
+    "agreeTermsLong": "继续即表示您同意我们的服务条款和隐私政策。",
+    "emailRequired": "请输入电子邮箱",
+    "emailInvalid": "请输入有效的电子邮箱地址",
+    "passwordRequired": "请输入密码",
+    "passwordWeak": "密码至少8个字符，需包含大写字母、小写字母、数字和特殊字符",
+    "rateLimited": "尝试次数过多，请稍后再试。",
+    "nameRequired": "请输入姓名",
+    "passwordMismatch": "两次输入的密码不一致",
+    "forgotPasswordTitle": "重置密码",
+    "forgotPasswordDescription": "请输入您的电子邮箱，我们将发送密码重置链接。",
+    "sendResetLink": "发送重置链接",
+    "resetLinkSent": "如果该邮箱存在关联账户，密码重置链接已发送。",
+    "backToSignIn": "返回登录",
+    "resetPasswordTitle": "设置新密码",
+    "resetPasswordDescription": "请在下方输入您的新密码。",
+    "resetPassword": "重置密码",
+    "newPassword": "新密码",
+    "confirmNewPassword": "确认新密码",
+    "resetPasswordSuccess": "密码已成功重置。您现在可以登录了。",
+    "resetTokenExpired": "此重置链接已过期。请重新申请。",
+    "resetTokenInvalid": "无效的重置链接。请重新申请。",
+    "emailNotVerified": "请验证您的电子邮箱以继续操作。",
+    "verificationSent": "验证邮件已发送。请查看您的收件箱。",
+    "verificationSuccess": "您的电子邮箱已成功验证！",
+    "verificationExpired": "验证链接已过期。请重新申请。",
+    "verificationInvalid": "无效的验证链接。请重新申请。",
+    "verificationError": "验证过程中发生错误。请重试。",
+    "resendVerification": "重新发送验证邮件",
+    "resendVerificationSuccess": "验证邮件已重新发送。"
   },
   "billing": {
     "title": "账单与方案",
@@ -176,6 +400,8 @@
     "usage": "用量",
     "revenueShare": "收益分成",
     "payouts": "提现",
+    "paymentMethods": "支付方式",
+    "billingHistory": "账单记录",
     "plans": {
       "free": {
         "name": "免费版",
@@ -219,6 +445,56 @@
       "description": "债务管理与优化导航器"
     }
   },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "基于AI的在线状态管理与分析"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI驱动的前瞻性分析平台"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "专利搜索、分析与管理"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "债务管理与优化导航器"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "专业级AI写作助手"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "AI智能优先级任务管理"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "AI结对编程与代码审查助手"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "实时营销分析与洞察"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "无代码工作流自动化构建器"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "个人财务跟踪与预算工具"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "面向创作者的AI设计工具"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "高级数据可视化与分析工具"
+    }
+  },
   "footer": {
     "product": "产品",
     "company": "公司",
@@ -236,5 +512,169 @@
     "privacy": "隐私政策",
     "cookies": "Cookie 政策",
     "copyright": "© 2026 Toolverse. 版权所有。"
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "在 Toolverse 上开发、发布和管理网页应用。",
+    "registerNew": "注册新应用",
+    "tabs": {
+      "tools": "我的工具",
+      "sdk": "SDK 集成",
+      "revenue": "收入",
+      "settings": "设置"
+    },
+    "stats": {
+      "publishedTools": "已发布工具",
+      "totalUsers": "总用户数",
+      "monthlyRevenue": "月收入",
+      "avgRating": "平均评分"
+    },
+    "status": {
+      "published": "已发布",
+      "draft": "草稿",
+      "review": "审核中"
+    },
+    "actions": {
+      "edit": "编辑",
+      "analytics": "数据分析",
+      "perMonth": "/月"
+    },
+    "pricing": {
+      "title": "定价模式",
+      "free": "免费",
+      "freeDesc": "所有功能免费使用",
+      "freemium": "免费增值",
+      "freemiumDesc": "免费基础方案 + 高级功能",
+      "paid": "一次性购买",
+      "paidDesc": "一次付款永久使用",
+      "subscription": "订阅",
+      "subscriptionDesc": "按月或按年定期计费",
+      "monthlyPrice": "月度价格",
+      "yearlyPrice": "年度价格（可选）",
+      "salePrice": "销售价格",
+      "freeTrialDays": "免费试用期（天）",
+      "freePlanLimits": "免费方案限制",
+      "freePlanLimitsPlaceholder": "例如：每月最多 1,000 次请求，仅限基础功能..."
+    },
+    "auth": {
+      "title": "认证方式",
+      "toolverse": "Toolverse 认证（推荐）",
+      "toolverseDesc": "使用 Toolverse 单点登录",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "集成您自己的 OAuth 提供商",
+      "oauthSettings": "OAuth 2.0 设置",
+      "apikey": "API 密钥",
+      "apikeyDesc": "基于 API 密钥的认证",
+      "none": "无需认证",
+      "noneDesc": "所有人均可访问"
+    },
+    "form": {
+      "appName": "应用名称",
+      "summaryDescription": "简要描述",
+      "summaryPlaceholder": "用1-2句话描述您的应用...",
+      "detailedDescription": "详细描述",
+      "detailedPlaceholder": "描述功能和详情...",
+      "category": "分类",
+      "categoryPlaceholder": "选择分类...",
+      "tags": "标签",
+      "tagsPlaceholder": "AI, 效率, 写作",
+      "icon": "图标",
+      "iconDragDrop": "拖放或点击上传",
+      "iconHint": "PNG, SVG（建议 512×512）",
+      "screenshots": "截图",
+      "screenshotsDesc": "上传截图（最多 6 张）",
+      "screenshotsHint": "PNG, JPG — 建议 1280×720",
+      "serviceUrl": "服务 URL",
+      "sandboxUrl": "沙盒 / 演示 URL",
+      "apiEndpoint": "API 端点",
+      "webhookUrl": "Webhook URL",
+      "privacyPolicyUrl": "隐私政策 URL",
+      "termsUrl": "服务条款 URL",
+      "supportEmail": "支持邮箱",
+      "supportUrl": "支持 URL"
+    },
+    "wizard": {
+      "title": "注册新应用",
+      "subtitle": "4 步发布到 Toolverse",
+      "step1": "基本信息",
+      "step1Desc": "应用名称、描述和分类",
+      "step2": "服务设置",
+      "step2Desc": "URL、API 和认证",
+      "step3": "定价与计费",
+      "step3Desc": "方案与 Toolverse 支付",
+      "step4": "审核与发布",
+      "step4Desc": "审核信息与可见性",
+      "previous": "上一步",
+      "next": "下一步",
+      "saveDraft": "保存草稿",
+      "submitReview": "提交审核"
+    },
+    "webAppConnection": "网页应用连接",
+    "webAppConnectionDesc": "Toolverse 是一个网页应用平台。注册您的应用 URL，让用户可以通过 Toolverse 访问。",
+    "payment": {
+      "title": "Toolverse 支付",
+      "description": "通过 Toolverse 的集成计费系统安全收款",
+      "connected": "支付账户已连接",
+      "connectedVia": "通过 Stripe Connect 关联",
+      "notConnected": "支付账户未连接",
+      "notConnectedDesc": "连接账户以接收收入",
+      "changeSettings": "更改设置",
+      "connect": "连接",
+      "revenueShare": "收益分成",
+      "creatorShare": "创作者",
+      "platformFee": "* Toolverse 平台费用包含支付处理费（3.6%）"
+    },
+    "review": {
+      "title": "发布前最终审核",
+      "description": "填写以下信息并提交审核。审核通常在 1-3 个工作日内完成。",
+      "visibility": "可见性",
+      "public": "公开",
+      "publicDesc": "在应用市场可见，所有用户均可使用",
+      "unlisted": "未列出",
+      "unlistedDesc": "仅拥有链接的用户可访问",
+      "private": "私有",
+      "privateDesc": "仅您自己可访问（用于测试）",
+      "summary": "注册摘要",
+      "appName": "应用名称",
+      "notEntered": "（未填写）",
+      "notSelected": "（未选择）",
+      "authMethod": "认证方式",
+      "pricingModel": "定价模式"
+    },
+    "sdk": {
+      "quickStart": "快速开始",
+      "quickStartDesc": "安装 Toolverse SDK 并与平台集成。",
+      "install": "安装",
+      "example": "示例",
+      "resources": "资源",
+      "apiReference": "API 参考",
+      "apiReferenceDesc": "完整 SDK 文档",
+      "authGuide": "认证指南",
+      "authGuideDesc": "OAuth2 和 API 密钥配置",
+      "webhook": "Webhooks",
+      "webhookDesc": "实时事件通知",
+      "rateLimit": "速率限制",
+      "rateLimitDesc": "使用限制和节流",
+      "openDocs": "打开文档"
+    },
+    "revenue": {
+      "lifetimeEarnings": "累计收入",
+      "thisMonth": "本月",
+      "nextPayout": "下次结算",
+      "chart": "收入趋势",
+      "chartPlaceholder": "收入图表",
+      "byTool": "按工具分类收入"
+    },
+    "settings": {
+      "creatorProfile": "创作者资料",
+      "displayName": "显示名称",
+      "bio": "个人简介",
+      "website": "网站",
+      "saveProfile": "保存资料",
+      "apiKey": "API 密钥",
+      "apiKeyDesc": "用于 SDK 集成和工具管理的 API 密钥。",
+      "productionKey": "生产密钥",
+      "regenerateKey": "重新生成密钥"
+    }
   }
 }

@@ -14,6 +14,12 @@ export default function Card({ children, className, hover = false, padding = 'md
   return (
     <div
       onClick={onClick}
+      onKeyDown={onClick ? (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      } : undefined}
       {...(onClick ? { role: 'button' as const, tabIndex: 0 } : {})}
       className={cn(
         'bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800',

@@ -51,7 +51,11 @@
       "title": "टूल्स की दुनिया में आपका स्वागत है",
       "subtitle": "सॉफ़्टवेयर, SaaS, AI और ऑटोमेशन टूल्स के लिए अगली पीढ़ी का प्लेटफ़ॉर्म",
       "cta": "टूल्स देखें",
-      "ctaSecondary": "क्रिएटर बनें"
+      "ctaSecondary": "क्रिएटर बनें",
+      "badge": "अब क्रिएटर्स के लिए खुला",
+      "trust1": "एंटरप्राइज़-स्तर की सुरक्षा",
+      "trust2": "99.9% अपटाइम SLA",
+      "trust3": "ग्लोबल CDN डिलीवरी"
     },
     "features": {
       "title": "Toolverse के साथ क्या कर सकते हैं",
@@ -70,6 +74,14 @@
       "api": {
         "title": "प्लेटफ़ॉर्म API",
         "description": "प्रमाणीकरण, बिलिंग, स्टोरेज। सब कुछ API से बनाएँ"
+      },
+      "infrastructure": {
+        "title": "प्रबंधित बुनियादी ढाँचा",
+        "description": "ऑटो-स्केलिंग कंप्यूट, ग्लोबल CDN और प्रबंधित डेटाबेस — अपने उत्पाद पर ध्यान दें"
+      },
+      "security": {
+        "title": "एंटरप्राइज़ सुरक्षा",
+        "description": "SOC 2 अनुपालन, एंड-टू-एंड एन्क्रिप्शन और किसी भी आकार की टीम के लिए विस्तृत एक्सेस कंट्रोल"
       }
     },
     "stats": {
@@ -87,11 +99,83 @@
       "development": "विकास",
       "creatorTools": "क्रिएटर",
       "automation": "ऑटोमेशन",
-      "analytics": "एनालिटिक्स"
+      "analytics": "डेटा और एनालिटिक्स",
+      "security": "साइबर सुरक्षा",
+      "healthcare": "हेल्थकेयर और बायोटेक",
+      "education": "शिक्षा और EdTech",
+      "ecommerce": "ई-कॉमर्स और रिटेल",
+      "communication": "संचार",
+      "iot": "IoT और रोबोटिक्स",
+      "media": "मीडिया और मनोरंजन",
+      "logistics": "लॉजिस्टिक्स और आपूर्ति श्रृंखला"
     },
     "officialTools": {
       "title": "आधिकारिक टूल्स",
       "subtitle": "Toolverse द्वारा प्रदान किए गए आधिकारिक टूल्स आज़माएँ"
+    },
+    "pricing": {
+      "badge": "मूल्य और योजनाएँ",
+      "title": "पारदर्शी और स्केलेबल मूल्य निर्धारण",
+      "subtitle": "मुफ़्त में शुरू करें, विकास के साथ बढ़ाएँ। कोई छिपी फीस नहीं, कोई सरप्राइज़ नहीं।",
+      "popular": "सबसे लोकप्रिय",
+      "strengths": {
+        "instant": {
+          "title": "तत्काल डिप्लॉयमेंट",
+          "description": "अपना ऐप प्रकाशित करें और मिनटों में भुगतान स्वीकार करना शुरू करें"
+        },
+        "secure": {
+          "title": "PCI-DSS अनुपालन",
+          "description": "सभी लेनदेन के लिए एंड-टू-एंड एन्क्रिप्शन के साथ बैंक-स्तरीय सुरक्षा"
+        },
+        "global": {
+          "title": "ग्लोबल पहुँच",
+          "description": "190+ देशों के उपयोगकर्ताओं से 135+ मुद्राओं में भुगतान स्वीकार करें"
+        },
+        "flexible": {
+          "title": "लचीली बिलिंग",
+          "description": "सदस्यता, एकमुश्त भुगतान, उपयोग-आधारित — अपने लिए सही मॉडल चुनें"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "मुफ़्त",
+          "price": "₹0",
+          "description": "व्यक्तिगत और साइड प्रोजेक्ट्स के लिए",
+          "f1": "5 ऐप्स तक प्रकाशित करें",
+          "f2": "1,000 मासिक सक्रिय उपयोगकर्ता",
+          "f3": "सामुदायिक सहायता"
+        },
+        "pro": {
+          "name": "प्रो",
+          "price": "₹1,199",
+          "period": "/माह",
+          "description": "पेशेवर डेवलपर्स के लिए",
+          "f1": "असीमित ऐप्स प्रकाशित करें",
+          "f2": "50,000 मासिक सक्रिय उपयोगकर्ता",
+          "f3": "प्राथमिकता सहायता और एनालिटिक्स",
+          "f4": "कस्टम डोमेन और ब्रांडिंग"
+        },
+        "team": {
+          "name": "टीम",
+          "price": "₹3,299",
+          "period": "/माह",
+          "description": "टीमों और संगठनों के लिए",
+          "f1": "प्रो की सभी सुविधाएँ शामिल",
+          "f2": "असीमित मासिक सक्रिय उपयोगकर्ता",
+          "f3": "टीम सहयोग और भूमिकाएँ",
+          "f4": "SLA और समर्पित सहायता"
+        }
+      },
+      "paymentTitle": "एकीकृत भुगतान प्रणाली",
+      "paymentSubtitle": "उद्योग-अग्रणी भुगतान बुनियादी ढाँचे द्वारा संचालित। बिना किसी सेटअप के वैश्विक भुगतान स्वीकार करें।",
+      "payment": {
+        "stripe": "कार्ड, वॉलेट, बैंक ट्रांसफ़र",
+        "applepay": "एक-टैप मोबाइल भुगतान",
+        "googlepay": "Android पर तेज़ चेकआउट"
+      },
+      "pci": "PCI-DSS Level 1 अनुपालन",
+      "currencies": "135+ मुद्राएँ समर्थित",
+      "creatorPayout": "साप्ताहिक क्रिएटर भुगतान"
     },
     "cta": {
       "title": "आइए साथ मिलकर टूल्स की दुनिया बनाएँ",
@@ -104,12 +188,120 @@
     "subtitle": "सर्वश्रेष्ठ टूल्स खोजें",
     "trending": "ट्रेंडिंग",
     "newTools": "नए टूल्स",
-    "featured": "विशेष रुप से प्रदर्शित",
+    "featured": {
+      "ai": {
+        "tag": "महीने का चयन",
+        "title": "AI Writer Pro",
+        "subtitle": "AI की शक्ति से अति तेज़ कंटेंट निर्माण"
+      },
+      "productivity": {
+        "tag": "संपादक की पसंद",
+        "title": "TaskFlow",
+        "subtitle": "AI द्वारा स्वचालित प्राथमिकता वाला कार्य प्रबंधन"
+      },
+      "finance": {
+        "tag": "लोकप्रिय मुफ़्त ऐप",
+        "title": "FinTrack",
+        "subtitle": "वित्त प्रबंधन को आसान बनाएँ"
+      },
+      "marketing": {
+        "tag": "नया लॉन्च",
+        "title": "MarketSense",
+        "subtitle": "रियल-टाइम मार्केटिंग एनालिटिक्स और इनसाइट्स"
+      },
+      "development": {
+        "tag": "प्रमुख अपडेट",
+        "title": "CodePilot",
+        "subtitle": "आधुनिक डेवलपर्स के लिए AI पेयर प्रोग्रामिंग"
+      },
+      "creator": {
+        "tag": "विशेष रुप से प्रदर्शित",
+        "title": "DesignStudio",
+        "subtitle": "क्रिएटर्स के लिए AI डिज़ाइन टूल"
+      },
+      "automation": {
+        "tag": "तेज़ी से बढ़ता ट्रेंड",
+        "title": "AutoFlow",
+        "subtitle": "बिना कोड के वर्कफ़्लो बनाएँ"
+      },
+      "analytics": {
+        "tag": "आवश्यक ऐप",
+        "title": "DataLens",
+        "subtitle": "उन्नत डेटा विज़ुअलाइज़ेशन"
+      },
+      "security": {
+        "tag": "सुरक्षा",
+        "title": "साइबर सुरक्षा टूल्स",
+        "subtitle": "अपने बुनियादी ढाँचे और डेटा की रक्षा करें"
+      },
+      "healthcare": {
+        "tag": "हेल्थकेयर",
+        "title": "हेल्थकेयर समाधान",
+        "subtitle": "डिजिटल स्वास्थ्य और बायोटेक एप्लिकेशन"
+      },
+      "education": {
+        "tag": "शिक्षा",
+        "title": "EdTech प्लेटफ़ॉर्म",
+        "subtitle": "लर्निंग मैनेजमेंट और शिक्षा टूल्स"
+      },
+      "ecommerce": {
+        "tag": "ई-कॉमर्स",
+        "title": "कॉमर्स समाधान",
+        "subtitle": "अपना ऑनलाइन व्यवसाय बनाएँ और बढ़ाएँ"
+      },
+      "communication": {
+        "tag": "संचार",
+        "title": "मैसेजिंग और सहयोग",
+        "subtitle": "टीमों और ग्राहकों को सहजता से जोड़ें"
+      },
+      "iot": {
+        "tag": "IoT और रोबोटिक्स",
+        "title": "कनेक्टेड डिवाइस",
+        "subtitle": "IoT फ़्लीट और रोबोटिक्स प्लेटफ़ॉर्म प्रबंधित करें"
+      },
+      "media": {
+        "tag": "मीडिया",
+        "title": "कंटेंट और मीडिया",
+        "subtitle": "कंटेंट बनाएँ, वितरित करें और मुद्रीकरण करें"
+      },
+      "logistics": {
+        "tag": "लॉजिस्टिक्स",
+        "title": "आपूर्ति श्रृंखला टूल्स",
+        "subtitle": "लॉजिस्टिक्स और संचालन को अनुकूलित करें"
+      },
+      "today": {
+        "tag": "आज का चयन",
+        "title": "SENRIGAN",
+        "subtitle": "AI-संचालित दूरदर्शी विश्लेषण प्लेटफ़ॉर्म"
+      },
+      "trending": {
+        "tag": "ट्रेंडिंग",
+        "title": "AI Writer Pro",
+        "subtitle": "इस सप्ताह का सबसे लोकप्रिय वेब ऐप"
+      },
+      "webapps": {
+        "tag": "वेब ऐप्स",
+        "title": "Toolverse वेब ऐप्स",
+        "subtitle": "शक्तिशाली वेब ऐप्स खोजें — इंस्टॉल की ज़रूरत नहीं"
+      },
+      "official": {
+        "tag": "आधिकारिक",
+        "title": "PresenceVision",
+        "subtitle": "Toolverse का आधिकारिक AI उपस्थिति प्रबंधन टूल"
+      }
+    },
     "categories": "श्रेणियाँ",
     "reviews": "समीक्षाएँ",
     "rating": "रेटिंग",
+    "view": "देखें",
     "install": "इंस्टॉल करें",
     "installed": "इंस्टॉल किया गया",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "आधिकारिक",
+    "essential": "आवश्यक",
+    "apps": "ऐप्स",
+    "selectedByEditors": "Toolverse संपादकों का चयन",
     "pricing": "मूल्य निर्धारण",
     "filters": "फ़िल्टर",
     "sortBy": "इसके अनुसार क्रमबद्ध करें",
@@ -166,7 +358,39 @@
     "github": "GitHub से जारी रखें",
     "agreeTerms": "मैं सेवा की शर्तों से सहमत हूँ",
     "alreadyHaveAccount": "पहले से खाता है?",
-    "dontHaveAccount": "खाता नहीं है?"
+    "dontHaveAccount": "खाता नहीं है?",
+    "loginSuccess": "लॉगिन सफल",
+    "redirecting": "रीडायरेक्ट हो रहा है...",
+    "name": "नाम",
+    "agreeTermsLong": "जारी रखकर, आप हमारी सेवा की शर्तों और गोपनीयता नीति से सहमत होते हैं।",
+    "emailRequired": "ईमेल आवश्यक है",
+    "emailInvalid": "अमान्य ईमेल पता",
+    "passwordRequired": "पासवर्ड आवश्यक है",
+    "passwordWeak": "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए जिसमें बड़े अक्षर, छोटे अक्षर, संख्या और विशेष वर्ण शामिल हों",
+    "rateLimited": "बहुत अधिक प्रयास। कृपया कुछ देर प्रतीक्षा करें।",
+    "nameRequired": "नाम आवश्यक है",
+    "passwordMismatch": "पासवर्ड मेल नहीं खाते",
+    "forgotPasswordTitle": "पासवर्ड रीसेट करें",
+    "forgotPasswordDescription": "अपना ईमेल पता दर्ज करें और हम आपको पासवर्ड रीसेट करने का लिंक भेजेंगे।",
+    "sendResetLink": "रीसेट लिंक भेजें",
+    "resetLinkSent": "यदि इस ईमेल से कोई खाता मौजूद है, तो पासवर्ड रीसेट लिंक भेज दिया गया है।",
+    "backToSignIn": "साइन इन पर वापस जाएँ",
+    "resetPasswordTitle": "नया पासवर्ड सेट करें",
+    "resetPasswordDescription": "नीचे अपना नया पासवर्ड दर्ज करें।",
+    "resetPassword": "पासवर्ड रीसेट करें",
+    "newPassword": "नया पासवर्ड",
+    "confirmNewPassword": "नए पासवर्ड की पुष्टि करें",
+    "resetPasswordSuccess": "आपका पासवर्ड सफलतापूर्वक रीसेट हो गया है। अब आप साइन इन कर सकते हैं।",
+    "resetTokenExpired": "यह रीसेट लिंक समाप्त हो गया है। कृपया नया अनुरोध करें।",
+    "resetTokenInvalid": "अमान्य रीसेट लिंक। कृपया नया अनुरोध करें।",
+    "emailNotVerified": "जारी रखने के लिए कृपया अपने ईमेल पते की पुष्टि करें।",
+    "verificationSent": "एक सत्यापन ईमेल भेजा गया है। कृपया अपना इनबॉक्स जाँचें।",
+    "verificationSuccess": "आपका ईमेल सफलतापूर्वक सत्यापित हो गया है!",
+    "verificationExpired": "सत्यापन लिंक समाप्त हो गया है। कृपया नया अनुरोध करें।",
+    "verificationInvalid": "अमान्य सत्यापन लिंक। कृपया नया अनुरोध करें।",
+    "verificationError": "सत्यापन के दौरान एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+    "resendVerification": "सत्यापन ईमेल पुनः भेजें",
+    "resendVerificationSuccess": "सत्यापन ईमेल पुनः भेज दिया गया है।"
   },
   "billing": {
     "title": "बिलिंग और प्लान",
@@ -176,6 +400,8 @@
     "usage": "उपयोग",
     "revenueShare": "राजस्व हिस्सेदारी",
     "payouts": "भुगतान",
+    "paymentMethods": "भुगतान के तरीके",
+    "billingHistory": "बिलिंग इतिहास",
     "plans": {
       "free": {
         "name": "मुफ़्त",
@@ -219,6 +445,56 @@
       "description": "ऋण प्रबंधन और अनुकूलन नेविगेटर"
     }
   },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI-संचालित उपस्थिति प्रबंधन और विश्लेषण"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI-संचालित दूरदर्शी विश्लेषण प्लेटफ़ॉर्म"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "पेटेंट खोज, विश्लेषण और प्रबंधन"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "ऋण प्रबंधन और अनुकूलन नेविगेटर"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "पेशेवरों के लिए उन्नत AI लेखन सहायक"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "AI प्राथमिकता के साथ बुद्धिमान कार्य प्रबंधन"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "AI पेयर प्रोग्रामिंग और कोड रिव्यू सहायक"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "रियल-टाइम मार्केटिंग एनालिटिक्स और इनसाइट्स"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "नो-कोड वर्कफ़्लो ऑटोमेशन बिल्डर"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "व्यक्तिगत वित्त ट्रैकिंग और बजट टूल"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "क्रिएटर्स के लिए AI डिज़ाइन टूल"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "उन्नत डेटा विज़ुअलाइज़ेशन और एनालिटिक्स"
+    }
+  },
   "footer": {
     "product": "उत्पाद",
     "company": "कंपनी",
@@ -236,5 +512,169 @@
     "privacy": "गोपनीयता नीति",
     "cookies": "कुकी नीति",
     "copyright": "© 2026 Toolverse. सर्वाधिकार सुरक्षित।"
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "Toolverse पर वेब ऐप्स विकसित, प्रकाशित और प्रबंधित करें।",
+    "registerNew": "नया ऐप पंजीकृत करें",
+    "tabs": {
+      "tools": "मेरे टूल्स",
+      "sdk": "SDK एकीकरण",
+      "revenue": "राजस्व",
+      "settings": "सेटिंग्स"
+    },
+    "stats": {
+      "publishedTools": "प्रकाशित टूल्स",
+      "totalUsers": "कुल उपयोगकर्ता",
+      "monthlyRevenue": "मासिक राजस्व",
+      "avgRating": "औसत रेटिंग"
+    },
+    "status": {
+      "published": "प्रकाशित",
+      "draft": "ड्राफ़्ट",
+      "review": "समीक्षा में"
+    },
+    "actions": {
+      "edit": "संपादित करें",
+      "analytics": "एनालिटिक्स",
+      "perMonth": "/माह"
+    },
+    "pricing": {
+      "title": "मूल्य निर्धारण मॉडल",
+      "free": "मुफ़्त",
+      "freeDesc": "सभी सुविधाएँ मुफ़्त में उपलब्ध",
+      "freemium": "फ्रीमियम",
+      "freemiumDesc": "मुफ़्त बुनियादी प्लान + प्रीमियम सुविधाएँ",
+      "paid": "एकमुश्त खरीद",
+      "paidDesc": "आजीवन पहुँच के लिए एकमुश्त भुगतान",
+      "subscription": "सदस्यता",
+      "subscriptionDesc": "मासिक या वार्षिक आवर्ती बिलिंग",
+      "monthlyPrice": "मासिक मूल्य",
+      "yearlyPrice": "वार्षिक मूल्य (वैकल्पिक)",
+      "salePrice": "विक्रय मूल्य",
+      "freeTrialDays": "मुफ़्त परीक्षण अवधि (दिन)",
+      "freePlanLimits": "मुफ़्त प्लान की सीमाएँ",
+      "freePlanLimitsPlaceholder": "उदा. प्रति माह 1,000 अनुरोध तक, केवल बुनियादी सुविधाएँ..."
+    },
+    "auth": {
+      "title": "प्रमाणीकरण विधि",
+      "toolverse": "Toolverse प्रमाणीकरण (अनुशंसित)",
+      "toolverseDesc": "Toolverse सिंगल साइन-ऑन का उपयोग करें",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "अपने OAuth प्रदाता के साथ एकीकृत करें",
+      "oauthSettings": "OAuth 2.0 सेटिंग्स",
+      "apikey": "API कुंजी",
+      "apikeyDesc": "API कुंजी आधारित प्रमाणीकरण",
+      "none": "कोई प्रमाणीकरण नहीं",
+      "noneDesc": "सभी के लिए सुलभ"
+    },
+    "form": {
+      "appName": "ऐप का नाम",
+      "summaryDescription": "सारांश",
+      "summaryPlaceholder": "अपने ऐप का 1-2 वाक्यों में वर्णन करें...",
+      "detailedDescription": "विस्तृत विवरण",
+      "detailedPlaceholder": "सुविधाओं और विवरणों का वर्णन करें...",
+      "category": "श्रेणी",
+      "categoryPlaceholder": "श्रेणी चुनें...",
+      "tags": "टैग",
+      "tagsPlaceholder": "AI, उत्पादकता, लेखन",
+      "icon": "आइकन",
+      "iconDragDrop": "खींचें और छोड़ें या क्लिक करें",
+      "iconHint": "PNG, SVG (512×512 अनुशंसित)",
+      "screenshots": "स्क्रीनशॉट",
+      "screenshotsDesc": "स्क्रीनशॉट अपलोड करें (6 तक)",
+      "screenshotsHint": "PNG, JPG — 1280×720 अनुशंसित",
+      "serviceUrl": "सेवा URL",
+      "sandboxUrl": "सैंडबॉक्स / डेमो URL",
+      "apiEndpoint": "API एंडपॉइंट",
+      "webhookUrl": "Webhook URL",
+      "privacyPolicyUrl": "गोपनीयता नीति URL",
+      "termsUrl": "सेवा शर्तें URL",
+      "supportEmail": "सहायता ईमेल",
+      "supportUrl": "सहायता URL"
+    },
+    "wizard": {
+      "title": "नया ऐप पंजीकृत करें",
+      "subtitle": "4 चरणों में Toolverse पर प्रकाशित करें",
+      "step1": "बुनियादी जानकारी",
+      "step1Desc": "ऐप का नाम, विवरण और श्रेणी",
+      "step2": "सेवा सेटिंग्स",
+      "step2Desc": "URLs, API और प्रमाणीकरण",
+      "step3": "मूल्य निर्धारण और बिलिंग",
+      "step3Desc": "प्लान और Toolverse भुगतान",
+      "step4": "समीक्षा और प्रकाशन",
+      "step4Desc": "जानकारी की समीक्षा और दृश्यता",
+      "previous": "पिछला",
+      "next": "अगला",
+      "saveDraft": "ड्राफ़्ट सहेजें",
+      "submitReview": "समीक्षा के लिए जमा करें"
+    },
+    "webAppConnection": "वेब ऐप कनेक्शन",
+    "webAppConnectionDesc": "Toolverse एक वेब ऐप प्लेटफ़ॉर्म है। अपने ऐप का URL पंजीकृत करें ताकि उपयोगकर्ता Toolverse के माध्यम से इसे एक्सेस कर सकें।",
+    "payment": {
+      "title": "Toolverse भुगतान",
+      "description": "Toolverse की एकीकृत बिलिंग के माध्यम से सुरक्षित रूप से भुगतान प्राप्त करें",
+      "connected": "भुगतान खाता जुड़ा हुआ",
+      "connectedVia": "Stripe Connect के माध्यम से लिंक किया गया",
+      "notConnected": "भुगतान खाता नहीं जुड़ा",
+      "notConnectedDesc": "आय प्राप्त करने के लिए एक खाता जोड़ें",
+      "changeSettings": "सेटिंग्स बदलें",
+      "connect": "जोड़ें",
+      "revenueShare": "राजस्व हिस्सेदारी",
+      "creatorShare": "क्रिएटर",
+      "platformFee": "* Toolverse प्लेटफ़ॉर्म शुल्क में भुगतान प्रसंस्करण शुल्क (3.6%) शामिल है"
+    },
+    "review": {
+      "title": "प्रकाशन से पहले अंतिम समीक्षा",
+      "description": "नीचे दी गई जानकारी भरें और समीक्षा के लिए जमा करें। समीक्षा आमतौर पर 1-3 कार्य दिवसों में पूरी होती है।",
+      "visibility": "दृश्यता",
+      "public": "सार्वजनिक",
+      "publicDesc": "मार्केटप्लेस पर दिखाई देता है और सभी उपयोगकर्ताओं के लिए उपलब्ध",
+      "unlisted": "असूचीबद्ध",
+      "unlistedDesc": "केवल लिंक वाले उपयोगकर्ताओं के लिए सुलभ",
+      "private": "निजी",
+      "privateDesc": "केवल आपके लिए सुलभ (परीक्षण हेतु)",
+      "summary": "पंजीकरण सारांश",
+      "appName": "ऐप का नाम",
+      "notEntered": "(दर्ज नहीं किया गया)",
+      "notSelected": "(चयनित नहीं)",
+      "authMethod": "प्रमाणीकरण विधि",
+      "pricingModel": "मूल्य निर्धारण मॉडल"
+    },
+    "sdk": {
+      "quickStart": "त्वरित शुरुआत",
+      "quickStartDesc": "Toolverse SDK इंस्टॉल करें और प्लेटफ़ॉर्म के साथ एकीकृत करें।",
+      "install": "इंस्टॉल करें",
+      "example": "उदाहरण",
+      "resources": "संसाधन",
+      "apiReference": "API संदर्भ",
+      "apiReferenceDesc": "पूर्ण SDK दस्तावेज़",
+      "authGuide": "प्रमाणीकरण गाइड",
+      "authGuideDesc": "OAuth2 और API कुंजी सेटअप",
+      "webhook": "Webhooks",
+      "webhookDesc": "रियल-टाइम इवेंट सूचनाएँ",
+      "rateLimit": "दर सीमाएँ",
+      "rateLimitDesc": "उपयोग सीमाएँ और थ्रॉटलिंग",
+      "openDocs": "दस्तावेज़ खोलें"
+    },
+    "revenue": {
+      "lifetimeEarnings": "कुल आय",
+      "thisMonth": "इस माह",
+      "nextPayout": "अगला भुगतान",
+      "chart": "राजस्व रुझान",
+      "chartPlaceholder": "राजस्व चार्ट",
+      "byTool": "टूल के अनुसार राजस्व"
+    },
+    "settings": {
+      "creatorProfile": "क्रिएटर प्रोफ़ाइल",
+      "displayName": "प्रदर्शन नाम",
+      "bio": "परिचय",
+      "website": "वेबसाइट",
+      "saveProfile": "प्रोफ़ाइल सहेजें",
+      "apiKey": "API कुंजी",
+      "apiKeyDesc": "SDK एकीकरण और टूल प्रबंधन के लिए API कुंजी।",
+      "productionKey": "प्रोडक्शन कुंजी",
+      "regenerateKey": "कुंजी पुनः उत्पन्न करें"
+    }
   }
 }

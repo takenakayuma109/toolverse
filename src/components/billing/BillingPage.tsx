@@ -125,8 +125,8 @@ export default function BillingPage() {
   const [activeTab, setActiveTab] = useState<BillingTab>('plans');
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
-  const [loadingInvoices, setLoadingInvoices] = useState(false);
-  const [loadingMethods, setLoadingMethods] = useState(false);
+  const [loadingInvoices, setLoadingInvoices] = useState(true);
+  const [loadingMethods, setLoadingMethods] = useState(true);
 
   const [showAddCard, setShowAddCard] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
@@ -138,18 +138,28 @@ export default function BillingPage() {
 
   useEffect(() => {
     if (activeTab === 'history' && invoices.length === 0) {
-      setLoadingInvoices(true);
-      provider.getInvoices('cus_demo', 6).then((data) => {
-        setInvoices(data);
-        setLoadingInvoices(false);
-      });
+      let cancelled = false;
+      const fetchInvoices = async () => {
+        const data = await provider.getInvoices('cus_demo', 6);
+        if (!cancelled) {
+          setInvoices(data);
+          setLoadingInvoices(false);
+        }
+      };
+      fetchInvoices();
+      return () => { cancelled = true; };
     }
     if (activeTab === 'payment' && paymentMethods.length === 0) {
-      setLoadingMethods(true);
-      provider.getPaymentMethods('cus_demo').then((data) => {
-        setPaymentMethods(data);
-        setLoadingMethods(false);
-      });
+      let cancelled = false;
+      const fetchMethods = async () => {
+        const data = await provider.getPaymentMethods('cus_demo');
+        if (!cancelled) {
+          setPaymentMethods(data);
+          setLoadingMethods(false);
+        }
+      };
+      fetchMethods();
+      return () => { cancelled = true; };
     }
   }, [activeTab, provider, invoices.length, paymentMethods.length]);
 

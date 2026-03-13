@@ -49,27 +49,39 @@
   "home": {
     "hero": {
       "title": "Welcome to the Universe of Tools",
-      "subtitle": "The next-generation platform for Web Apps, SaaS, AI, and Automation tools",
-      "cta": "Explore Tools",
-      "ctaSecondary": "Become a Creator"
+      "subtitle": "The enterprise-grade platform where Web Apps, SaaS, AI, and Automation tools converge",
+      "cta": "Explore Platform",
+      "ctaSecondary": "Start Building",
+      "badge": "Now Open for Creators",
+      "trust1": "Enterprise-grade security",
+      "trust2": "99.9% uptime SLA",
+      "trust3": "Global CDN delivery"
     },
     "features": {
-      "title": "What You Can Do with Toolverse",
+      "title": "Built for Scale, Designed for Everyone",
       "marketplace": {
-        "title": "Marketplace",
-        "description": "Discover and instantly use the best tools from around the world"
+        "title": "Global Marketplace",
+        "description": "Discover, evaluate, and deploy the best web applications from developers and enterprises worldwide"
       },
       "workspace": {
-        "title": "Universal Workspace",
-        "description": "All tools in one space. Single login, unified data layer"
+        "title": "Unified Workspace",
+        "description": "Consolidated access to all your tools with single sign-on, unified billing, and seamless data interoperability"
       },
       "creator": {
         "title": "Creator Economy",
-        "description": "Publish your tools to the world and earn revenue"
+        "description": "Publish your applications to a global audience, manage subscriptions, and earn up to 95% revenue share"
       },
       "api": {
         "title": "Platform APIs",
-        "description": "Auth, billing, storage. Build everything with APIs"
+        "description": "Authentication, billing, storage, and analytics — enterprise-ready APIs for rapid application development"
+      },
+      "infrastructure": {
+        "title": "Managed Infrastructure",
+        "description": "Auto-scaling compute, global CDN, and managed databases so you can focus on building your product"
+      },
+      "security": {
+        "title": "Enterprise Security",
+        "description": "SOC 2 compliant, end-to-end encryption, and granular access controls for teams of any size"
       }
     },
     "stats": {
@@ -80,22 +92,94 @@
     },
     "categories": {
       "title": "Browse by Category",
-      "ai": "AI",
+      "ai": "AI & Machine Learning",
       "productivity": "Productivity",
-      "finance": "Finance",
-      "marketing": "Marketing",
-      "development": "Development",
-      "creatorTools": "Creator",
-      "automation": "Automation",
-      "analytics": "Analytics"
+      "finance": "FinTech & Banking",
+      "marketing": "Marketing & AdTech",
+      "development": "Developer Tools",
+      "creatorTools": "Creator & Design",
+      "automation": "Automation & RPA",
+      "analytics": "Data & Analytics",
+      "security": "Cybersecurity",
+      "healthcare": "Healthcare & BioTech",
+      "education": "Education & EdTech",
+      "ecommerce": "E-Commerce & Retail",
+      "communication": "Communication",
+      "iot": "IoT & Robotics",
+      "media": "Media & Entertainment",
+      "logistics": "Logistics & Supply Chain"
     },
     "officialTools": {
       "title": "Official Tools",
       "subtitle": "Try the official tools provided by Toolverse"
     },
+    "pricing": {
+      "badge": "Pricing & Plans",
+      "title": "Transparent, Scalable Pricing",
+      "subtitle": "Start free, scale as you grow. No hidden fees, no surprises.",
+      "popular": "Most Popular",
+      "strengths": {
+        "instant": {
+          "title": "Instant Deployment",
+          "description": "Publish your app and start accepting payments within minutes, not weeks"
+        },
+        "secure": {
+          "title": "PCI-DSS Compliant",
+          "description": "Bank-grade security with end-to-end encryption for all transactions"
+        },
+        "global": {
+          "title": "Global Reach",
+          "description": "Accept payments in 135+ currencies from users in 190+ countries"
+        },
+        "flexible": {
+          "title": "Flexible Billing",
+          "description": "Subscriptions, one-time, usage-based — choose the model that fits"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "Free",
+          "price": "$0",
+          "description": "For individuals and side projects",
+          "f1": "Up to 5 published apps",
+          "f2": "1,000 monthly active users",
+          "f3": "Community support"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$14.99",
+          "period": "/mo",
+          "description": "For professional developers",
+          "f1": "Unlimited published apps",
+          "f2": "50,000 monthly active users",
+          "f3": "Priority support & analytics",
+          "f4": "Custom domain & branding"
+        },
+        "team": {
+          "name": "Team",
+          "price": "$39.99",
+          "period": "/mo",
+          "description": "For teams and organizations",
+          "f1": "Everything in Pro",
+          "f2": "Unlimited monthly active users",
+          "f3": "Team collaboration & roles",
+          "f4": "SLA & dedicated support"
+        }
+      },
+      "paymentTitle": "Integrated Payment System",
+      "paymentSubtitle": "Powered by industry-leading payment infrastructure. Accept payments globally with zero setup.",
+      "payment": {
+        "stripe": "Cards, wallets, bank transfers",
+        "applepay": "One-tap mobile payments",
+        "googlepay": "Fast checkout on Android"
+      },
+      "pci": "PCI-DSS Level 1 Compliant",
+      "currencies": "135+ Currencies Supported",
+      "creatorPayout": "Weekly Creator Payouts"
+    },
     "cta": {
-      "title": "Let's Build the Universe of Tools Together",
-      "subtitle": "Join as a creator and build the next-generation Software Internet Layer",
+      "title": "Build the Future of Software Distribution",
+      "subtitle": "Join thousands of creators building the next generation of web applications on Toolverse",
       "button": "Get Started Now"
     }
   },
@@ -144,6 +228,46 @@
         "tag": "ESSENTIAL",
         "title": "DataLens",
         "subtitle": "Advanced data visualization"
+      },
+      "security": {
+        "tag": "SECURITY",
+        "title": "Cybersecurity Tools",
+        "subtitle": "Protect your infrastructure and data"
+      },
+      "healthcare": {
+        "tag": "HEALTHCARE",
+        "title": "Healthcare Solutions",
+        "subtitle": "Digital health and biotech applications"
+      },
+      "education": {
+        "tag": "EDUCATION",
+        "title": "EdTech Platform",
+        "subtitle": "Learning management and education tools"
+      },
+      "ecommerce": {
+        "tag": "E-COMMERCE",
+        "title": "Commerce Solutions",
+        "subtitle": "Build and scale your online business"
+      },
+      "communication": {
+        "tag": "COMMUNICATION",
+        "title": "Messaging & Collaboration",
+        "subtitle": "Connect teams and customers seamlessly"
+      },
+      "iot": {
+        "tag": "IoT & ROBOTICS",
+        "title": "Connected Devices",
+        "subtitle": "Manage IoT fleets and robotics platforms"
+      },
+      "media": {
+        "tag": "MEDIA",
+        "title": "Content & Media",
+        "subtitle": "Create, distribute, and monetize content"
+      },
+      "logistics": {
+        "tag": "LOGISTICS",
+        "title": "Supply Chain Tools",
+        "subtitle": "Optimize logistics and operations"
       },
       "today": {
         "tag": "TODAY'S PICK",
@@ -234,7 +358,39 @@
     "github": "Continue with GitHub",
     "agreeTerms": "I agree to the Terms of Service",
     "alreadyHaveAccount": "Already have an account?",
-    "dontHaveAccount": "Don't have an account?"
+    "dontHaveAccount": "Don't have an account?",
+    "loginSuccess": "Login successful",
+    "redirecting": "Redirecting...",
+    "name": "Name",
+    "agreeTermsLong": "By continuing, you agree to our Terms of Service and Privacy Policy.",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "passwordWeak": "Password must be at least 8 characters with uppercase, lowercase, number, and special character",
+    "rateLimited": "Too many attempts. Please wait a moment.",
+    "nameRequired": "Name is required",
+    "passwordMismatch": "Passwords do not match",
+    "forgotPasswordTitle": "Reset your password",
+    "forgotPasswordDescription": "Enter your email address and we'll send you a link to reset your password.",
+    "sendResetLink": "Send Reset Link",
+    "backToSignIn": "Back to Sign In",
+    "resetLinkSent": "If an account with that email exists, a password reset link has been sent.",
+    "resetPasswordTitle": "Set a new password",
+    "resetPasswordDescription": "Enter your new password below.",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "resetPassword": "Reset Password",
+    "resetPasswordSuccess": "Your password has been reset successfully. You can now sign in.",
+    "resetTokenExpired": "This reset link has expired. Please request a new one.",
+    "resetTokenInvalid": "Invalid reset link. Please request a new one.",
+    "verificationSent": "A verification email has been sent. Please check your inbox.",
+    "verificationSuccess": "Your email has been verified successfully!",
+    "verificationExpired": "The verification link has expired. Please request a new one.",
+    "verificationInvalid": "Invalid verification link. Please request a new one.",
+    "verificationError": "An error occurred during verification. Please try again.",
+    "resendVerification": "Resend verification email",
+    "resendVerificationSuccess": "Verification email has been resent.",
+    "emailNotVerified": "Please verify your email address to continue."
   },
   "billing": {
     "title": "Billing & Plans",
@@ -244,6 +400,8 @@
     "usage": "Usage",
     "revenueShare": "Revenue Share",
     "payouts": "Payouts",
+    "paymentMethods": "Payment Methods",
+    "billingHistory": "Billing History",
     "plans": {
       "free": {
         "name": "Free",
@@ -354,5 +512,169 @@
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy",
     "copyright": "© 2026 Toolverse. All rights reserved."
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "Develop, publish, and manage web apps on Toolverse.",
+    "registerNew": "Register New App",
+    "tabs": {
+      "tools": "My Tools",
+      "sdk": "SDK Integration",
+      "revenue": "Revenue",
+      "settings": "Settings"
+    },
+    "stats": {
+      "publishedTools": "Published Tools",
+      "totalUsers": "Total Users",
+      "monthlyRevenue": "Monthly Revenue",
+      "avgRating": "Avg. Rating"
+    },
+    "status": {
+      "published": "Published",
+      "draft": "Draft",
+      "review": "In Review"
+    },
+    "actions": {
+      "edit": "Edit",
+      "analytics": "Analytics",
+      "perMonth": "/mo"
+    },
+    "pricing": {
+      "title": "Pricing Model",
+      "free": "Free",
+      "freeDesc": "All features available for free",
+      "freemium": "Freemium",
+      "freemiumDesc": "Free basic plan + premium features",
+      "paid": "One-time Purchase",
+      "paidDesc": "Single payment for lifetime access",
+      "subscription": "Subscription",
+      "subscriptionDesc": "Monthly or yearly recurring billing",
+      "monthlyPrice": "Monthly Price (JPY)",
+      "yearlyPrice": "Yearly Price (JPY) (optional)",
+      "salePrice": "Sale Price (JPY)",
+      "freeTrialDays": "Free Trial Period (days)",
+      "freePlanLimits": "Free Plan Limitations",
+      "freePlanLimitsPlaceholder": "e.g. Up to 1,000 requests/month, basic features only..."
+    },
+    "auth": {
+      "title": "Authentication Method",
+      "toolverse": "Toolverse Auth (Recommended)",
+      "toolverseDesc": "Use Toolverse single sign-on",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "Integrate with your own OAuth provider",
+      "oauthSettings": "OAuth 2.0 Settings",
+      "apikey": "API Key",
+      "apikeyDesc": "API key-based authentication",
+      "none": "No Authentication",
+      "noneDesc": "Accessible to everyone"
+    },
+    "form": {
+      "appName": "App Name",
+      "summaryDescription": "Summary",
+      "summaryPlaceholder": "Describe your app in 1-2 sentences...",
+      "detailedDescription": "Detailed Description",
+      "detailedPlaceholder": "Describe features and details...",
+      "category": "Category",
+      "categoryPlaceholder": "Select a category...",
+      "tags": "Tags",
+      "tagsPlaceholder": "AI, Productivity, Writing",
+      "icon": "Icon",
+      "iconDragDrop": "Drag & drop or click",
+      "iconHint": "PNG, SVG (512×512 recommended)",
+      "screenshots": "Screenshots",
+      "screenshotsDesc": "Upload screenshots (up to 6)",
+      "screenshotsHint": "PNG, JPG — 1280×720 recommended",
+      "serviceUrl": "Service URL",
+      "sandboxUrl": "Sandbox / Demo URL",
+      "apiEndpoint": "API Endpoint",
+      "webhookUrl": "Webhook URL",
+      "privacyPolicyUrl": "Privacy Policy URL",
+      "termsUrl": "Terms of Service URL",
+      "supportEmail": "Support Email",
+      "supportUrl": "Support URL"
+    },
+    "wizard": {
+      "title": "Register New App",
+      "subtitle": "Publish to Toolverse in 4 steps",
+      "step1": "Basic Info",
+      "step1Desc": "App name, description & category",
+      "step2": "Service Settings",
+      "step2Desc": "URLs, API & authentication",
+      "step3": "Pricing & Billing",
+      "step3Desc": "Plans & Toolverse payments",
+      "step4": "Review & Publish",
+      "step4Desc": "Review info & visibility",
+      "previous": "Previous",
+      "next": "Next",
+      "saveDraft": "Save Draft",
+      "submitReview": "Submit for Review"
+    },
+    "webAppConnection": "Web App Connection",
+    "webAppConnectionDesc": "Toolverse is a web app platform. Register your app's URL so users can access it through Toolverse.",
+    "payment": {
+      "title": "Toolverse Payments",
+      "description": "Receive payments securely through Toolverse's integrated billing",
+      "connected": "Payment Account Connected",
+      "connectedVia": "Linked via Stripe Connect",
+      "notConnected": "Payment Account Not Connected",
+      "notConnectedDesc": "Connect an account to receive earnings",
+      "changeSettings": "Change Settings",
+      "connect": "Connect",
+      "revenueShare": "Revenue Share",
+      "creatorShare": "Creator",
+      "platformFee": "* Toolverse platform fee includes payment processing fee (3.6%)"
+    },
+    "review": {
+      "title": "Final Review Before Publishing",
+      "description": "Enter the information below and submit for review. Reviews typically complete within 1-3 business days.",
+      "visibility": "Visibility",
+      "public": "Public",
+      "publicDesc": "Visible on the marketplace and available to all users",
+      "unlisted": "Unlisted",
+      "unlistedDesc": "Only accessible to users with the link",
+      "private": "Private",
+      "privateDesc": "Only accessible to you (for testing)",
+      "summary": "Registration Summary",
+      "appName": "App Name",
+      "notEntered": "(not entered)",
+      "notSelected": "(not selected)",
+      "authMethod": "Auth Method",
+      "pricingModel": "Pricing Model"
+    },
+    "sdk": {
+      "quickStart": "Quick Start",
+      "quickStartDesc": "Install the Toolverse SDK and integrate with the platform.",
+      "install": "Install",
+      "example": "Example",
+      "resources": "Resources",
+      "apiReference": "API Reference",
+      "apiReferenceDesc": "Complete SDK documentation",
+      "authGuide": "Auth Guide",
+      "authGuideDesc": "OAuth2 & API key setup",
+      "webhook": "Webhooks",
+      "webhookDesc": "Real-time event notifications",
+      "rateLimit": "Rate Limits",
+      "rateLimitDesc": "Usage limits and throttling",
+      "openDocs": "Open Documentation"
+    },
+    "revenue": {
+      "lifetimeEarnings": "Lifetime Earnings",
+      "thisMonth": "This Month",
+      "nextPayout": "Next Payout",
+      "chart": "Revenue Trend",
+      "chartPlaceholder": "Revenue Chart",
+      "byTool": "Revenue by Tool"
+    },
+    "settings": {
+      "creatorProfile": "Creator Profile",
+      "displayName": "Display Name",
+      "bio": "Bio",
+      "website": "Website",
+      "saveProfile": "Save Profile",
+      "apiKey": "API Key",
+      "apiKeyDesc": "API key for SDK integration and tool management.",
+      "productionKey": "Production Key",
+      "regenerateKey": "Regenerate Key"
+    }
   }
 }

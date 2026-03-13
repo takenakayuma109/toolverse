@@ -51,7 +51,11 @@
       "title": "Bem-vindo ao universo das ferramentas",
       "subtitle": "A plataforma de nova geração para software, SaaS, IA e ferramentas de automação",
       "cta": "Explorar ferramentas",
-      "ctaSecondary": "Tornar-se criador"
+      "ctaSecondary": "Tornar-se criador",
+      "badge": "Aberto para criadores",
+      "trust1": "Segurança empresarial",
+      "trust2": "SLA de disponibilidade de 99,9%",
+      "trust3": "CDN global"
     },
     "features": {
       "title": "O que você pode fazer com o Toolverse",
@@ -70,6 +74,14 @@
       "api": {
         "title": "APIs da plataforma",
         "description": "Autenticação, cobrança, armazenamento. Construa tudo com APIs"
+      },
+      "infrastructure": {
+        "title": "Infraestrutura gerenciada",
+        "description": "Computação com auto-scaling, CDN global e bancos de dados gerenciados para você focar no seu produto"
+      },
+      "security": {
+        "title": "Segurança empresarial",
+        "description": "Conformidade SOC 2, criptografia ponta a ponta e controles de acesso granulares para equipes de qualquer tamanho"
       }
     },
     "stats": {
@@ -87,11 +99,83 @@
       "development": "Desenvolvimento",
       "creatorTools": "Criador",
       "automation": "Automação",
-      "analytics": "Análises"
+      "analytics": "Dados e análises",
+      "security": "Cibersegurança",
+      "healthcare": "Saúde e biotecnologia",
+      "education": "Educação e EdTech",
+      "ecommerce": "E-commerce e varejo",
+      "communication": "Comunicação",
+      "iot": "IoT e robótica",
+      "media": "Mídia e entretenimento",
+      "logistics": "Logística e cadeia de suprimentos"
     },
     "officialTools": {
       "title": "Ferramentas oficiais",
       "subtitle": "Experimente as ferramentas oficiais fornecidas pelo Toolverse"
+    },
+    "pricing": {
+      "badge": "Preços e planos",
+      "title": "Preços transparentes e escaláveis",
+      "subtitle": "Comece grátis, escale conforme cresce. Sem taxas ocultas, sem surpresas.",
+      "popular": "Mais popular",
+      "strengths": {
+        "instant": {
+          "title": "Implantação instantânea",
+          "description": "Publique seu app e comece a receber pagamentos em minutos"
+        },
+        "secure": {
+          "title": "Conformidade PCI-DSS",
+          "description": "Segurança bancária com criptografia ponta a ponta para todas as transações"
+        },
+        "global": {
+          "title": "Alcance global",
+          "description": "Aceite pagamentos em mais de 135 moedas de usuários em mais de 190 países"
+        },
+        "flexible": {
+          "title": "Cobrança flexível",
+          "description": "Assinaturas, pagamento único, baseado em uso — escolha o modelo ideal"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "Grátis",
+          "price": "R$ 0",
+          "description": "Para indivíduos e projetos pessoais",
+          "f1": "Até 5 apps publicados",
+          "f2": "1.000 usuários ativos mensais",
+          "f3": "Suporte da comunidade"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "R$ 79,90",
+          "period": "/mês",
+          "description": "Para desenvolvedores profissionais",
+          "f1": "Apps publicados ilimitados",
+          "f2": "50.000 usuários ativos mensais",
+          "f3": "Suporte prioritário e análises",
+          "f4": "Domínio personalizado e branding"
+        },
+        "team": {
+          "name": "Equipe",
+          "price": "R$ 199,90",
+          "period": "/mês",
+          "description": "Para equipes e organizações",
+          "f1": "Tudo do plano Pro incluído",
+          "f2": "Usuários ativos mensais ilimitados",
+          "f3": "Colaboração em equipe e funções",
+          "f4": "SLA e suporte dedicado"
+        }
+      },
+      "paymentTitle": "Sistema de pagamento integrado",
+      "paymentSubtitle": "Com infraestrutura de pagamento líder do setor. Aceite pagamentos globalmente sem configuração.",
+      "payment": {
+        "stripe": "Cartões, carteiras digitais, transferências",
+        "applepay": "Pagamento móvel com um toque",
+        "googlepay": "Checkout rápido no Android"
+      },
+      "pci": "Conformidade PCI-DSS Nível 1",
+      "currencies": "Mais de 135 moedas suportadas",
+      "creatorPayout": "Pagamentos semanais aos criadores"
     },
     "cta": {
       "title": "Vamos construir juntos o universo das ferramentas",
@@ -104,12 +188,120 @@
     "subtitle": "Encontre as melhores ferramentas",
     "trending": "Em alta",
     "newTools": "Novas ferramentas",
-    "featured": "Destaque",
+    "featured": {
+      "ai": {
+        "tag": "ESCOLHA DO MÊS",
+        "title": "AI Writer Pro",
+        "subtitle": "Crie conteúdo em alta velocidade com IA"
+      },
+      "productivity": {
+        "tag": "ESCOLHA DOS EDITORES",
+        "title": "TaskFlow",
+        "subtitle": "Gestão inteligente de tarefas com IA"
+      },
+      "finance": {
+        "tag": "APP GRÁTIS POPULAR",
+        "title": "FinTrack",
+        "subtitle": "Gerencie suas finanças com facilidade"
+      },
+      "marketing": {
+        "tag": "NOVO LANÇAMENTO",
+        "title": "MarketSense",
+        "subtitle": "Análise de marketing em tempo real"
+      },
+      "development": {
+        "tag": "ATUALIZAÇÃO IMPORTANTE",
+        "title": "CodePilot",
+        "subtitle": "Programação em par com IA para desenvolvedores modernos"
+      },
+      "creator": {
+        "tag": "DESTAQUE",
+        "title": "DesignStudio",
+        "subtitle": "Ferramenta de design IA para criadores"
+      },
+      "automation": {
+        "tag": "EM ALTA",
+        "title": "AutoFlow",
+        "subtitle": "Construa fluxos de trabalho sem código"
+      },
+      "analytics": {
+        "tag": "ESSENCIAL",
+        "title": "DataLens",
+        "subtitle": "Visualização avançada de dados"
+      },
+      "security": {
+        "tag": "SEGURANÇA",
+        "title": "Ferramentas de cibersegurança",
+        "subtitle": "Proteja sua infraestrutura e dados"
+      },
+      "healthcare": {
+        "tag": "SAÚDE",
+        "title": "Soluções de saúde",
+        "subtitle": "Aplicações de saúde digital e biotecnologia"
+      },
+      "education": {
+        "tag": "EDUCAÇÃO",
+        "title": "Plataforma EdTech",
+        "subtitle": "Gestão de aprendizagem e ferramentas educacionais"
+      },
+      "ecommerce": {
+        "tag": "E-COMMERCE",
+        "title": "Soluções de comércio",
+        "subtitle": "Construa e escale seu negócio online"
+      },
+      "communication": {
+        "tag": "COMUNICAÇÃO",
+        "title": "Mensagens e colaboração",
+        "subtitle": "Conecte equipes e clientes perfeitamente"
+      },
+      "iot": {
+        "tag": "IoT E ROBÓTICA",
+        "title": "Dispositivos conectados",
+        "subtitle": "Gerencie frotas IoT e plataformas robóticas"
+      },
+      "media": {
+        "tag": "MÍDIA",
+        "title": "Conteúdo e mídia",
+        "subtitle": "Crie, distribua e monetize conteúdo"
+      },
+      "logistics": {
+        "tag": "LOGÍSTICA",
+        "title": "Ferramentas de cadeia de suprimentos",
+        "subtitle": "Otimize logística e operações"
+      },
+      "today": {
+        "tag": "ESCOLHA DO DIA",
+        "title": "SENRIGAN",
+        "subtitle": "Plataforma de análise preditiva com IA"
+      },
+      "trending": {
+        "tag": "EM ALTA",
+        "title": "AI Writer Pro",
+        "subtitle": "O app web mais popular desta semana"
+      },
+      "webapps": {
+        "tag": "APPS WEB",
+        "title": "Toolverse Web Apps",
+        "subtitle": "Descubra aplicações web poderosas — sem instalação"
+      },
+      "official": {
+        "tag": "OFICIAL",
+        "title": "PresenceVision",
+        "subtitle": "Gestão de presença IA oficial do Toolverse"
+      }
+    },
     "categories": "Categorias",
     "reviews": "Avaliações",
     "rating": "Classificação",
+    "view": "Ver",
     "install": "Instalar",
     "installed": "Instalado",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "Oficial",
+    "essential": "Essencial",
+    "apps": "Aplicativos",
+    "selectedByEditors": "Seleção dos editores do Toolverse",
     "pricing": "Preços",
     "filters": "Filtros",
     "sortBy": "Ordenar por",
@@ -166,7 +358,39 @@
     "github": "Continuar com GitHub",
     "agreeTerms": "Concordo com os termos de serviço",
     "alreadyHaveAccount": "Já tem uma conta?",
-    "dontHaveAccount": "Não tem uma conta?"
+    "dontHaveAccount": "Não tem uma conta?",
+    "loginSuccess": "Login realizado com sucesso",
+    "redirecting": "Redirecionando...",
+    "name": "Nome",
+    "agreeTermsLong": "Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade.",
+    "emailRequired": "O e-mail é obrigatório",
+    "emailInvalid": "Endereço de e-mail inválido",
+    "passwordRequired": "A senha é obrigatória",
+    "passwordWeak": "A senha deve ter pelo menos 8 caracteres com maiúsculas, minúsculas, números e caracteres especiais",
+    "rateLimited": "Muitas tentativas. Por favor, aguarde um momento.",
+    "nameRequired": "O nome é obrigatório",
+    "passwordMismatch": "As senhas não coincidem",
+    "forgotPasswordTitle": "Redefinir senha",
+    "forgotPasswordDescription": "Digite seu e-mail e enviaremos um link para redefinir sua senha.",
+    "sendResetLink": "Enviar link de redefinição",
+    "resetLinkSent": "Se houver uma conta com esse e-mail, um link de redefinição de senha foi enviado.",
+    "backToSignIn": "Voltar para o login",
+    "resetPasswordTitle": "Definir nova senha",
+    "resetPasswordDescription": "Digite sua nova senha abaixo.",
+    "resetPassword": "Redefinir senha",
+    "newPassword": "Nova senha",
+    "confirmNewPassword": "Confirmar nova senha",
+    "resetPasswordSuccess": "Sua senha foi redefinida com sucesso. Agora você pode entrar.",
+    "resetTokenExpired": "Este link expirou. Por favor, solicite um novo.",
+    "resetTokenInvalid": "Link de redefinição inválido. Por favor, solicite um novo.",
+    "emailNotVerified": "Por favor, verifique seu endereço de e-mail para continuar.",
+    "verificationSent": "Um e-mail de verificação foi enviado. Verifique sua caixa de entrada.",
+    "verificationSuccess": "Seu e-mail foi verificado com sucesso!",
+    "verificationExpired": "O link de verificação expirou. Por favor, solicite um novo.",
+    "verificationInvalid": "Link de verificação inválido. Por favor, solicite um novo.",
+    "verificationError": "Ocorreu um erro durante a verificação. Por favor, tente novamente.",
+    "resendVerification": "Reenviar e-mail de verificação",
+    "resendVerificationSuccess": "O e-mail de verificação foi reenviado."
   },
   "billing": {
     "title": "Cobrança e planos",
@@ -176,6 +400,8 @@
     "usage": "Uso",
     "revenueShare": "Divisão de receita",
     "payouts": "Pagamentos",
+    "paymentMethods": "Métodos de pagamento",
+    "billingHistory": "Histórico de cobrança",
     "plans": {
       "free": {
         "name": "Grátis",
@@ -219,6 +445,56 @@
       "description": "Navegador de gestão e otimização de dívidas"
     }
   },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "Gestão e análise de presença com IA"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "Plataforma de análise preditiva com IA"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "Pesquisa, análise e gestão de patentes"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "Navegador de gestão e otimização de dívidas"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "Assistente de escrita IA avançado para profissionais"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "Gestão inteligente de tarefas com priorização IA"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "Assistente de programação em par e revisão de código com IA"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "Análise de marketing em tempo real e insights"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "Construtor de automação de fluxos de trabalho sem código"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "Acompanhamento de finanças pessoais e orçamento"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "Ferramenta de design IA para criadores"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "Visualização e análise avançada de dados"
+    }
+  },
   "footer": {
     "product": "Produto",
     "company": "Empresa",
@@ -236,5 +512,169 @@
     "privacy": "Política de privacidade",
     "cookies": "Política de cookies",
     "copyright": "© 2026 Toolverse. Todos os direitos reservados."
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "Desenvolva, publique e gerencie aplicações web no Toolverse.",
+    "registerNew": "Registrar novo app",
+    "tabs": {
+      "tools": "Minhas ferramentas",
+      "sdk": "Integração SDK",
+      "revenue": "Receita",
+      "settings": "Configurações"
+    },
+    "stats": {
+      "publishedTools": "Ferramentas publicadas",
+      "totalUsers": "Total de usuários",
+      "monthlyRevenue": "Receita mensal",
+      "avgRating": "Avaliação média"
+    },
+    "status": {
+      "published": "Publicado",
+      "draft": "Rascunho",
+      "review": "Em análise"
+    },
+    "actions": {
+      "edit": "Editar",
+      "analytics": "Análises",
+      "perMonth": "/mês"
+    },
+    "pricing": {
+      "title": "Modelo de preços",
+      "free": "Grátis",
+      "freeDesc": "Todos os recursos disponíveis gratuitamente",
+      "freemium": "Freemium",
+      "freemiumDesc": "Plano básico gratuito + recursos premium",
+      "paid": "Compra única",
+      "paidDesc": "Pagamento único para acesso vitalício",
+      "subscription": "Assinatura",
+      "subscriptionDesc": "Cobrança recorrente mensal ou anual",
+      "monthlyPrice": "Preço mensal",
+      "yearlyPrice": "Preço anual (opcional)",
+      "salePrice": "Preço de venda",
+      "freeTrialDays": "Período de teste gratuito (dias)",
+      "freePlanLimits": "Limitações do plano gratuito",
+      "freePlanLimitsPlaceholder": "Ex. Até 1.000 requisições/mês, apenas recursos básicos..."
+    },
+    "auth": {
+      "title": "Método de autenticação",
+      "toolverse": "Auth Toolverse (recomendado)",
+      "toolverseDesc": "Usar login único do Toolverse",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "Integrar com seu próprio provedor OAuth",
+      "oauthSettings": "Configurações OAuth 2.0",
+      "apikey": "Chave API",
+      "apikeyDesc": "Autenticação baseada em chave API",
+      "none": "Sem autenticação",
+      "noneDesc": "Acessível a todos"
+    },
+    "form": {
+      "appName": "Nome do app",
+      "summaryDescription": "Resumo",
+      "summaryPlaceholder": "Descreva seu app em 1-2 frases...",
+      "detailedDescription": "Descrição detalhada",
+      "detailedPlaceholder": "Descreva recursos e detalhes...",
+      "category": "Categoria",
+      "categoryPlaceholder": "Selecione uma categoria...",
+      "tags": "Tags",
+      "tagsPlaceholder": "IA, Produtividade, Escrita",
+      "icon": "Ícone",
+      "iconDragDrop": "Arraste e solte ou clique",
+      "iconHint": "PNG, SVG (512×512 recomendado)",
+      "screenshots": "Capturas de tela",
+      "screenshotsDesc": "Envie capturas de tela (até 6)",
+      "screenshotsHint": "PNG, JPG — 1280×720 recomendado",
+      "serviceUrl": "URL do serviço",
+      "sandboxUrl": "URL de sandbox / demo",
+      "apiEndpoint": "Endpoint de API",
+      "webhookUrl": "URL de Webhook",
+      "privacyPolicyUrl": "URL da política de privacidade",
+      "termsUrl": "URL dos termos de serviço",
+      "supportEmail": "E-mail de suporte",
+      "supportUrl": "URL de suporte"
+    },
+    "wizard": {
+      "title": "Registrar novo app",
+      "subtitle": "Publique no Toolverse em 4 etapas",
+      "step1": "Informações básicas",
+      "step1Desc": "Nome do app, descrição e categoria",
+      "step2": "Configurações do serviço",
+      "step2Desc": "URLs, API e autenticação",
+      "step3": "Preços e cobrança",
+      "step3Desc": "Planos e pagamentos Toolverse",
+      "step4": "Revisão e publicação",
+      "step4Desc": "Revisar informações e visibilidade",
+      "previous": "Anterior",
+      "next": "Próximo",
+      "saveDraft": "Salvar rascunho",
+      "submitReview": "Enviar para revisão"
+    },
+    "webAppConnection": "Conexão do app web",
+    "webAppConnectionDesc": "Toolverse é uma plataforma de aplicações web. Registre a URL do seu app para que os usuários possam acessá-lo pelo Toolverse.",
+    "payment": {
+      "title": "Pagamentos Toolverse",
+      "description": "Receba pagamentos com segurança através da cobrança integrada do Toolverse",
+      "connected": "Conta de pagamento conectada",
+      "connectedVia": "Vinculada via Stripe Connect",
+      "notConnected": "Conta de pagamento não conectada",
+      "notConnectedDesc": "Conecte uma conta para receber seus ganhos",
+      "changeSettings": "Alterar configurações",
+      "connect": "Conectar",
+      "revenueShare": "Divisão de receita",
+      "creatorShare": "Criador",
+      "platformFee": "* A taxa da plataforma Toolverse inclui a taxa de processamento de pagamento (3,6%)"
+    },
+    "review": {
+      "title": "Revisão final antes da publicação",
+      "description": "Preencha as informações abaixo e envie para revisão. As revisões são geralmente concluídas em 1-3 dias úteis.",
+      "visibility": "Visibilidade",
+      "public": "Público",
+      "publicDesc": "Visível no marketplace e disponível para todos os usuários",
+      "unlisted": "Não listado",
+      "unlistedDesc": "Acessível apenas para usuários com o link",
+      "private": "Privado",
+      "privateDesc": "Acessível apenas para você (para testes)",
+      "summary": "Resumo do registro",
+      "appName": "Nome do app",
+      "notEntered": "(não preenchido)",
+      "notSelected": "(não selecionado)",
+      "authMethod": "Método de autenticação",
+      "pricingModel": "Modelo de preços"
+    },
+    "sdk": {
+      "quickStart": "Início rápido",
+      "quickStartDesc": "Instale o SDK do Toolverse e integre com a plataforma.",
+      "install": "Instalar",
+      "example": "Exemplo",
+      "resources": "Recursos",
+      "apiReference": "Referência de API",
+      "apiReferenceDesc": "Documentação completa do SDK",
+      "authGuide": "Guia de autenticação",
+      "authGuideDesc": "Configuração de OAuth2 e chave API",
+      "webhook": "Webhooks",
+      "webhookDesc": "Notificações de eventos em tempo real",
+      "rateLimit": "Limites de uso",
+      "rateLimitDesc": "Limites de uso e limitação de taxa",
+      "openDocs": "Abrir documentação"
+    },
+    "revenue": {
+      "lifetimeEarnings": "Ganhos acumulados",
+      "thisMonth": "Este mês",
+      "nextPayout": "Próximo pagamento",
+      "chart": "Tendência de receita",
+      "chartPlaceholder": "Gráfico de receita",
+      "byTool": "Receita por ferramenta"
+    },
+    "settings": {
+      "creatorProfile": "Perfil do criador",
+      "displayName": "Nome de exibição",
+      "bio": "Biografia",
+      "website": "Site",
+      "saveProfile": "Salvar perfil",
+      "apiKey": "Chave API",
+      "apiKeyDesc": "Chave API para integração SDK e gerenciamento de ferramentas.",
+      "productionKey": "Chave de produção",
+      "regenerateKey": "Regenerar chave"
+    }
   }
 }

@@ -51,7 +51,11 @@
       "title": "도구의 우주에 오신 것을 환영합니다",
       "subtitle": "소프트웨어, SaaS, AI, 자동화 도구가 모이는 차세대 플랫폼",
       "cta": "도구 탐색",
-      "ctaSecondary": "크리에이터 되기"
+      "ctaSecondary": "크리에이터 되기",
+      "badge": "크리에이터 모집 중",
+      "trust1": "엔터프라이즈급 보안",
+      "trust2": "99.9% 가동률 SLA",
+      "trust3": "글로벌 CDN 제공"
     },
     "features": {
       "title": "Toolverse로 할 수 있는 것",
@@ -70,6 +74,14 @@
       "api": {
         "title": "플랫폼 API",
         "description": "인증, 결제, 스토리지. 모든 것을 API로 구축하세요"
+      },
+      "infrastructure": {
+        "title": "관리형 인프라",
+        "description": "오토 스케일링 컴퓨팅, 글로벌 CDN, 관리형 데이터베이스로 제품 개발에 집중하세요"
+      },
+      "security": {
+        "title": "엔터프라이즈 보안",
+        "description": "SOC 2 준수, 종단간 암호화, 모든 규모의 팀을 위한 세밀한 접근 제어"
       }
     },
     "stats": {
@@ -87,11 +99,83 @@
       "development": "개발",
       "creatorTools": "크리에이터",
       "automation": "자동화",
-      "analytics": "분석"
+      "analytics": "데이터・분석",
+      "security": "사이버 보안",
+      "healthcare": "헬스케어・바이오테크",
+      "education": "교육・EdTech",
+      "ecommerce": "이커머스・리테일",
+      "communication": "커뮤니케이션",
+      "iot": "IoT・로보틱스",
+      "media": "미디어・엔터테인먼트",
+      "logistics": "물류・공급망"
     },
     "officialTools": {
       "title": "공식 도구",
       "subtitle": "Toolverse가 제공하는 공식 도구를 사용해 보세요"
+    },
+    "pricing": {
+      "badge": "요금 및 플랜",
+      "title": "투명하고 확장 가능한 요금제",
+      "subtitle": "무료로 시작하고 성장에 맞춰 확장하세요. 숨겨진 비용 없이 투명하게.",
+      "popular": "가장 인기",
+      "strengths": {
+        "instant": {
+          "title": "즉시 배포",
+          "description": "앱을 게시하고 몇 분 만에 결제를 받기 시작하세요"
+        },
+        "secure": {
+          "title": "PCI-DSS 준수",
+          "description": "은행급 보안, 모든 거래에 종단간 암호화 적용"
+        },
+        "global": {
+          "title": "글로벌 도달",
+          "description": "135개 이상의 통화로 190개 이상의 국가 사용자로부터 결제 수령"
+        },
+        "flexible": {
+          "title": "유연한 과금",
+          "description": "구독, 일회성 결제, 사용량 기반 과금 — 맞는 모델을 선택하세요"
+        }
+      },
+      "plans": {
+        "free": {
+          "name": "무료",
+          "price": "$0",
+          "description": "개인 및 사이드 프로젝트용",
+          "f1": "최대 5개 앱 게시",
+          "f2": "월 1,000명 활성 사용자",
+          "f3": "커뮤니티 지원"
+        },
+        "pro": {
+          "name": "프로",
+          "price": "$14.99",
+          "period": "/월",
+          "description": "프로 개발자를 위한 플랜",
+          "f1": "무제한 앱 게시",
+          "f2": "월 50,000명 활성 사용자",
+          "f3": "우선 지원 및 분석",
+          "f4": "커스텀 도메인 및 브랜딩"
+        },
+        "team": {
+          "name": "팀",
+          "price": "$39.99",
+          "period": "/월",
+          "description": "팀 및 조직을 위한 플랜",
+          "f1": "프로의 모든 기능 포함",
+          "f2": "무제한 월 활성 사용자",
+          "f3": "팀 협업 및 역할 관리",
+          "f4": "SLA 및 전담 지원"
+        }
+      },
+      "paymentTitle": "통합 결제 시스템",
+      "paymentSubtitle": "업계 최고의 결제 인프라 기반. 설정 없이 글로벌 결제 수령.",
+      "payment": {
+        "stripe": "카드, 지갑, 계좌이체",
+        "applepay": "원터치 모바일 결제",
+        "googlepay": "Android 빠른 결제"
+      },
+      "pci": "PCI-DSS Level 1 준수",
+      "currencies": "135개 이상 통화 지원",
+      "creatorPayout": "주간 크리에이터 정산"
     },
     "cta": {
       "title": "함께 도구의 우주를 만들어 갑시다",
@@ -104,12 +188,120 @@
     "subtitle": "최고의 도구를 찾아보세요",
     "trending": "트렌딩",
     "newTools": "신규 도구",
-    "featured": "추천",
+    "featured": {
+      "ai": {
+        "tag": "이달의 추천",
+        "title": "AI Writer Pro",
+        "subtitle": "AI의 힘으로 초고속 콘텐츠 제작"
+      },
+      "productivity": {
+        "tag": "편집부 추천",
+        "title": "TaskFlow",
+        "subtitle": "AI가 우선순위를 자동 판단하는 작업 관리"
+      },
+      "finance": {
+        "tag": "인기 무료 앱",
+        "title": "FinTrack",
+        "subtitle": "가계 관리를 더 간단하게"
+      },
+      "marketing": {
+        "tag": "신규 출시",
+        "title": "MarketSense",
+        "subtitle": "실시간 마케팅 분석 및 인사이트"
+      },
+      "development": {
+        "tag": "주요 업데이트",
+        "title": "CodePilot",
+        "subtitle": "모던 개발자를 위한 AI 페어 프로그래밍"
+      },
+      "creator": {
+        "tag": "주목 앱",
+        "title": "DesignStudio",
+        "subtitle": "크리에이터를 위한 AI 디자인 도구"
+      },
+      "automation": {
+        "tag": "급상승 트렌드",
+        "title": "AutoFlow",
+        "subtitle": "코드 없이 워크플로 구축"
+      },
+      "analytics": {
+        "tag": "필수 앱",
+        "title": "DataLens",
+        "subtitle": "고급 데이터 시각화 도구"
+      },
+      "security": {
+        "tag": "보안",
+        "title": "사이버 보안 도구",
+        "subtitle": "인프라와 데이터를 안전하게 보호하세요"
+      },
+      "healthcare": {
+        "tag": "헬스케어",
+        "title": "헬스케어 솔루션",
+        "subtitle": "디지털 헬스 및 바이오테크 애플리케이션"
+      },
+      "education": {
+        "tag": "교육",
+        "title": "EdTech 플랫폼",
+        "subtitle": "학습 관리 및 교육 도구"
+      },
+      "ecommerce": {
+        "tag": "이커머스",
+        "title": "커머스 솔루션",
+        "subtitle": "온라인 비즈니스를 구축하고 확장하세요"
+      },
+      "communication": {
+        "tag": "커뮤니케이션",
+        "title": "메시징 및 협업",
+        "subtitle": "팀과 고객을 원활하게 연결하세요"
+      },
+      "iot": {
+        "tag": "IoT & 로보틱스",
+        "title": "커넥티드 디바이스",
+        "subtitle": "IoT 디바이스 및 로보틱스 플랫폼 관리"
+      },
+      "media": {
+        "tag": "미디어",
+        "title": "콘텐츠 & 미디어",
+        "subtitle": "콘텐츠를 제작, 유통하고 수익을 창출하세요"
+      },
+      "logistics": {
+        "tag": "물류",
+        "title": "공급망 도구",
+        "subtitle": "물류와 운영을 최적화하세요"
+      },
+      "today": {
+        "tag": "오늘의 추천",
+        "title": "SENRIGAN",
+        "subtitle": "AI 기반 선견 분석 플랫폼"
+      },
+      "trending": {
+        "tag": "트렌딩",
+        "title": "AI Writer Pro",
+        "subtitle": "이번 주 가장 인기 있는 웹 앱"
+      },
+      "webapps": {
+        "tag": "웹 앱",
+        "title": "Toolverse 웹 앱",
+        "subtitle": "설치 불필요. 강력한 웹 앱을 발견하세요"
+      },
+      "official": {
+        "tag": "공식",
+        "title": "PresenceVision",
+        "subtitle": "Toolverse 공식 AI 프레즌스 관리 도구"
+      }
+    },
     "categories": "카테고리",
     "reviews": "리뷰",
     "rating": "평점",
+    "view": "보기",
     "install": "설치",
     "installed": "설치됨",
+    "today": "Today",
+    "webApps": "Web Apps",
+    "official": "공식",
+    "essential": "추천",
+    "apps": "앱",
+    "selectedByEditors": "Toolverse 편집부 셀렉션",
     "pricing": "요금",
     "filters": "필터",
     "sortBy": "정렬",
@@ -166,7 +358,39 @@
     "github": "GitHub로 계속",
     "agreeTerms": "이용약관에 동의합니다",
     "alreadyHaveAccount": "이미 계정이 있으신가요?",
-    "dontHaveAccount": "계정이 없으신가요?"
+    "dontHaveAccount": "계정이 없으신가요?",
+    "loginSuccess": "로그인 성공",
+    "redirecting": "리디렉션 중...",
+    "name": "이름",
+    "agreeTermsLong": "계속 진행하면 이용약관 및 개인정보 처리방침에 동의하는 것으로 간주됩니다.",
+    "emailRequired": "이메일을 입력해주세요",
+    "emailInvalid": "유효한 이메일 주소를 입력해주세요",
+    "passwordRequired": "비밀번호를 입력해주세요",
+    "passwordWeak": "비밀번호는 8자 이상이며 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다",
+    "rateLimited": "시도 횟수가 너무 많습니다. 잠시 후 다시 시도해주세요.",
+    "nameRequired": "이름을 입력해주세요",
+    "passwordMismatch": "비밀번호가 일치하지 않습니다",
+    "forgotPasswordTitle": "비밀번호 재설정",
+    "forgotPasswordDescription": "이메일 주소를 입력하시면 비밀번호 재설정 링크를 보내드립니다.",
+    "sendResetLink": "재설정 링크 보내기",
+    "resetLinkSent": "해당 이메일로 등록된 계정이 있다면 비밀번호 재설정 링크가 전송되었습니다.",
+    "backToSignIn": "로그인으로 돌아가기",
+    "resetPasswordTitle": "새 비밀번호 설정",
+    "resetPasswordDescription": "아래에 새 비밀번호를 입력하세요.",
+    "resetPassword": "비밀번호 재설정",
+    "newPassword": "새 비밀번호",
+    "confirmNewPassword": "새 비밀번호 확인",
+    "resetPasswordSuccess": "비밀번호가 성공적으로 재설정되었습니다. 이제 로그인할 수 있습니다.",
+    "resetTokenExpired": "이 재설정 링크가 만료되었습니다. 새 링크를 요청해주세요.",
+    "resetTokenInvalid": "유효하지 않은 재설정 링크입니다. 새 링크를 요청해주세요.",
+    "emailNotVerified": "계속하려면 이메일 주소를 인증해주세요.",
+    "verificationSent": "인증 이메일이 전송되었습니다. 받은편지함을 확인해주세요.",
+    "verificationSuccess": "이메일이 성공적으로 인증되었습니다!",
+    "verificationExpired": "인증 링크가 만료되었습니다. 새 링크를 요청해주세요.",
+    "verificationInvalid": "유효하지 않은 인증 링크입니다. 새 링크를 요청해주세요.",
+    "verificationError": "인증 중 오류가 발생했습니다. 다시 시도해주세요.",
+    "resendVerification": "인증 이메일 재발송",
+    "resendVerificationSuccess": "인증 이메일이 재발송되었습니다."
   },
   "billing": {
     "title": "결제 및 플랜",
@@ -176,6 +400,8 @@
     "usage": "사용량",
     "revenueShare": "수익 배분",
     "payouts": "지급",
+    "paymentMethods": "결제 수단",
+    "billingHistory": "결제 내역",
     "plans": {
       "free": {
         "name": "무료",
@@ -219,6 +445,56 @@
       "description": "채무 관리 및 최적화 내비게이터"
     }
   },
+  "toolDescriptions": {
+    "presenceVision": {
+      "name": "PresenceVision",
+      "description": "AI 기반 프레즌스 관리 및 분석"
+    },
+    "senrigan": {
+      "name": "SENRIGAN",
+      "description": "AI 기반 선견 분석 플랫폼"
+    },
+    "patentVision": {
+      "name": "PatentVision",
+      "description": "특허 검색, 분석 및 관리"
+    },
+    "debtNavigator": {
+      "name": "Debt Navigator",
+      "description": "채무 관리 및 최적화 내비게이터"
+    },
+    "aiWriterPro": {
+      "name": "AI Writer Pro",
+      "description": "전문가용 AI 작문 어시스턴트"
+    },
+    "taskFlow": {
+      "name": "TaskFlow",
+      "description": "AI 지능형 우선순위 작업 관리"
+    },
+    "codePilot": {
+      "name": "CodePilot",
+      "description": "AI 페어 프로그래밍 및 코드 리뷰 어시스턴트"
+    },
+    "marketSense": {
+      "name": "MarketSense",
+      "description": "실시간 마케팅 분석 및 인사이트"
+    },
+    "autoFlow": {
+      "name": "AutoFlow",
+      "description": "노코드 워크플로 자동화 빌더"
+    },
+    "fintrack": {
+      "name": "FinTrack",
+      "description": "개인 재무 추적 및 예산 도구"
+    },
+    "designStudio": {
+      "name": "DesignStudio",
+      "description": "크리에이터를 위한 AI 디자인 도구"
+    },
+    "dataLens": {
+      "name": "DataLens",
+      "description": "고급 데이터 시각화 및 분석 도구"
+    }
+  },
   "footer": {
     "product": "제품",
     "company": "회사",
@@ -236,5 +512,169 @@
     "privacy": "개인정보 처리방침",
     "cookies": "쿠키 정책",
     "copyright": "© 2026 Toolverse. 모든 권리 보유."
+  },
+  "studio": {
+    "title": "Tool Studio",
+    "subtitle": "Toolverse에서 웹 앱을 개발, 게시 및 관리하세요.",
+    "registerNew": "새 앱 등록",
+    "tabs": {
+      "tools": "내 도구",
+      "sdk": "SDK 연동",
+      "revenue": "수익",
+      "settings": "설정"
+    },
+    "stats": {
+      "publishedTools": "게시된 도구",
+      "totalUsers": "총 사용자",
+      "monthlyRevenue": "월간 수익",
+      "avgRating": "평균 평점"
+    },
+    "status": {
+      "published": "게시됨",
+      "draft": "초안",
+      "review": "검토 중"
+    },
+    "actions": {
+      "edit": "편집",
+      "analytics": "분석",
+      "perMonth": "/월"
+    },
+    "pricing": {
+      "title": "요금 모델",
+      "free": "무료",
+      "freeDesc": "모든 기능을 무료로 제공",
+      "freemium": "프리미엄",
+      "freemiumDesc": "무료 기본 플랜 + 프리미엄 기능",
+      "paid": "일회성 구매",
+      "paidDesc": "일회 결제로 영구 이용",
+      "subscription": "구독",
+      "subscriptionDesc": "월간 또는 연간 정기 과금",
+      "monthlyPrice": "월간 가격",
+      "yearlyPrice": "연간 가격 (선택사항)",
+      "salePrice": "판매 가격",
+      "freeTrialDays": "무료 체험 기간 (일)",
+      "freePlanLimits": "무료 플랜 제한사항",
+      "freePlanLimitsPlaceholder": "예: 월 1,000건 요청까지, 기본 기능만 이용 가능..."
+    },
+    "auth": {
+      "title": "인증 방식",
+      "toolverse": "Toolverse 인증 (권장)",
+      "toolverseDesc": "Toolverse 싱글 사인온 사용",
+      "oauth": "OAuth 2.0",
+      "oauthDesc": "자체 OAuth 제공자와 연동",
+      "oauthSettings": "OAuth 2.0 설정",
+      "apikey": "API 키",
+      "apikeyDesc": "API 키 기반 인증",
+      "none": "인증 없음",
+      "noneDesc": "누구나 접근 가능"
+    },
+    "form": {
+      "appName": "앱 이름",
+      "summaryDescription": "요약 설명",
+      "summaryPlaceholder": "앱을 1-2문장으로 설명하세요...",
+      "detailedDescription": "상세 설명",
+      "detailedPlaceholder": "기능과 세부사항을 설명하세요...",
+      "category": "카테고리",
+      "categoryPlaceholder": "카테고리를 선택하세요...",
+      "tags": "태그",
+      "tagsPlaceholder": "AI, 생산성, 글쓰기",
+      "icon": "아이콘",
+      "iconDragDrop": "드래그 앤 드롭 또는 클릭",
+      "iconHint": "PNG, SVG (512×512 권장)",
+      "screenshots": "스크린샷",
+      "screenshotsDesc": "스크린샷 업로드 (최대 6장)",
+      "screenshotsHint": "PNG, JPG — 1280×720 권장",
+      "serviceUrl": "서비스 URL",
+      "sandboxUrl": "샌드박스 / 데모 URL",
+      "apiEndpoint": "API 엔드포인트",
+      "webhookUrl": "Webhook URL",
+      "privacyPolicyUrl": "개인정보 처리방침 URL",
+      "termsUrl": "이용약관 URL",
+      "supportEmail": "지원 이메일",
+      "supportUrl": "지원 URL"
+    },
+    "wizard": {
+      "title": "새 앱 등록",
+      "subtitle": "4단계로 Toolverse에 게시하세요",
+      "step1": "기본 정보",
+      "step1Desc": "앱 이름, 설명 및 카테고리",
+      "step2": "서비스 설정",
+      "step2Desc": "URL, API 및 인증",
+      "step3": "요금 및 결제",
+      "step3Desc": "플랜 및 Toolverse 결제",
+      "step4": "검토 및 게시",
+      "step4Desc": "정보 확인 및 공개 설정",
+      "previous": "이전",
+      "next": "다음",
+      "saveDraft": "초안 저장",
+      "submitReview": "검토 제출"
+    },
+    "webAppConnection": "웹 앱 연결",
+    "webAppConnectionDesc": "Toolverse는 웹 앱 플랫폼입니다. 앱의 URL을 등록하여 사용자가 Toolverse를 통해 접근할 수 있게 하세요.",
+    "payment": {
+      "title": "Toolverse 결제",
+      "description": "Toolverse의 통합 결제 시스템을 통해 안전하게 결제를 받으세요",
+      "connected": "결제 계정 연결됨",
+      "connectedVia": "Stripe Connect로 연결됨",
+      "notConnected": "결제 계정 미연결",
+      "notConnectedDesc": "수익을 받으려면 계정을 연결하세요",
+      "changeSettings": "설정 변경",
+      "connect": "연결",
+      "revenueShare": "수익 배분",
+      "creatorShare": "크리에이터",
+      "platformFee": "* Toolverse 플랫폼 수수료에는 결제 처리 수수료(3.6%)가 포함됩니다"
+    },
+    "review": {
+      "title": "게시 전 최종 검토",
+      "description": "아래 정보를 입력하고 검토를 위해 제출하세요. 검토는 보통 1-3 영업일 내에 완료됩니다.",
+      "visibility": "공개 설정",
+      "public": "공개",
+      "publicDesc": "마켓플레이스에 표시되며 모든 사용자가 이용 가능",
+      "unlisted": "미등록",
+      "unlistedDesc": "링크를 가진 사용자만 접근 가능",
+      "private": "비공개",
+      "privateDesc": "본인만 접근 가능 (테스트용)",
+      "summary": "등록 요약",
+      "appName": "앱 이름",
+      "notEntered": "(입력되지 않음)",
+      "notSelected": "(선택되지 않음)",
+      "authMethod": "인증 방식",
+      "pricingModel": "요금 모델"
+    },
+    "sdk": {
+      "quickStart": "빠른 시작",
+      "quickStartDesc": "Toolverse SDK를 설치하고 플랫폼과 연동하세요.",
+      "install": "설치",
+      "example": "예제",
+      "resources": "리소스",
+      "apiReference": "API 레퍼런스",
+      "apiReferenceDesc": "전체 SDK 문서",
+      "authGuide": "인증 가이드",
+      "authGuideDesc": "OAuth2 및 API 키 설정",
+      "webhook": "Webhooks",
+      "webhookDesc": "실시간 이벤트 알림",
+      "rateLimit": "요청 제한",
+      "rateLimitDesc": "사용 제한 및 스로틀링",
+      "openDocs": "문서 열기"
+    },
+    "revenue": {
+      "lifetimeEarnings": "누적 수익",
+      "thisMonth": "이번 달",
+      "nextPayout": "다음 정산",
+      "chart": "수익 추이",
+      "chartPlaceholder": "수익 차트",
+      "byTool": "도구별 수익"
+    },
+    "settings": {
+      "creatorProfile": "크리에이터 프로필",
+      "displayName": "표시 이름",
+      "bio": "자기소개",
+      "website": "웹사이트",
+      "saveProfile": "프로필 저장",
+      "apiKey": "API 키",
+      "apiKeyDesc": "SDK 연동 및 도구 관리를 위한 API 키입니다.",
+      "productionKey": "프로덕션 키",
+      "regenerateKey": "키 재생성"
+    }
   }
 }

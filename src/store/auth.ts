@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import type { User } from '@/types';
 
-const STORAGE_KEY = 'toolverse-auth';
-
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -12,46 +10,121 @@ interface AuthState {
   signInWithApple: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (token: string, email: string, password: string) => Promise<void>;
   signOut: () => void;
   getInitialAuth: () => void;
 }
 
-function createMockUser(overrides: Partial<User> = {}): User {
+/**
+ * Map a NextAuth session user to our app User type.
+ */
+function toAppUser(sessionUser: {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  role?: string;
+}): User {
   return {
-    id: 'usr_' + Math.random().toString(36).slice(2, 10),
-    email: 'yuma@toolverse.com',
-    name: 'Yuma Takenaka',
-    avatar: 'gradient:violet-indigo',
-    role: 'admin',
+    id: sessionUser.id ?? '',
+    email: sessionUser.email ?? '',
+    name: sessionUser.name ?? '',
+    avatar: sessionUser.image ?? undefined,
+    role: (sessionUser.role as User['role']) ?? 'user',
     locale: 'ja',
     createdAt: new Date().toISOString(),
-    ...overrides,
   };
 }
 
-function saveSession(user: User) {
+/**
+ * Fetch the current session from NextAuth and return the user if authenticated.
+ */
+async function fetchSession(): Promise<User | null> {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-  } catch {}
-}
-
-function loadSession(): User | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as User;
+    const res = await fetch('/api/auth/session');
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data?.user?.email) {
+      return toAppUser(data.user);
+    }
+    return null;
   } catch {
     return null;
   }
 }
 
-function clearSession() {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch {}
+/**
+ * Sign in via credentials using NextAuth's CSRF-protected flow.
+ * NextAuth v5 expects the credentials POSTed to /api/auth/callback/credentials
+ * along with a csrfToken obtained from /api/auth/csrf.
+ */
+async function credentialsSignIn(email: string, password: string): Promise<void> {
+  // 1. Obtain CSRF token
+  const csrfRes = await fetch('/api/auth/csrf');
+  if (!csrfRes.ok) throw new Error('Failed to obtain CSRF token');
+  const { csrfToken } = await csrfRes.json();
+
+  // 2. POST credentials
+  const res = await fetch('/api/auth/callback/credentials', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      csrfToken,
+      email,
+      password,
+      redirect: 'false',
+      json: 'true',
+    }),
+    redirect: 'manual',
+  });
+
+  // NextAuth returns a redirect (302) on success when using credentials.
+  // With redirect: "manual" we get an opaque redirect or 200.
+  // If it returns 401 or a body with error, auth failed.
+  if (res.status === 401) {
+    throw new Error('Invalid email or password');
+  }
+
+  // Some NextAuth versions return JSON with an error field
+  if (res.headers.get('content-type')?.includes('application/json')) {
+    const data = await res.json();
+    if (data?.error) {
+      throw new Error(data.error);
+    }
+  }
 }
 
-const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+/**
+ * Initiate OAuth sign-in by redirecting to the provider.
+ */
+function oauthSignIn(provider: 'google' | 'github' | 'apple'): void {
+  // For OAuth, we redirect the browser to NextAuth's sign-in endpoint.
+  // NextAuth handles the full OAuth flow.
+  window.location.href = `/api/auth/signin/${provider}`;
+}
+
+/**
+ * Sign out by calling NextAuth's sign-out endpoint.
+ */
+async function nextAuthSignOut(): Promise<void> {
+  try {
+    const csrfRes = await fetch('/api/auth/csrf');
+    const { csrfToken } = await csrfRes.json();
+
+    await fetch('/api/auth/signout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        csrfToken,
+        redirect: 'false',
+        json: 'true',
+      }),
+    });
+  } catch {
+    // Best-effort sign out
+  }
+}
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
@@ -60,78 +133,125 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   signInWithGoogle: async () => {
     set({ isLoading: true });
-    await delay(800);
-    const user = createMockUser({
-      name: 'Yuma Takenaka',
-      email: 'yuma@toolverse.com',
-      avatar: 'gradient:violet-indigo',
-      role: 'admin',
-    });
-    saveSession(user);
-    set({ user, isAuthenticated: true, isLoading: false });
+    try {
+      oauthSignIn('google');
+      // Browser will redirect, so loading stays true
+    } catch {
+      set({ isLoading: false });
+    }
   },
 
   signInWithGitHub: async () => {
     set({ isLoading: true });
-    await delay(800);
-    const user = createMockUser({
-      name: 'Yuma Takenaka',
-      email: 'yuma@github.com',
-      avatar: 'gradient:gray-slate',
-      role: 'admin',
-    });
-    saveSession(user);
-    set({ user, isAuthenticated: true, isLoading: false });
+    try {
+      oauthSignIn('github');
+    } catch {
+      set({ isLoading: false });
+    }
   },
 
   signInWithApple: async () => {
     set({ isLoading: true });
-    await delay(800);
-    const user = createMockUser({
-      name: 'Yuma Takenaka',
-      email: 'yuma@icloud.com',
-      avatar: 'gradient:zinc-neutral',
-      role: 'admin',
-    });
-    saveSession(user);
-    set({ user, isAuthenticated: true, isLoading: false });
+    try {
+      oauthSignIn('apple');
+    } catch {
+      set({ isLoading: false });
+    }
   },
 
-  signInWithEmail: async (email: string, _password: string) => {
+  signInWithEmail: async (email: string, password: string) => {
     set({ isLoading: true });
-    await delay(800);
-    const user = createMockUser({
-      email,
-      name: email.split('@')[0],
-      avatar: 'gradient:emerald-teal',
-      role: 'user',
-    });
-    saveSession(user);
-    set({ user, isAuthenticated: true, isLoading: false });
+    try {
+      await credentialsSignIn(email, password);
+      // After successful sign-in, fetch the session to get user data
+      const user = await fetchSession();
+      if (user) {
+        set({ user, isAuthenticated: true, isLoading: false });
+      } else {
+        throw new Error('Authentication failed');
+      }
+    } catch {
+      set({ isLoading: false });
+      throw new Error('Invalid email or password');
+    }
   },
 
-  signUp: async (email: string, _password: string, name: string) => {
+  signUp: async (email: string, password: string, name: string) => {
     set({ isLoading: true });
-    await delay(800);
-    const user = createMockUser({
-      email,
-      name,
-      avatar: 'gradient:rose-pink',
-      role: 'user',
-    });
-    saveSession(user);
-    set({ user, isAuthenticated: true, isLoading: false });
+    try {
+      // 1. Create the account
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Sign up failed');
+      }
+
+      // 2. Auto sign-in after successful registration
+      await credentialsSignIn(email, password);
+      const user = await fetchSession();
+      if (user) {
+        set({ user, isAuthenticated: true, isLoading: false });
+      } else {
+        throw new Error('Auto sign-in after registration failed');
+      }
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+  },
+
+  forgotPassword: async (email: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to send reset email');
+      }
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  resetPassword: async (token: string, email: string, password: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, email, password }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to reset password');
+      }
+    } finally {
+      set({ isLoading: false });
+    }
   },
 
   signOut: () => {
-    clearSession();
+    nextAuthSignOut();
     set({ user: null, isAuthenticated: false, isLoading: false });
   },
 
   getInitialAuth: () => {
-    const user = loadSession();
-    if (user) {
-      set({ user, isAuthenticated: true });
-    }
+    // Fetch session from NextAuth on app load
+    fetchSession().then((user) => {
+      if (user) {
+        set({ user, isAuthenticated: true });
+      }
+    });
   },
 }));

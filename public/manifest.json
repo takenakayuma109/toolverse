@@ -1,22 +1,30 @@
 {
   "name": "Toolverse",
   "short_name": "Toolverse",
-  "description": "The Universe of Tools - 世界中のツールが集まるプラットフォーム",
+  "description": "The Universe of Tools - Discover, create, and use the world's best tools",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#030014",
-  "theme_color": "#8b5cf6",
+  "theme_color": "#7c3aed",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon?size=192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon?size=512",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

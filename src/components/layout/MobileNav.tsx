@@ -4,7 +4,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import { Home, Compass, LayoutGrid, Wrench, User } from 'lucide-react';
 
-type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin';
+type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin' | 'wallet';
 
 const NAV_ITEMS = [
   { key: 'home' as PageView, Icon: Home },
@@ -39,6 +39,7 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
             <button
               key={key}
               onClick={() => onNavigate(key)}
+              aria-label={t(`nav.${key}`)}
               className={cn(
                 'flex flex-col items-center justify-center flex-1 min-w-0 py-2 px-1 rounded-xl transition-all duration-200 active:scale-95',
                 isActive

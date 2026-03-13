@@ -1,5 +1,19 @@
+/**
+ * ============================================================
+ * FALLBACK MOCK DATA
+ * ============================================================
+ * This data is used as a fallback until the database has real data.
+ * Components should prefer fetching from the API (e.g. /api/tools)
+ * and only fall back to these exports when the API is unavailable.
+ *
+ * TODO: Remove this file once real data is consistently available
+ *       from the database and all components have been migrated.
+ * ============================================================
+ */
+
 import type { Tool } from '@/types';
 
+/** Fallback official tools — prefer fetching from /api/tools?isOfficial=true */
 export const officialTools: Tool[] = [
   {
     id: 'presence-vision',
@@ -87,6 +101,7 @@ export const officialTools: Tool[] = [
   },
 ];
 
+/** Fallback community tools — prefer fetching from /api/tools?isOfficial=false */
 export const communityTools: Tool[] = [
   {
     id: 'ai-writer-pro',
@@ -258,15 +273,25 @@ export const communityTools: Tool[] = [
   },
 ];
 
+/** Fallback combined tools list — prefer fetching from /api/tools */
 export const allTools = [...officialTools, ...communityTools];
 
+/** Fallback categories — prefer fetching from /api/categories */
 export const categories = [
-  { id: 'ai', icon: '🤖', color: 'from-violet-500 to-purple-600' },
+  { id: 'ai', icon: '🧠', color: 'from-violet-500 to-purple-600' },
   { id: 'productivity', icon: '⚡', color: 'from-blue-500 to-cyan-500' },
-  { id: 'finance', icon: '💰', color: 'from-emerald-500 to-green-600' },
-  { id: 'marketing', icon: '📢', color: 'from-orange-500 to-red-500' },
-  { id: 'development', icon: '💻', color: 'from-slate-600 to-slate-800' },
-  { id: 'creator', icon: '🎨', color: 'from-pink-500 to-rose-600' },
-  { id: 'automation', icon: '🔄', color: 'from-amber-500 to-yellow-600' },
+  { id: 'finance', icon: '📈', color: 'from-emerald-500 to-green-600' },
+  { id: 'marketing', icon: '🎯', color: 'from-orange-500 to-red-500' },
+  { id: 'development', icon: '⌨️', color: 'from-slate-500 to-slate-700' },
+  { id: 'creator', icon: '🎬', color: 'from-pink-500 to-rose-600' },
+  { id: 'automation', icon: '⚙️', color: 'from-amber-500 to-yellow-600' },
   { id: 'analytics', icon: '📊', color: 'from-indigo-500 to-blue-600' },
+  { id: 'security', icon: '🛡️', color: 'from-red-500 to-rose-700' },
+  { id: 'healthcare', icon: '🏥', color: 'from-teal-500 to-cyan-600' },
+  { id: 'education', icon: '🎓', color: 'from-sky-500 to-blue-600' },
+  { id: 'ecommerce', icon: '🛒', color: 'from-fuchsia-500 to-pink-600' },
+  { id: 'communication', icon: '💬', color: 'from-green-500 to-emerald-600' },
+  { id: 'iot', icon: '📡', color: 'from-cyan-500 to-teal-600' },
+  { id: 'media', icon: '🎥', color: 'from-rose-500 to-orange-500' },
+  { id: 'logistics', icon: '🚀', color: 'from-purple-500 to-indigo-600' },
 ] as const;

@@ -1,3 +1,15 @@
+import {
+  stripe,
+  createCheckoutSession as stripeCreateCheckout,
+  getSubscription as stripeGetSubscription,
+  cancelSubscription as stripeCancelSubscription,
+  listInvoices as stripeListInvoices,
+  listPaymentMethods as stripeListPaymentMethods,
+} from '@/lib/stripe';
+import type Stripe from 'stripe';
+
+// ─── Shared interfaces (backward compatible) ─────────────────────────────────
+
 export interface CheckoutParams {
   toolId: string;
   priceId: string;
@@ -114,278 +126,245 @@ export interface PaymentProvider {
   getRevenue: (params: RevenueQuery) => Promise<RevenueData>;
 }
 
-const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
-const mockId = (prefix: string) => `${prefix}_${Math.random().toString(36).slice(2, 14)}`;
+// ─── Stripe status mappers ────────────────────────────────────────────────────
+
+function mapStripeSubStatus(
+  status: Stripe.Subscription.Status,
+): Subscription['status'] {
+  const map: Record<string, Subscription['status']> = {
+    active: 'active',
+    trialing: 'trialing',
+    past_due: 'past_due',
+    canceled: 'canceled',
+    incomplete: 'incomplete',
+    incomplete_expired: 'canceled',
+    unpaid: 'past_due',
+    paused: 'paused',
+  };
+  return map[status] ?? 'incomplete';
+}
+
+function mapStripeInvoiceStatus(
+  status: Stripe.Invoice.Status | null,
+): Invoice['status'] {
+  if (!status) return 'draft';
+  const map: Record<string, Invoice['status']> = {
+    draft: 'draft',
+    open: 'open',
+    paid: 'paid',
+    void: 'void',
+    uncollectible: 'uncollectible',
+  };
+  return map[status] ?? 'draft';
+}
+
+function toCardBrand(brand: string): PaymentMethod['card'] extends infer C ? C extends { brand: infer B } ? B : never : never {
+  const normalized = brand.toLowerCase();
+  const valid = ['visa', 'mastercard', 'amex', 'jcb', 'diners'] as const;
+  return (valid.includes(normalized as typeof valid[number])
+    ? normalized
+    : 'visa') as typeof valid[number];
+}
+
+function toISOString(ts: number | null | undefined): string {
+  if (!ts) return new Date().toISOString();
+  return new Date(ts * 1000).toISOString();
+}
+
+// ─── Real Stripe Provider ─────────────────────────────────────────────────────
 
 export class StripeProvider implements PaymentProvider {
   name = 'stripe';
 
   async createCheckoutSession(params: CheckoutParams): Promise<CheckoutSession> {
-    await delay(400);
+    const session = await stripeCreateCheckout(
+      params.userId,
+      params.priceId,
+      params.successUrl,
+      params.cancelUrl,
+      { toolId: params.toolId, ...params.metadata },
+    );
+
     return {
-      id: mockId('cs'),
-      url: `https://checkout.stripe.com/pay/${mockId('cs')}`,
-      status: 'pending',
-      expiresAt: new Date(Date.now() + 30 * 60 * 1000).toISOString(),
-      amountTotal: 1980,
-      currency: 'jpy',
+      id: session.id,
+      url: session.url ?? '',
+      status: session.status === 'complete' ? 'complete' : 'pending',
+      expiresAt: toISOString(session.expires_at),
+      amountTotal: session.amount_total ?? 0,
+      currency: session.currency ?? 'jpy',
     };
   }
 
   async createSubscription(params: SubscriptionParams): Promise<Subscription> {
-    await delay(500);
-    const now = new Date();
-    const periodEnd = new Date(now);
-    periodEnd.setMonth(periodEnd.getMonth() + 1);
+    const subParams: Stripe.SubscriptionCreateParams = {
+      customer: params.customerId,
+      items: [{ price: params.priceId }],
+      metadata: { userId: params.userId, planId: params.planId, ...params.metadata },
+    };
+
+    if (params.trialDays) {
+      subParams.trial_period_days = params.trialDays;
+    }
+
+    const sub = await stripe.subscriptions.create(subParams);
+
     return {
-      id: mockId('sub'),
-      customerId: params.customerId,
+      id: sub.id,
+      customerId: typeof sub.customer === 'string' ? sub.customer : sub.customer.id,
       planId: params.planId,
       priceId: params.priceId,
-      status: params.trialDays ? 'trialing' : 'active',
-      currentPeriodStart: now.toISOString(),
-      currentPeriodEnd: periodEnd.toISOString(),
-      cancelAtPeriodEnd: false,
-      trialEnd: params.trialDays
-        ? new Date(Date.now() + params.trialDays * 86400000).toISOString()
-        : null,
-      createdAt: now.toISOString(),
+      status: mapStripeSubStatus(sub.status),
+      currentPeriodStart: toISOString(sub.billing_cycle_anchor),
+      currentPeriodEnd: toISOString(sub.billing_cycle_anchor),
+      cancelAtPeriodEnd: sub.cancel_at_period_end,
+      trialEnd: sub.trial_end ? toISOString(sub.trial_end) : null,
+      createdAt: toISOString(sub.created),
     };
   }
 
-  async cancelSubscription(_subscriptionId: string): Promise<void> {
-    await delay(300);
+  async cancelSubscription(subscriptionId: string): Promise<void> {
+    await stripeCancelSubscription(subscriptionId);
   }
 
-  async getSubscription(_subscriptionId: string): Promise<Subscription> {
-    await delay(200);
-    const now = new Date();
-    const periodEnd = new Date(now);
-    periodEnd.setMonth(periodEnd.getMonth() + 1);
+  async getSubscription(subscriptionId: string): Promise<Subscription> {
+    const sub = await stripeGetSubscription(subscriptionId);
+    const item = sub.items.data[0];
+
     return {
-      id: _subscriptionId,
-      customerId: mockId('cus'),
-      planId: 'free',
-      priceId: 'price_free',
-      status: 'active',
-      currentPeriodStart: now.toISOString(),
-      currentPeriodEnd: periodEnd.toISOString(),
-      cancelAtPeriodEnd: false,
-      trialEnd: null,
-      createdAt: '2025-01-15T00:00:00Z',
+      id: sub.id,
+      customerId: typeof sub.customer === 'string' ? sub.customer : sub.customer.id,
+      planId: (sub.metadata?.planId as string) ?? '',
+      priceId: typeof item?.price === 'object' ? item.price.id : '',
+      status: mapStripeSubStatus(sub.status),
+      currentPeriodStart: toISOString(sub.billing_cycle_anchor),
+      currentPeriodEnd: toISOString(sub.billing_cycle_anchor),
+      cancelAtPeriodEnd: sub.cancel_at_period_end,
+      trialEnd: sub.trial_end ? toISOString(sub.trial_end) : null,
+      createdAt: toISOString(sub.created),
     };
   }
 
-  async getPaymentMethods(_customerId: string): Promise<PaymentMethod[]> {
-    await delay(200);
-    return [
-      {
-        id: mockId('pm'),
-        type: 'card',
-        card: { brand: 'visa', last4: '4242', expMonth: 12, expYear: 2027 },
-        isDefault: true,
-        createdAt: '2025-06-01T00:00:00Z',
-      },
-    ];
+  async getPaymentMethods(customerId: string): Promise<PaymentMethod[]> {
+    const methods = await stripeListPaymentMethods(customerId);
+    const customer = await stripe.customers.retrieve(customerId);
+    const defaultPmId =
+      typeof customer !== 'string' && !customer.deleted
+        ? (customer.invoice_settings?.default_payment_method as string | null)
+        : null;
+
+    return methods.map((pm) => ({
+      id: pm.id,
+      type: 'card' as const,
+      card: pm.card
+        ? {
+            brand: toCardBrand(pm.card.brand),
+            last4: pm.card.last4 ?? '****',
+            expMonth: pm.card.exp_month,
+            expYear: pm.card.exp_year,
+          }
+        : undefined,
+      isDefault: pm.id === defaultPmId,
+      createdAt: toISOString(pm.created),
+    }));
   }
 
-  async addPaymentMethod(_customerId: string, _token: string): Promise<PaymentMethod> {
-    await delay(400);
+  async addPaymentMethod(customerId: string, token: string): Promise<PaymentMethod> {
+    const pm = await stripe.paymentMethods.attach(token, {
+      customer: customerId,
+    });
+
     return {
-      id: mockId('pm'),
+      id: pm.id,
       type: 'card',
-      card: { brand: 'mastercard', last4: '8888', expMonth: 6, expYear: 2028 },
+      card: pm.card
+        ? {
+            brand: toCardBrand(pm.card.brand),
+            last4: pm.card.last4 ?? '****',
+            expMonth: pm.card.exp_month,
+            expYear: pm.card.exp_year,
+          }
+        : undefined,
       isDefault: false,
-      createdAt: new Date().toISOString(),
+      createdAt: toISOString(pm.created),
     };
   }
 
-  async removePaymentMethod(_paymentMethodId: string): Promise<void> {
-    await delay(200);
+  async removePaymentMethod(paymentMethodId: string): Promise<void> {
+    await stripe.paymentMethods.detach(paymentMethodId);
   }
 
   async processRefund(paymentId: string, amount?: number): Promise<Refund> {
-    await delay(400);
+    const params: Stripe.RefundCreateParams = {
+      payment_intent: paymentId,
+    };
+    if (amount !== undefined) {
+      params.amount = amount;
+    }
+
+    const refund = await stripe.refunds.create(params);
+
     return {
-      id: mockId('re'),
+      id: refund.id,
       paymentId,
-      amount: amount ?? 1980,
-      currency: 'jpy',
-      status: 'succeeded',
-      createdAt: new Date().toISOString(),
+      amount: refund.amount,
+      currency: refund.currency,
+      status:
+        refund.status === 'succeeded'
+          ? 'succeeded'
+          : refund.status === 'failed'
+            ? 'failed'
+            : 'pending',
+      createdAt: toISOString(refund.created),
     };
   }
 
-  async getInvoices(_customerId: string, limit = 6): Promise<Invoice[]> {
-    await delay(300);
-    const invoices: Invoice[] = [];
-    for (let i = 0; i < limit; i++) {
-      const date = new Date();
-      date.setMonth(date.getMonth() - i);
-      const monthStr = date.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long' });
-      invoices.push({
-        id: mockId('inv'),
-        number: `INV-2026-${String(date.getMonth() + 1).padStart(2, '0')}`,
-        customerId: _customerId,
-        subscriptionId: mockId('sub'),
-        amount: i === 0 ? 1980 : 1980,
-        currency: 'jpy',
-        status: 'paid',
-        description: `Toolverse Pro - ${monthStr}`,
-        paidAt: date.toISOString(),
-        createdAt: date.toISOString(),
-        pdfUrl: `https://invoices.toolverse.com/${mockId('inv')}.pdf`,
-      });
-    }
-    return invoices;
+  async getInvoices(customerId: string, limit = 10): Promise<Invoice[]> {
+    const invoices = await stripeListInvoices(customerId, limit);
+
+    return invoices.map((inv) => ({
+      id: inv.id,
+      number: inv.number ?? inv.id,
+      customerId: typeof inv.customer === 'string' ? inv.customer : inv.customer?.id ?? '',
+      subscriptionId: (() => {
+        const subRef = inv.parent?.subscription_details?.subscription;
+        return typeof subRef === 'string' ? subRef : subRef?.id ?? '';
+      })(),
+      amount: inv.amount_paid ?? inv.total ?? 0,
+      currency: inv.currency,
+      status: mapStripeInvoiceStatus(inv.status),
+      description: inv.description ?? `Invoice ${inv.number ?? inv.id}`,
+      paidAt: inv.status === 'paid' && inv.status_transitions?.paid_at
+        ? toISOString(inv.status_transitions.paid_at)
+        : null,
+      createdAt: toISOString(inv.created),
+      pdfUrl: inv.invoice_pdf ?? '',
+    }));
   }
 
   async getRevenue(params: RevenueQuery): Promise<RevenueData> {
-    await delay(400);
-    const dataPoints: RevenueDataPoint[] = [];
-    const start = new Date(params.startDate);
-    const end = new Date(params.endDate);
-    const current = new Date(start);
+    // Revenue data is fetched from the database via the /api/revenue endpoint.
+    // This method is kept for interface compatibility but delegates to the API.
+    const response = await fetch(
+      `/api/revenue?startDate=${params.startDate}&endDate=${params.endDate}&granularity=${params.granularity}` +
+        (params.creatorId ? `&creatorId=${params.creatorId}` : '') +
+        (params.toolId ? `&toolId=${params.toolId}` : ''),
+    );
 
-    while (current <= end) {
-      const revenue = Math.floor(Math.random() * 50000) + 10000;
-      const transactions = Math.floor(Math.random() * 30) + 5;
-      dataPoints.push({
-        date: current.toISOString().split('T')[0],
-        revenue,
-        transactions,
-        refunds: Math.floor(Math.random() * 3),
-      });
-      if (params.granularity === 'day') current.setDate(current.getDate() + 1);
-      else if (params.granularity === 'week') current.setDate(current.getDate() + 7);
-      else current.setMonth(current.getMonth() + 1);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch revenue data: ${response.statusText}`);
     }
 
-    const totalRevenue = dataPoints.reduce((s, d) => s + d.revenue, 0);
-    const totalTransactions = dataPoints.reduce((s, d) => s + d.transactions, 0);
-
-    return {
-      totalRevenue,
-      totalTransactions,
-      currency: 'jpy',
-      platformFee: Math.floor(totalRevenue * 0.15),
-      creatorPayout: Math.floor(totalRevenue * 0.85),
-      dataPoints,
-    };
+    return response.json();
   }
 }
 
-export class ToolversePayProvider implements PaymentProvider {
-  name = 'toolverse-pay';
-
-  async createCheckoutSession(params: CheckoutParams): Promise<CheckoutSession> {
-    await delay(300);
-    return {
-      id: mockId('tvcs'),
-      url: `https://pay.toolverse.com/checkout/${mockId('tvcs')}`,
-      status: 'pending',
-      expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
-      amountTotal: 1980,
-      currency: 'jpy',
-    };
-  }
-
-  async createSubscription(params: SubscriptionParams): Promise<Subscription> {
-    await delay(400);
-    const now = new Date();
-    const periodEnd = new Date(now);
-    periodEnd.setMonth(periodEnd.getMonth() + 1);
-    return {
-      id: mockId('tvsub'),
-      customerId: params.customerId,
-      planId: params.planId,
-      priceId: params.priceId,
-      status: 'active',
-      currentPeriodStart: now.toISOString(),
-      currentPeriodEnd: periodEnd.toISOString(),
-      cancelAtPeriodEnd: false,
-      trialEnd: null,
-      createdAt: now.toISOString(),
-    };
-  }
-
-  async cancelSubscription(_subscriptionId: string): Promise<void> {
-    await delay(200);
-  }
-
-  async getSubscription(_subscriptionId: string): Promise<Subscription> {
-    await delay(200);
-    const now = new Date();
-    const periodEnd = new Date(now);
-    periodEnd.setMonth(periodEnd.getMonth() + 1);
-    return {
-      id: _subscriptionId,
-      customerId: mockId('tvcus'),
-      planId: 'free',
-      priceId: 'tvprice_free',
-      status: 'active',
-      currentPeriodStart: now.toISOString(),
-      currentPeriodEnd: periodEnd.toISOString(),
-      cancelAtPeriodEnd: false,
-      trialEnd: null,
-      createdAt: '2025-01-15T00:00:00Z',
-    };
-  }
-
-  async getPaymentMethods(_customerId: string): Promise<PaymentMethod[]> {
-    await delay(150);
-    return [];
-  }
-
-  async addPaymentMethod(_customerId: string, _token: string): Promise<PaymentMethod> {
-    await delay(300);
-    return {
-      id: mockId('tvpm'),
-      type: 'card',
-      card: { brand: 'visa', last4: '1234', expMonth: 3, expYear: 2028 },
-      isDefault: true,
-      createdAt: new Date().toISOString(),
-    };
-  }
-
-  async removePaymentMethod(_paymentMethodId: string): Promise<void> {
-    await delay(150);
-  }
-
-  async processRefund(paymentId: string, amount?: number): Promise<Refund> {
-    await delay(300);
-    return {
-      id: mockId('tvre'),
-      paymentId,
-      amount: amount ?? 1980,
-      currency: 'jpy',
-      status: 'succeeded',
-      createdAt: new Date().toISOString(),
-    };
-  }
-
-  async getInvoices(_customerId: string, _limit = 6): Promise<Invoice[]> {
-    await delay(200);
-    return [];
-  }
-
-  async getRevenue(_params: RevenueQuery): Promise<RevenueData> {
-    await delay(300);
-    return {
-      totalRevenue: 0,
-      totalTransactions: 0,
-      currency: 'jpy',
-      platformFee: 0,
-      creatorPayout: 0,
-      dataPoints: [],
-    };
-  }
-}
+// ─── Provider Singleton ───────────────────────────────────────────────────────
 
 let providerInstance: PaymentProvider | null = null;
 
 export function getPaymentProvider(provider: 'stripe' | 'toolverse-pay' = 'stripe'): PaymentProvider {
   if (providerInstance && providerInstance.name === provider) return providerInstance;
-  providerInstance = provider === 'toolverse-pay' ? new ToolversePayProvider() : new StripeProvider();
+  // All providers now use Stripe under the hood
+  providerInstance = new StripeProvider();
   return providerInstance;
 }

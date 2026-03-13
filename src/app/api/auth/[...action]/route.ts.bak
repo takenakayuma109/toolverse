@@ -1,0 +1,105 @@
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ action: string[] }> }
+) {
+  const { action } = await params;
+  const actionPath = action.join('/');
+
+  switch (actionPath) {
+    case 'signin': {
+      const body = await request.json();
+      const { provider, email, password, name } = body;
+
+      const user = {
+        id: 'usr_' + Math.random().toString(36).slice(2, 10),
+        email: email || `user@${provider || 'email'}.com`,
+        name: name || email?.split('@')[0] || 'User',
+        avatar: 'gradient:violet-indigo',
+        role: email === 'yuma@toolverse.com' ? 'admin' : 'user',
+        locale: 'ja',
+        createdAt: new Date().toISOString(),
+      };
+
+      const sessionToken = crypto.randomUUID();
+
+      const response = NextResponse.json({ user, sessionToken });
+      response.cookies.set('toolverse-session', sessionToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60,
+        path: '/',
+      });
+
+      return response;
+    }
+    case 'signup': {
+      const body = await request.json();
+      const { email, password, name } = body;
+
+      if (!email || !password || !name) {
+        return NextResponse.json(
+          { error: 'Missing required fields' },
+          { status: 400 }
+        );
+      }
+
+      const user = {
+        id: 'usr_' + Math.random().toString(36).slice(2, 10),
+        email,
+        name,
+        avatar: 'gradient:rose-pink',
+        role: 'user' as const,
+        locale: 'ja',
+        createdAt: new Date().toISOString(),
+      };
+
+      const sessionToken = crypto.randomUUID();
+
+      const response = NextResponse.json({ user, sessionToken });
+      response.cookies.set('toolverse-session', sessionToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60,
+        path: '/',
+      });
+
+      return response;
+    }
+    case 'signout': {
+      const response = NextResponse.json({ success: true });
+      response.cookies.delete('toolverse-session');
+      return response;
+    }
+    case 'session': {
+      const sessionToken = request.cookies.get('toolverse-session');
+      if (!sessionToken) {
+        return NextResponse.json({ user: null }, { status: 401 });
+      }
+      return NextResponse.json({ user: null, message: 'Session validation requires database' });
+    }
+    default:
+      return NextResponse.json({ error: 'Unknown action' }, { status: 404 });
+  }
+}
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ action: string[] }> }
+) {
+  const { action } = await params;
+  const actionPath = action.join('/');
+
+  if (actionPath === 'session') {
+    const sessionToken = request.cookies.get('toolverse-session');
+    if (!sessionToken) {
+      return NextResponse.json({ user: null });
+    }
+    return NextResponse.json({ authenticated: true });
+  }
+
+  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+}

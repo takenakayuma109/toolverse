@@ -31,7 +31,15 @@ export type ToolCategory =
   | 'development'
   | 'creator'
   | 'automation'
-  | 'analytics';
+  | 'analytics'
+  | 'security'
+  | 'healthcare'
+  | 'education'
+  | 'ecommerce'
+  | 'communication'
+  | 'iot'
+  | 'media'
+  | 'logistics';
 
 export interface ToolPricing {
   type: 'free' | 'freemium' | 'paid' | 'subscription';
@@ -88,4 +96,77 @@ export interface BillingPlan {
   currency: string;
   period: 'monthly' | 'yearly';
   features: string[];
+}
+
+export type CreatorTier = 'early' | 'verified' | 'standard';
+
+export interface CreatorTierInfo {
+  tier: CreatorTier;
+  creatorShare: number; // percentage (95, 90, 85)
+  platformShare: number; // percentage (5, 10, 15)
+  label: string;
+  requirements: string[];
+}
+
+export interface CreatorWallet {
+  id: string;
+  creatorId: string;
+  tier: CreatorTier;
+  balance: number;
+  pendingPayout: number;
+  lifetimeEarnings: number;
+  lifetimePlatformFee: number;
+  currency: string;
+  payoutMethod: PayoutMethod | null;
+  payoutHistory: PayoutRecord[];
+  monthlyRevenue: MonthlyRevenue[];
+}
+
+export type PayoutMethodType = 'stripe_connect' | 'bank_transfer' | 'paypal';
+
+export interface PayoutMethod {
+  type: PayoutMethodType;
+  details: string; // masked info like "****1234" or "paypal@email.com"
+  isVerified: boolean;
+  addedAt: string;
+}
+
+export interface PayoutRecord {
+  id: string;
+  amount: number;
+  currency: string;
+  method: PayoutMethodType;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  requestedAt: string;
+  completedAt: string | null;
+  reference: string;
+}
+
+export interface MonthlyRevenue {
+  month: string; // "2026-03"
+  grossRevenue: number;
+  creatorShare: number;
+  platformFee: number;
+  refunds: number;
+  netPayout: number;
+  transactions: number;
+}
+
+export interface InfrastructureUsage {
+  service: InfraService;
+  usage: number;
+  unit: string;
+  cost: number;
+  period: string;
+}
+
+export type InfraService = 'ai_api' | 'storage' | 'database' | 'search' | 'automation' | 'notification' | 'auth' | 'workspace';
+
+export interface InfraServicePricing {
+  service: InfraService;
+  name: string;
+  unit: string;
+  pricePerUnit: number;
+  freeAllowance: number;
+  icon: string;
 }
