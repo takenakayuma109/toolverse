@@ -347,7 +347,7 @@ export default function MarketplacePage() {
                         {tool.isOfficial && <Badge variant="gradient" size="sm">{t('common.official')}</Badge>}
                         {tool.isTrending && <Badge variant="warning" size="sm">🔥</Badge>}
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
                         {getToolDescription(tool)}
                       </p>
                       <div className="flex items-center gap-4 mt-2.5 text-xs text-gray-400">
