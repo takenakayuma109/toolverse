@@ -6,36 +6,12 @@ import { cn } from '@/lib/utils';
 import { Store, LayoutGrid, Sparkles, Code, Shield, Cpu } from 'lucide-react';
 
 const features = [
-  {
-    id: 'marketplace',
-    icon: Store,
-    gradient: 'from-violet-500 to-purple-600',
-  },
-  {
-    id: 'workspace',
-    icon: LayoutGrid,
-    gradient: 'from-blue-500 to-cyan-500',
-  },
-  {
-    id: 'creator',
-    icon: Sparkles,
-    gradient: 'from-amber-500 to-orange-600',
-  },
-  {
-    id: 'api',
-    icon: Code,
-    gradient: 'from-emerald-500 to-teal-600',
-  },
-  {
-    id: 'infrastructure',
-    icon: Cpu,
-    gradient: 'from-rose-500 to-pink-600',
-  },
-  {
-    id: 'security',
-    icon: Shield,
-    gradient: 'from-slate-500 to-gray-700',
-  },
+  { id: 'marketplace', icon: Store, color: 'text-violet-500', bg: 'bg-violet-500/10' },
+  { id: 'workspace', icon: LayoutGrid, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+  { id: 'creator', icon: Sparkles, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+  { id: 'api', icon: Code, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+  { id: 'infrastructure', icon: Cpu, color: 'text-rose-500', bg: 'bg-rose-500/10' },
+  { id: 'security', icon: Shield, color: 'text-slate-500', bg: 'bg-slate-500/10' },
 ] as const;
 
 export default function FeaturesSection() {
@@ -45,47 +21,40 @@ export default function FeaturesSection() {
   const isEarth = theme === 'earth';
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+    <section className="px-4 sm:px-6 lg:px-8 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 md:mb-16">
-          <span className={cn(
-            'inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-4',
-            isDark ? 'bg-violet-950/50 text-violet-300 border border-violet-800/50' :
-            isEarth ? 'bg-violet-100/50 text-violet-700 border border-violet-200' :
-            'bg-violet-50 text-violet-600 border border-violet-200'
+        <div className="text-center mb-16">
+          <p className={cn(
+            'text-sm font-semibold tracking-widest uppercase mb-3',
+            isDark ? 'text-violet-400' : isEarth ? 'text-violet-600' : 'text-violet-600'
           )}>
-            PLATFORM
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            Platform
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">
             {t('home.features.title')}
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {features.map(({ id, icon: Icon, gradient }) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {features.map(({ id, icon: Icon, color, bg }) => (
             <div
               key={id}
               className={cn(
-                'group relative p-8 rounded-2xl border transition-all duration-300 hover:-translate-y-1',
-                isDark ? 'bg-gray-900/50 border-gray-800 hover:border-gray-700 hover:shadow-xl hover:shadow-violet-500/5' :
-                isEarth ? 'bg-white/60 border-gray-200 hover:border-gray-300 hover:shadow-lg' :
-                'bg-white border-gray-100 hover:border-gray-200 hover:shadow-xl hover:shadow-violet-500/10'
+                'group relative p-7 sm:p-8 rounded-2xl border transition-all duration-200',
+                isDark
+                  ? 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.1]'
+                  : isEarth
+                    ? 'bg-white/80 border-gray-200/80 hover:border-gray-300 hover:shadow-md'
+                    : 'bg-white border-gray-200/60 hover:border-gray-300 hover:shadow-lg hover:shadow-gray-200/50'
               )}
             >
-              <div
-                className={cn(
-                  'w-14 h-14 rounded-2xl flex items-center justify-center mb-6',
-                  'bg-gradient-to-br shadow-lg',
-                  gradient,
-                  'group-hover:scale-110 transition-transform duration-300'
-                )}
-              >
-                <Icon className="w-7 h-7 text-white" />
+              <div className={cn('w-12 h-12 rounded-xl flex items-center justify-center mb-5', bg)}>
+                <Icon className={cn('w-6 h-6', color)} />
               </div>
-              <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t(`home.features.${id}.title`)}
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm">
+              <p className="text-[15px] text-gray-500 dark:text-gray-400 leading-relaxed">
                 {t(`home.features.${id}.description`)}
               </p>
             </div>
