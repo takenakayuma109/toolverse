@@ -3,6 +3,8 @@ import { constructWebhookEvent } from '@/lib/stripe';
 import { prisma } from '@/lib/db';
 import { isCriticalEvent, logWebhookError } from '@/lib/webhook-errors';
 import { logger } from '@/lib/logger';
+import { isToolverseAttributed, extractAttribution } from '@/core/attribution/attributionEngine';
+import { calculateRevenue, getRevenueShareRate } from '@/core/revenue/calculateRevenue';
 import type Stripe from 'stripe';
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -119,6 +121,30 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         status: 'COMPLETED',
       },
     });
+  }
+
+  // Revenue attribution: if purchase came through Toolverse, calculate revenue share
+  const metadata = (session.metadata ?? {}) as Record<string, string | undefined>;
+  if (isToolverseAttributed(metadata)) {
+    const attribution = extractAttribution(metadata);
+    if (attribution.creatorId) {
+      const creator = await prisma.creatorProfile.findUnique({
+        where: { userId: attribution.creatorId },
+      });
+      if (creator) {
+        const amount = session.amount_total ?? 0;
+        const rate = getRevenueShareRate(creator.tier);
+        const { platformFee, creatorRevenue } = calculateRevenue(amount, rate);
+        logger.info('Toolverse revenue attributed', {
+          toolId: attribution.toolId,
+          creatorId: attribution.creatorId,
+          amount,
+          platformFee,
+          creatorRevenue,
+          tier: creator.tier,
+        });
+      }
+    }
   }
 
   // Activate subscription if present
