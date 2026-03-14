@@ -31,7 +31,7 @@ export default function HeroBackground() {
     };
 
     const initParticles = () => {
-      const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 15000), 80);
+      const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 10000), 120);
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * canvas.offsetWidth,
         y: Math.random() * canvas.offsetHeight,
