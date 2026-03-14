@@ -26,17 +26,35 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
 
   return (
     <section className="relative min-h-[92dvh] flex flex-col justify-center overflow-hidden">
-      {/* Background */}
+      {/* Video background */}
       <div className="absolute inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%23030014' width='1920' height='1080'/%3E%3C/svg%3E"
+        >
+          <source
+            src="https://cdn.coverr.co/videos/coverr-an-abstract-dark-tunnel-2481/1080p.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Overlay gradient for readability */}
         <div
           className="absolute inset-0 transition-colors duration-500"
           style={{
             background: isEarth
-              ? 'linear-gradient(160deg, #1a1428 0%, #0f0d1a 40%, #0a0814 100%)'
-              : 'linear-gradient(160deg, #0c0024 0%, #050012 40%, #020008 100%)',
+              ? 'linear-gradient(160deg, rgba(26,20,40,0.82) 0%, rgba(15,13,26,0.88) 40%, rgba(10,8,20,0.85) 100%)'
+              : 'linear-gradient(160deg, rgba(12,0,36,0.75) 0%, rgba(5,0,18,0.82) 40%, rgba(2,0,8,0.78) 100%)',
           }}
         />
+
+        {/* Canvas particle layer on top of video */}
         <HeroBackground />
+
         {/* Subtle radial glow */}
         <div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] rounded-full blur-[120px] pointer-events-none"
