@@ -332,38 +332,39 @@ export default function MarketplacePage() {
             </p>
 
             {filteredTools.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-6 gap-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
                 {filteredTools.map((tool) => (
                   <div
                     key={tool.id}
-                    className="flex items-center gap-4 py-3 border-b border-gray-100 dark:border-gray-800 last:border-b-0 group"
+                    className="flex gap-4 p-4 rounded-2xl border border-gray-200/60 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] hover:border-gray-300 dark:hover:border-white/[0.1] hover:shadow-md hover:shadow-gray-200/40 dark:hover:shadow-none transition-all group"
                   >
-                    <AppIcon3D icon={tool.icon} size="md" />
+                    <AppIcon3D icon={tool.icon} size="lg" className="flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-semibold text-gray-900 dark:text-white text-sm truncate">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-bold text-gray-900 dark:text-white text-[15px] truncate">
                           {getToolName(tool)}
                         </h4>
                         {tool.isOfficial && <Badge variant="gradient" size="sm">{t('common.official')}</Badge>}
+                        {tool.isTrending && <Badge variant="warning" size="sm">🔥</Badge>}
                       </div>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">
                         {getToolDescription(tool)}
                       </p>
-                      <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
-                        <span className="flex items-center gap-0.5">
-                          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      <div className="flex items-center gap-4 mt-2.5 text-xs text-gray-400">
+                        <span className="flex items-center gap-1">
+                          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                           {tool.rating}
                         </span>
-                        <span className="flex items-center gap-0.5">
-                          <Users className="w-3 h-3" />
+                        <span className="flex items-center gap-1">
+                          <Users className="w-3.5 h-3.5" />
                           {formatNumber(tool.userCount)}
                         </span>
-                        <span className="text-gray-400">
+                        <span className="font-medium text-gray-500 dark:text-gray-400">
                           {tool.pricing.type === 'free' ? t('common.free') : tool.pricing.price ? `¥${tool.pricing.price}/mo` : t('common.freemium')}
                         </span>
                       </div>
                     </div>
-                    <button className="flex-shrink-0 px-4 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-950/50 text-violet-600 dark:text-violet-400 text-sm font-medium transition-all border border-gray-200 dark:border-gray-700 hover:border-violet-300 dark:hover:border-violet-700">
+                    <button className="self-center flex-shrink-0 px-5 py-2 rounded-full bg-gray-100 dark:bg-white/[0.06] hover:bg-violet-100 dark:hover:bg-violet-950/50 text-violet-600 dark:text-violet-400 text-sm font-semibold transition-all">
                       {t('marketplace.view')}
                     </button>
                   </div>
