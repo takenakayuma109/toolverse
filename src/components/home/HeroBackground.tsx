@@ -46,13 +46,13 @@ export default function HeroBackground() {
     const initParticles = () => {
       const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 10000), 120);
       particles = Array.from({ length: count }, () => {
-        const baseOpacity = Math.random() * 0.5 + 0.3;
+        const baseOpacity = Math.random() * 0.5 + 0.5;
         return {
           x: Math.random() * canvas.offsetWidth,
           y: Math.random() * canvas.offsetHeight,
           vx: (Math.random() - 0.5) * 0.3,
           vy: (Math.random() - 0.5) * 0.3,
-          radius: Math.random() * 1.8 + 0.5,
+          radius: Math.random() * 2.5 + 0.8,
           opacity: baseOpacity,
           baseOpacity,
           twinkleSpeed: Math.random() * 2 + 1,
@@ -90,22 +90,23 @@ export default function HeroBackground() {
       for (const p of particles) {
         const twinkle = Math.sin(time * p.twinkleSpeed + p.twinkleOffset);
         // Opacity oscillates between dim and bright
-        p.opacity = p.baseOpacity + twinkle * 0.3;
+        p.opacity = Math.min(p.baseOpacity + twinkle * 0.5, 1);
         const [r, g, b] = p.color;
 
-        // Outer glow
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.6})`);
+        // Outer glow (larger, brighter)
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 5);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${Math.min(p.opacity * 0.9, 1)})`);
+        gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.3})`);
         gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.radius * 5, 0, Math.PI * 2);
         ctx.fillStyle = gradient;
         ctx.fill();
 
-        // Core dot
+        // Core dot (brighter)
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(p.opacity + 0.3, 1)})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(p.opacity + 0.4, 1)})`;
         ctx.fill();
 
         p.x += p.vx;
@@ -135,7 +136,7 @@ export default function HeroBackground() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: 0.6 }}
+      style={{ opacity: 1 }}
     />
   );
 }
