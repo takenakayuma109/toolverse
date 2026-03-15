@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { errorResponse, withErrorHandler } from '@/lib/api-utils';
+import {
+  checkMAUCapacity,
+  recordActiveUser,
+} from '@/core/active-users/activeUserService';
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -21,15 +25,28 @@ export async function GET(request: NextRequest, { params }: Params) {
     // Check if the tool exists
     const tool = await prisma.tool.findUnique({
       where: { id: toolId },
-      select: { id: true, pricingType: true },
+      select: { id: true, pricingType: true, creatorId: true },
     });
 
     if (!tool) {
       return errorResponse('Tool not found', 404);
     }
 
+    // --- MAU limit check ---
+    const capacity = await checkMAUCapacity(tool.creatorId, userId, toolId);
+    if (!capacity.allowed) {
+      return NextResponse.json({
+        hasAccess: false,
+        reason: 'mau_limit_exceeded',
+        currentCount: capacity.currentCount,
+        limit: capacity.limit,
+      });
+    }
+
     // Free tools are always accessible
     if (tool.pricingType === 'free') {
+      // Record the active user
+      await recordActiveUser(userId, toolId, tool.creatorId);
       return NextResponse.json({ hasAccess: true });
     }
 
@@ -44,6 +61,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     });
 
     if (payment) {
+      await recordActiveUser(userId, toolId, tool.creatorId);
       return NextResponse.json({ hasAccess: true });
     }
 
@@ -61,6 +79,7 @@ export async function GET(request: NextRequest, { params }: Params) {
     });
 
     if (subscription) {
+      await recordActiveUser(userId, toolId, tool.creatorId);
       return NextResponse.json({
         hasAccess: true,
         subscription: {

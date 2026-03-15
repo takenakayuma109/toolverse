@@ -445,6 +445,7 @@
     "usage": "Usage",
     "revenueShare": "Revenue Share",
     "payouts": "Payouts",
+    "activeUsers": "Active Users",
     "paymentMethods": "Payment Methods",
     "billingHistory": "Billing History",
     "plans": {

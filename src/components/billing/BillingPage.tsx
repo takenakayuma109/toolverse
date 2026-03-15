@@ -103,7 +103,7 @@ const PLANS = [
   },
 ] as const;
 
-const USAGE_STATS = [
+const STATIC_USAGE_STATS = [
   { label: 'Tools used', value: '5', limit: '5', unit: 'tools', percent: 100 },
   { label: 'Storage', value: '0.8', limit: '1', unit: 'GB', percent: 80 },
   { label: 'API calls', value: '1,240', limit: '10,000', unit: 'calls', percent: 12.4 },
@@ -120,6 +120,15 @@ const CARD_BRANDS: Record<string, string> = {
   diners: 'Diners Club',
 };
 
+interface MAUStats {
+  monthKey: string;
+  activeUsers: number;
+  limit: number | null;
+  limitReached: boolean;
+  percentUsed: number;
+  byTool: { toolId: string; toolName: string; activeUsers: number }[];
+}
+
 export default function BillingPage() {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<BillingTab>('plans');
@@ -127,6 +136,7 @@ export default function BillingPage() {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
   const [loadingInvoices, setLoadingInvoices] = useState(true);
   const [loadingMethods, setLoadingMethods] = useState(true);
+  const [mauStats, setMauStats] = useState<MAUStats | null>(null);
 
   const [showAddCard, setShowAddCard] = useState(false);
   const [cardNumber, setCardNumber] = useState('');
@@ -162,6 +172,40 @@ export default function BillingPage() {
       return () => { cancelled = true; };
     }
   }, [activeTab, provider, invoices.length, paymentMethods.length]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchMAU = async () => {
+      try {
+        const res = await fetch('/api/creator/active-users');
+        if (res.ok && !cancelled) {
+          setMauStats(await res.json());
+        }
+      } catch {
+        // silently ignore — non-creator users won't have access
+      }
+    };
+    fetchMAU();
+    return () => { cancelled = true; };
+  }, []);
+
+  const USAGE_STATS = useMemo(() => {
+    const stats = [...STATIC_USAGE_STATS];
+    if (mauStats) {
+      const mauPercent =
+        mauStats.limit !== null
+          ? (mauStats.activeUsers / mauStats.limit) * 100
+          : 0;
+      stats.unshift({
+        label: t('billing.activeUsers') || 'Active Users',
+        value: mauStats.activeUsers.toLocaleString(),
+        limit: mauStats.limit !== null ? mauStats.limit.toLocaleString() : '∞',
+        unit: 'users',
+        percent: Math.round(mauPercent * 10) / 10,
+      });
+    }
+    return stats;
+  }, [mauStats, t]);
 
   const formatCardNumber = (v: string) => {
     const digits = v.replace(/\D/g, '').slice(0, 16);

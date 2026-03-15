@@ -126,7 +126,8 @@ model User {
   creatorProfile CreatorProfile?
   payments       Payment[]
   subscriptions  Subscription[]
-  billingPlans   UserBillingPlan[]
+  billingPlans      UserBillingPlan[]
+  activeUserEvents  ActiveUserEvent[]
 
   @@index([email])
   @@index([role])
@@ -208,8 +209,9 @@ model Tool {
   reviews      Review[]
   installedBy  UserTool[]
   projectTools ProjectTool[]
-  payments     Payment[]
-  subscriptions Subscription[]
+  payments         Payment[]
+  subscriptions    Subscription[]
+  activeUserEvents ActiveUserEvent[]
 
   @@index([slug])
   @@index([category])
@@ -360,6 +362,7 @@ model BillingPlan {
   period        BillingPeriod
   stripePriceId String?       @unique
   features      Json          @default("[]")
+  mauLimit      Int?          // null = unlimited, e.g. 1000 for Free, 50000 for Pro
   isActive      Boolean       @default(true)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
@@ -385,4 +388,22 @@ model UserBillingPlan {
   @@index([userId])
   @@index([planId])
   @@index([status])
+}
+
+// ─── Active User Tracking ───────────────────────────────────────────────────────
+
+model ActiveUserEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  toolId    String
+  creatorId String
+  monthKey  String   @db.VarChar(7) // "YYYY-MM"
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, toolId, monthKey])
+  @@index([creatorId, monthKey])
+  @@index([toolId, monthKey])
 }

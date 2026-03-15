@@ -445,6 +445,7 @@
     "usage": "利用量",
     "revenueShare": "レベニューシェア",
     "payouts": "支払い",
+    "activeUsers": "アクティブユーザー",
     "paymentMethods": "お支払い方法",
     "billingHistory": "請求履歴",
     "plans": {
