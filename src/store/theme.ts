@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type Theme = 'universe' | 'earth' | 'light';
+export type Theme = 'universe' | 'earth';
 
 interface ThemeState {
   theme: Theme;
@@ -20,7 +20,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
 
 export function applyTheme(theme: Theme) {
   const root = document.documentElement;
-  root.setAttribute('data-theme', theme === 'universe' ? 'dark' : theme === 'earth' ? 'offwhite' : 'light');
+  root.setAttribute('data-theme', theme === 'universe' ? 'dark' : 'offwhite');
   if (theme === 'universe') {
     root.classList.add('dark');
   } else {
@@ -31,7 +31,7 @@ export function applyTheme(theme: Theme) {
 export function getInitialTheme(): Theme {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('toolverse-theme') as Theme;
-    if (saved === 'universe' || saved === 'earth' || saved === 'light') return saved;
+    if (saved === 'universe' || saved === 'earth') return saved;
     const legacy = localStorage.getItem('toolverse-theme');
     if (legacy === 'dark') return 'universe';
     if (legacy === 'offwhite') return 'earth';

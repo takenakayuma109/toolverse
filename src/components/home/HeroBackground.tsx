@@ -44,9 +44,9 @@ export default function HeroBackground() {
     ];
 
     const initParticles = () => {
-      const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 10000), 120);
+      const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 20000), 60);
       particles = Array.from({ length: count }, () => {
-        const baseOpacity = Math.random() * 0.5 + 0.5;
+        const baseOpacity = Math.random() * 0.25 + 0.25;
         return {
           x: Math.random() * canvas.offsetWidth,
           y: Math.random() * canvas.offsetHeight,
@@ -90,13 +90,13 @@ export default function HeroBackground() {
       for (const p of particles) {
         const twinkle = Math.sin(time * p.twinkleSpeed + p.twinkleOffset);
         // Opacity oscillates between dim and bright
-        p.opacity = Math.min(p.baseOpacity + twinkle * 0.5, 1);
+        p.opacity = Math.min(p.baseOpacity + twinkle * 0.25, 1);
         const [r, g, b] = p.color;
 
         // Outer glow (larger, brighter)
         const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 5);
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${Math.min(p.opacity * 0.9, 1)})`);
-        gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.3})`);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${Math.min(p.opacity * 0.45, 1)})`);
+        gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.15})`);
         gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius * 5, 0, Math.PI * 2);
@@ -106,7 +106,7 @@ export default function HeroBackground() {
         // Core dot (brighter)
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(p.opacity + 0.4, 1)})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(p.opacity + 0.1, 1)})`;
         ctx.fill();
 
         p.x += p.vx;
