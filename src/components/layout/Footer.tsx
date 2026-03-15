@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTranslation } from '@/hooks/useTranslation';
 import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import ThemeSwitch from '@/components/ui/ThemeSwitch';
@@ -24,9 +25,9 @@ const FOOTER_LINKS = {
     { key: 'community' },
   ],
   legal: [
-    { key: 'terms' },
-    { key: 'privacy' },
-    { key: 'cookies' },
+    { key: 'terms', href: '/terms' },
+    { key: 'privacy', href: '/privacy' },
+    { key: 'developerAgreement', href: '/developer-agreement' },
   ],
 } as const;
 
@@ -120,11 +121,14 @@ export default function Footer() {
               {t('footer.legal')}
             </h3>
             <ul className="mt-4 space-y-3">
-              {FOOTER_LINKS.legal.map(({ key }) => (
+              {FOOTER_LINKS.legal.map(({ key, href }) => (
                 <li key={key}>
-                  <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                  <Link
+                    href={href}
+                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
                     {t(`footer.${key}`)}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
