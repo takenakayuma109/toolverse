@@ -14,7 +14,6 @@ type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth
 const NAV_ITEMS = [
   { key: 'home' },
   { key: 'discover' },
-  { key: 'workspace' },
   { key: 'studio' },
 ] as const;
 
@@ -154,9 +153,9 @@ export default function Header({ onNavigate, currentPage }: HeaderProps) {
                       <p className="text-xs text-gray-500 truncate">{user.email}</p>
                     </div>
                     <div className="py-1">
-                      <button onClick={() => { onNavigate('workspace'); setUserMenuOpen(false); }}
+                      <button onClick={() => { onNavigate('account'); setUserMenuOpen(false); }}
                         className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.04]">
-                        <User className="w-4 h-4 text-gray-400" /> {t('nav.workspace')}
+                        <User className="w-4 h-4 text-gray-400" /> {t('nav.account')}
                       </button>
                       <button onClick={() => { onNavigate('studio'); setUserMenuOpen(false); }}
                         className="flex items-center gap-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.04]">

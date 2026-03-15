@@ -9,7 +9,6 @@ type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth
 const NAV_ITEMS = [
   { key: 'home' as PageView, Icon: Home },
   { key: 'discover' as PageView, Icon: Compass },
-  { key: 'workspace' as PageView, Icon: LayoutGrid },
   { key: 'studio' as PageView, Icon: Wrench },
   { key: 'account' as PageView, Icon: User },
 ] as const;

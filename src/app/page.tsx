@@ -96,17 +96,16 @@ export default function Home() {
     switch (currentPage) {
       case 'discover':
         return <MarketplacePage />;
-      case 'workspace':
-        if (!isAuthenticated) return <AuthPage />;
-        return <WorkspacePage />;
       case 'studio':
         if (!isAuthenticated) return <AuthPage />;
         return <ToolStudioPage />;
       case 'auth':
-      case 'account':
         return isAuthenticated
-          ? <WorkspacePage />
+          ? <BillingPage />
           : <AuthPage />;
+      case 'account':
+        if (!isAuthenticated) return <AuthPage />;
+        return <BillingPage />;
       case 'billing':
         if (!isAuthenticated) return <AuthPage />;
         return <BillingPage />;
