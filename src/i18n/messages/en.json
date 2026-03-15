@@ -163,6 +163,9 @@
       "title": "Transparent, Scalable Pricing",
       "subtitle": "Start free, scale as you grow. No hidden fees, no surprises.",
       "popular": "Most Popular",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "yearlySave": "Save 2 months",
       "strengths": {
         "instant": {
           "title": "Instant Deployment",
@@ -194,6 +197,8 @@
           "name": "Pro",
           "price": "$14.99",
           "period": "/mo",
+          "yearlyPrice": "$149.99",
+          "yearlyPeriod": "/yr",
           "description": "For professional developers",
           "f1": "Unlimited published apps",
           "f2": "50,000 monthly active users",
@@ -204,6 +209,8 @@
           "name": "Team",
           "price": "$39.99",
           "period": "/mo",
+          "yearlyPrice": "$399.99",
+          "yearlyPeriod": "/yr",
           "description": "For teams and organizations",
           "f1": "Everything in Pro",
           "f2": "Unlimited monthly active users",

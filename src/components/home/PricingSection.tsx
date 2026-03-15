@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useThemeStore } from '@/store/theme';
 import { cn } from '@/lib/utils';
@@ -17,6 +18,7 @@ export default function PricingSection() {
   const theme = useThemeStore((s) => s.theme);
   const isDark = theme === 'universe';
   const isEarth = theme === 'earth';
+  const [isYearly, setIsYearly] = useState(false);
 
   const strengths = [
     {
@@ -53,6 +55,7 @@ export default function PricingSection() {
     {
       nameKey: 'home.pricing.plans.free.name',
       priceKey: 'home.pricing.plans.free.price',
+      yearlyPriceKey: 'home.pricing.plans.free.price',
       descKey: 'home.pricing.plans.free.description',
       features: [
         'home.pricing.plans.free.f1',
@@ -64,7 +67,9 @@ export default function PricingSection() {
     {
       nameKey: 'home.pricing.plans.pro.name',
       priceKey: 'home.pricing.plans.pro.price',
+      yearlyPriceKey: 'home.pricing.plans.pro.yearlyPrice',
       periodKey: 'home.pricing.plans.pro.period',
+      yearlyPeriodKey: 'home.pricing.plans.pro.yearlyPeriod',
       descKey: 'home.pricing.plans.pro.description',
       features: [
         'home.pricing.plans.pro.f1',
@@ -77,7 +82,9 @@ export default function PricingSection() {
     {
       nameKey: 'home.pricing.plans.team.name',
       priceKey: 'home.pricing.plans.team.price',
+      yearlyPriceKey: 'home.pricing.plans.team.yearlyPrice',
       periodKey: 'home.pricing.plans.team.period',
+      yearlyPeriodKey: 'home.pricing.plans.team.yearlyPeriod',
       descKey: 'home.pricing.plans.team.description',
       features: [
         'home.pricing.plans.team.f1',
@@ -138,13 +145,53 @@ export default function PricingSection() {
           ))}
         </div>
 
+        {/* Billing period toggle */}
+        <div className="flex items-center justify-center gap-4 mb-10">
+          <span className={cn(
+            'text-sm font-medium transition-colors',
+            !isYearly ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
+          )}>
+            {t('home.pricing.monthly')}
+          </span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={isYearly}
+            onClick={() => setIsYearly(!isYearly)}
+            className={cn(
+              'relative inline-flex h-7 w-[52px] items-center rounded-full transition-colors duration-200',
+              isYearly
+                ? 'bg-violet-600'
+                : isDark ? 'bg-white/[0.12]' : 'bg-gray-300'
+            )}
+          >
+            <span
+              className={cn(
+                'inline-block h-5 w-5 rounded-full bg-white shadow-sm transition-transform duration-200',
+                isYearly ? 'translate-x-[28px]' : 'translate-x-[3px]'
+              )}
+            />
+          </button>
+          <span className={cn(
+            'text-sm font-medium transition-colors',
+            isYearly ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'
+          )}>
+            {t('home.pricing.yearly')}
+          </span>
+          {isYearly && (
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+              {t('home.pricing.yearlySave')}
+            </span>
+          )}
+        </div>
+
         {/* Pricing cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-20">
-          {plans.map(({ nameKey, priceKey, periodKey, descKey, features, highlighted }) => (
+          {plans.map(({ nameKey, priceKey, yearlyPriceKey, periodKey, yearlyPeriodKey, descKey, features, highlighted }) => (
             <div
               key={nameKey}
               className={cn(
-                'relative rounded-2xl border p-8 transition-all duration-200',
+                'relative rounded-2xl border p-8 flex flex-col transition-all duration-200',
                 highlighted
                   ? cn(
                       'border-violet-500/40 shadow-lg',
@@ -178,15 +225,15 @@ export default function PricingSection() {
               </div>
               <div className="flex items-baseline gap-1 mb-8">
                 <span className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
-                  {t(priceKey)}
+                  {t(isYearly ? yearlyPriceKey : priceKey)}
                 </span>
                 {periodKey && (
                   <span className="text-gray-400 dark:text-gray-500 text-sm">
-                    {t(periodKey)}
+                    {t(isYearly && yearlyPeriodKey ? yearlyPeriodKey : periodKey)}
                   </span>
                 )}
               </div>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3 flex-1">
                 {features.map((fKey) => (
                   <li key={fKey} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-300">
                     <Check className="w-4 h-4 text-violet-500 mt-0.5 flex-shrink-0" />
@@ -196,7 +243,7 @@ export default function PricingSection() {
               </ul>
               <button
                 className={cn(
-                  'w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200',
+                  'w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 mt-8',
                   highlighted
                     ? 'bg-violet-600 text-white hover:bg-violet-700 shadow-md shadow-violet-500/20'
                     : isDark

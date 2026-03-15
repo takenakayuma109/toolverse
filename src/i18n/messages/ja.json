@@ -163,6 +163,9 @@
       "title": "透明でスケーラブルな料金体系",
       "subtitle": "無料で始めて、成長に合わせてスケール。隠れた費用は一切ありません。",
       "popular": "人気No.1",
+      "monthly": "月払い",
+      "yearly": "年払い",
+      "yearlySave": "2ヶ月分お得",
       "strengths": {
         "instant": {
           "title": "即時デプロイ",
@@ -194,6 +197,8 @@
           "name": "プロ",
           "price": "¥1,980",
           "period": "/月",
+          "yearlyPrice": "¥19,800",
+          "yearlyPeriod": "/年",
           "description": "プロフェッショナル開発者向け",
           "f1": "アプリ公開数無制限",
           "f2": "月間50,000アクティブユーザー",
@@ -204,6 +209,8 @@
           "name": "チーム",
           "price": "¥4,980",
           "period": "/月",
+          "yearlyPrice": "¥49,800",
+          "yearlyPeriod": "/年",
           "description": "チーム・組織向け",
           "f1": "プロの全機能を含む",
           "f2": "アクティブユーザー数無制限",
