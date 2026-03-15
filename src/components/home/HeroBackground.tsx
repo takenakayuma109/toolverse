@@ -9,6 +9,10 @@ interface Particle {
   vy: number;
   radius: number;
   opacity: number;
+  baseOpacity: number;
+  twinkleSpeed: number;
+  twinkleOffset: number;
+  color: [number, number, number]; // RGB
 }
 
 export default function HeroBackground() {
@@ -30,16 +34,32 @@ export default function HeroBackground() {
       ctx.scale(dpr, dpr);
     };
 
+    // Warm star-like color palette: gold, amber, orange, warm white
+    const warmColors: [number, number, number][] = [
+      [255, 214, 100], // gold
+      [255, 191, 71],  // amber
+      [255, 167, 55],  // orange
+      [255, 235, 180], // warm white
+      [255, 200, 120], // light gold
+    ];
+
     const initParticles = () => {
       const count = Math.min(Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 10000), 120);
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * canvas.offsetWidth,
-        y: Math.random() * canvas.offsetHeight,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.5 + 0.2,
-      }));
+      particles = Array.from({ length: count }, () => {
+        const baseOpacity = Math.random() * 0.5 + 0.3;
+        return {
+          x: Math.random() * canvas.offsetWidth,
+          y: Math.random() * canvas.offsetHeight,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          radius: Math.random() * 1.8 + 0.5,
+          opacity: baseOpacity,
+          baseOpacity,
+          twinkleSpeed: Math.random() * 2 + 1,
+          twinkleOffset: Math.random() * Math.PI * 2,
+          color: warmColors[Math.floor(Math.random() * warmColors.length)],
+        };
+      });
     };
 
     const draw = () => {
@@ -47,7 +67,9 @@ export default function HeroBackground() {
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      // Draw connections
+      const time = Date.now() / 1000;
+
+      // Draw connections with warm tone
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -55,7 +77,7 @@ export default function HeroBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 150) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.06 * (1 - dist / 150)})`;
+            ctx.strokeStyle = `rgba(255, 200, 100, ${0.05 * (1 - dist / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -64,11 +86,26 @@ export default function HeroBackground() {
         }
       }
 
-      // Draw particles
+      // Draw twinkling star-like particles
       for (const p of particles) {
+        const twinkle = Math.sin(time * p.twinkleSpeed + p.twinkleOffset);
+        // Opacity oscillates between dim and bright
+        p.opacity = p.baseOpacity + twinkle * 0.3;
+        const [r, g, b] = p.color;
+
+        // Outer glow
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.opacity * 0.6})`);
+        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Core dot
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(167, 139, 250, ${p.opacity})`;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.min(p.opacity + 0.3, 1)})`;
         ctx.fill();
 
         p.x += p.vx;
