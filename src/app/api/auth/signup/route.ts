@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again.', detail: message },
+      { error: 'An unexpected error occurred. Please try again.' },
       { status: 500 }
     );
   }
