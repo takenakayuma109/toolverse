@@ -113,6 +113,51 @@
       "title": "공식 도구",
       "subtitle": "Toolverse가 제공하는 공식 도구를 사용해 보세요"
     },
+    "howItWorks": {
+      "badge": "이용 방법",
+      "title": "Toolverse 요금 모델",
+      "subtitle": "앱 사용자와 개발자 모두에게 간단하고 명확합니다.",
+      "user": {
+        "title": "앱 사용자용",
+        "subtitle": "구독 불필요 — 앱별 결제",
+        "step1": {
+          "title": "앱을 탐색하고 사용하세요",
+          "desc": "Toolverse에서 원하는 앱을 찾고 바로 사용하세요. Toolverse 구독이 필요 없습니다."
+        },
+        "step2": {
+          "title": "앱별로 결제하세요",
+          "desc": "Toolverse를 통해 각 앱의 요금제에 따라 결제하세요. 무료 앱은 비용 없이 사용할 수 있습니다."
+        },
+        "benefit": {
+          "title": "통합 청구서 한 장",
+          "desc": "얼마나 많은 앱을 사용하든 Toolverse에서 하나의 청구서를 받습니다. 간편한 비용 관리."
+        },
+        "keyPoint": "Toolverse 자체는 무료입니다. 앱에 대해서만 비용을 지불합니다."
+      },
+      "dev": {
+        "title": "개발자용",
+        "subtitle": "Tool Studio를 통해 게시하고 수익을 창출하세요",
+        "step1": {
+          "title": "Tool Studio에 앱을 등록하세요",
+          "desc": "앱 이름, 설명, 스크린샷, 요금제를 설정한 후 심사를 위해 제출하세요."
+        },
+        "step2": {
+          "title": "Toolverse 플랜을 구독하세요",
+          "desc": "필요한 앱 수와 지원 수준에 따라 Free / Pro / Team 플랜 중 선택하세요."
+        },
+        "benefit": {
+          "title": "자동 수익 정산",
+          "desc": "Toolverse가 사용자로부터 결제를 수금하고 개발자에게 자동으로 수익을 분배합니다."
+        },
+        "keyPoint": "Toolverse 구독은 개발자용입니다. 앱을 게시하고 수익화하려면 필요합니다."
+      },
+      "billing": {
+        "title": "통합 청구, 간편하게",
+        "desc": "모든 앱 결제를 Toolverse의 하나의 청구서로 통합하세요. 회계 처리가 간편합니다.",
+        "invoice": "Toolverse 청구서",
+        "invoiceDesc": "모든 앱 요금이 하나로 통합"
+      }
+    },
     "pricing": {
       "badge": "요금 및 플랜",
       "title": "투명하고 확장 가능한 요금제",

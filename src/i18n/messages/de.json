@@ -113,6 +113,51 @@
       "title": "Offizielle Tools",
       "subtitle": "Testen Sie die offiziellen Tools von Toolverse"
     },
+    "howItWorks": {
+      "badge": "So funktioniert's",
+      "title": "Toolverse-Preismodell",
+      "subtitle": "Einfach und klar für App-Nutzer und Entwickler.",
+      "user": {
+        "title": "Für App-Nutzer",
+        "subtitle": "Kein Abo erforderlich — zahlen Sie pro App",
+        "step1": {
+          "title": "Apps entdecken und nutzen",
+          "desc": "Finden Sie Ihre Lieblings-Apps auf Toolverse und nutzen Sie sie sofort. Kein Toolverse-Abonnement nötig."
+        },
+        "step2": {
+          "title": "Pro App bezahlen",
+          "desc": "Bezahlen Sie den Preisplan jeder App über Toolverse. Kostenlose Apps sind gebührenfrei verfügbar."
+        },
+        "benefit": {
+          "title": "Eine einheitliche Rechnung",
+          "desc": "Egal wie viele Apps Sie nutzen – Sie erhalten eine einzige Rechnung von Toolverse. Einfache Kostenverwaltung."
+        },
+        "keyPoint": "Toolverse selbst ist kostenlos. Sie zahlen nur für die Apps."
+      },
+      "dev": {
+        "title": "Für Entwickler",
+        "subtitle": "Veröffentlichen und monetarisieren über Tool Studio",
+        "step1": {
+          "title": "Registrieren Sie Ihre App in Tool Studio",
+          "desc": "Richten Sie App-Name, Beschreibung, Screenshots und Preisplan ein und reichen Sie sie zur Überprüfung ein."
+        },
+        "step2": {
+          "title": "Toolverse-Plan abonnieren",
+          "desc": "Wählen Sie zwischen Free / Pro / Team-Plänen basierend auf der Anzahl der Apps und dem gewünschten Support-Level."
+        },
+        "benefit": {
+          "title": "Automatische Umsatzauszahlung",
+          "desc": "Toolverse zieht Zahlungen von Nutzern ein und verteilt die Einnahmen automatisch an Entwickler."
+        },
+        "keyPoint": "Toolverse-Abonnements sind für Entwickler. Erforderlich zum Veröffentlichen und Monetarisieren von Apps."
+      },
+      "billing": {
+        "title": "Einheitliche Abrechnung, vereinfacht",
+        "desc": "Fassen Sie alle Ihre App-Zahlungen in einer einzigen Toolverse-Rechnung zusammen. Einfach für die Buchhaltung.",
+        "invoice": "Rechnung von Toolverse",
+        "invoiceDesc": "Alle App-Gebühren in einer Rechnung zusammengefasst"
+      }
+    },
     "pricing": {
       "badge": "Preise & Pläne",
       "title": "Transparente, skalierbare Preise",

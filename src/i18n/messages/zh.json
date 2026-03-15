@@ -113,6 +113,51 @@
       "title": "官方工具",
       "subtitle": "体验 Toolverse 提供的官方工具"
     },
+    "howItWorks": {
+      "badge": "运作方式",
+      "title": "Toolverse 定价模式",
+      "subtitle": "对应用用户和开发者都简单明了。",
+      "user": {
+        "title": "面向应用用户",
+        "subtitle": "无需订阅 — 按应用付费",
+        "step1": {
+          "title": "发现并使用应用",
+          "desc": "在 Toolverse 上找到您喜欢的应用，立即开始使用。无需 Toolverse 订阅。"
+        },
+        "step2": {
+          "title": "按应用付费",
+          "desc": "通过 Toolverse 为每个应用的定价方案付费。免费应用无需任何费用。"
+        },
+        "benefit": {
+          "title": "统一账单",
+          "desc": "无论您使用多少应用，都只会收到一张来自 Toolverse 的账单。轻松管理费用。"
+        },
+        "keyPoint": "Toolverse 本身免费使用。您只需为应用付费。"
+      },
+      "dev": {
+        "title": "面向开发者",
+        "subtitle": "通过 Tool Studio 发布和变现",
+        "step1": {
+          "title": "在 Tool Studio 中注册您的应用",
+          "desc": "设置应用名称、描述、截图和定价方案，然后提交审核。"
+        },
+        "step2": {
+          "title": "订阅 Toolverse 计划",
+          "desc": "根据您需要的应用数量和支持级别，选择免费版 / 专业版 / 团队版计划。"
+        },
+        "benefit": {
+          "title": "自动收入结算",
+          "desc": "Toolverse 向用户收取费用，并自动将收入分配给开发者。"
+        },
+        "keyPoint": "Toolverse 订阅面向开发者。发布和变现应用时需要订阅。"
+      },
+      "billing": {
+        "title": "统一计费，化繁为简",
+        "desc": "将所有应用付款合并为一张来自 Toolverse 的账单。会计处理更简单。",
+        "invoice": "来自 Toolverse 的账单",
+        "invoiceDesc": "所有应用费用合并为一张账单"
+      }
+    },
     "pricing": {
       "badge": "价格与方案",
       "title": "透明、可扩展的定价",

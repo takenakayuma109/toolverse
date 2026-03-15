@@ -13,6 +13,7 @@ import FeaturesSection from '@/components/home/FeaturesSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
 import TrendingSection from '@/components/home/TrendingSection';
 import OfficialToolsSection from '@/components/home/OfficialToolsSection';
+import HowItWorksSection from '@/components/home/HowItWorksSection';
 import PricingSection from '@/components/home/PricingSection';
 import CTASection from '@/components/home/CTASection';
 
@@ -140,6 +141,7 @@ export default function Home() {
             <FeaturesSection />
             <CategoriesSection onNavigate={navigateTo} />
             <TrendingSection />
+            <HowItWorksSection />
             <PricingSection />
             <OfficialToolsSection />
             <CTASection onNavigate={navigateTo} />

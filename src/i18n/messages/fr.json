@@ -113,6 +113,51 @@
       "title": "Outils officiels",
       "subtitle": "Essayez les outils officiels fournis par Toolverse"
     },
+    "howItWorks": {
+      "badge": "Comment ça marche",
+      "title": "Modèle tarifaire de Toolverse",
+      "subtitle": "Simple et clair pour les utilisateurs d'apps et les développeurs.",
+      "user": {
+        "title": "Pour les utilisateurs d'apps",
+        "subtitle": "Pas d'abonnement requis — paiement par application",
+        "step1": {
+          "title": "Découvrez et utilisez des apps",
+          "desc": "Trouvez vos applications préférées sur Toolverse et commencez à les utiliser immédiatement. Aucun abonnement Toolverse nécessaire."
+        },
+        "step2": {
+          "title": "Payez par application",
+          "desc": "Payez le plan tarifaire de chaque application via Toolverse. Les applications gratuites sont disponibles sans frais."
+        },
+        "benefit": {
+          "title": "Une seule facture unifiée",
+          "desc": "Quel que soit le nombre d'applications que vous utilisez, vous recevez une seule facture de Toolverse. Gestion des dépenses simplifiée."
+        },
+        "keyPoint": "Toolverse est gratuit. Vous ne payez que pour les applications."
+      },
+      "dev": {
+        "title": "Pour les développeurs",
+        "subtitle": "Publiez et monétisez via Tool Studio",
+        "step1": {
+          "title": "Enregistrez votre app dans Tool Studio",
+          "desc": "Configurez le nom, la description, les captures d'écran et le plan tarifaire de votre application, puis soumettez-la pour examen."
+        },
+        "step2": {
+          "title": "Abonnez-vous à un plan Toolverse",
+          "desc": "Choisissez parmi les plans Free / Pro / Team selon le nombre d'applications et le niveau de support dont vous avez besoin."
+        },
+        "benefit": {
+          "title": "Versements automatiques des revenus",
+          "desc": "Toolverse collecte les paiements des utilisateurs et distribue automatiquement les revenus aux développeurs."
+        },
+        "keyPoint": "Les abonnements Toolverse sont destinés aux développeurs. Requis pour publier et monétiser des applications."
+      },
+      "billing": {
+        "title": "Facturation unifiée et simplifiée",
+        "desc": "Consolidez tous vos paiements d'applications en une seule facture Toolverse. Simple pour la comptabilité.",
+        "invoice": "Facture de Toolverse",
+        "invoiceDesc": "Tous les frais d'applications regroupés en une seule facture"
+      }
+    },
     "pricing": {
       "badge": "Tarifs et forfaits",
       "title": "Des tarifs transparents et évolutifs",

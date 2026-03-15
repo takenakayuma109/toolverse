@@ -113,6 +113,51 @@
       "title": "Ferramentas oficiais",
       "subtitle": "Experimente as ferramentas oficiais fornecidas pelo Toolverse"
     },
+    "howItWorks": {
+      "badge": "Como funciona",
+      "title": "Modelo de preços do Toolverse",
+      "subtitle": "Simples e claro para usuários de apps e desenvolvedores.",
+      "user": {
+        "title": "Para usuários de apps",
+        "subtitle": "Sem assinatura necessária — pague por app",
+        "step1": {
+          "title": "Descubra e use apps",
+          "desc": "Encontre seus apps favoritos no Toolverse e comece a usá-los imediatamente. Nenhuma assinatura do Toolverse necessária."
+        },
+        "step2": {
+          "title": "Pague por app",
+          "desc": "Pague pelo plano de preços de cada app através do Toolverse. Apps gratuitos estão disponíveis sem custo."
+        },
+        "benefit": {
+          "title": "Uma fatura unificada",
+          "desc": "Não importa quantos apps você use, você recebe uma única fatura do Toolverse. Gestão de despesas simplificada."
+        },
+        "keyPoint": "O Toolverse em si é gratuito. Você só paga pelos apps."
+      },
+      "dev": {
+        "title": "Para desenvolvedores",
+        "subtitle": "Publique e monetize pelo Tool Studio",
+        "step1": {
+          "title": "Registre seu app no Tool Studio",
+          "desc": "Configure o nome, descrição, capturas de tela e plano de preços do seu app, depois envie para revisão."
+        },
+        "step2": {
+          "title": "Assine um plano Toolverse",
+          "desc": "Escolha entre os planos Free / Pro / Team com base no número de apps e no nível de suporte que você precisa."
+        },
+        "benefit": {
+          "title": "Pagamentos automáticos de receita",
+          "desc": "O Toolverse cobra os pagamentos dos usuários e distribui automaticamente a receita para os desenvolvedores."
+        },
+        "keyPoint": "As assinaturas do Toolverse são para desenvolvedores. Necessárias para publicar e monetizar apps."
+      },
+      "billing": {
+        "title": "Faturamento unificado e simplificado",
+        "desc": "Consolide todos os seus pagamentos de apps em uma única fatura do Toolverse. Simples para a contabilidade.",
+        "invoice": "Fatura do Toolverse",
+        "invoiceDesc": "Todas as cobranças de apps consolidadas em uma só"
+      }
+    },
     "pricing": {
       "badge": "Preços e planos",
       "title": "Preços transparentes e escaláveis",

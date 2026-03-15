@@ -113,6 +113,51 @@
       "title": "Official Tools",
       "subtitle": "Try the official tools provided by Toolverse"
     },
+    "howItWorks": {
+      "badge": "How It Works",
+      "title": "Toolverse Pricing Model",
+      "subtitle": "Simple and clear for both app users and developers.",
+      "user": {
+        "title": "For App Users",
+        "subtitle": "No subscription required — pay per app",
+        "step1": {
+          "title": "Discover and use apps",
+          "desc": "Find your favorite apps on Toolverse and start using them right away. No Toolverse subscription needed."
+        },
+        "step2": {
+          "title": "Pay per app",
+          "desc": "Pay for each app's pricing plan through Toolverse. Free apps are available at no cost."
+        },
+        "benefit": {
+          "title": "One unified invoice",
+          "desc": "No matter how many apps you use, you get a single invoice from Toolverse. Easy expense management."
+        },
+        "keyPoint": "Toolverse itself is free to use. You only pay for the apps."
+      },
+      "dev": {
+        "title": "For Developers",
+        "subtitle": "Publish and monetize via Tool Studio",
+        "step1": {
+          "title": "Register your app in Tool Studio",
+          "desc": "Set up your app name, description, screenshots, and pricing plan, then submit for review."
+        },
+        "step2": {
+          "title": "Subscribe to a Toolverse plan",
+          "desc": "Choose from Free / Pro / Team plans based on the number of apps and support level you need."
+        },
+        "benefit": {
+          "title": "Automatic revenue payouts",
+          "desc": "Toolverse collects payments from users and automatically distributes revenue to developers."
+        },
+        "keyPoint": "Toolverse subscriptions are for developers. Required to publish and monetize apps."
+      },
+      "billing": {
+        "title": "Unified Billing, Simplified",
+        "desc": "Consolidate all your app payments into one invoice from Toolverse. Simple for accounting.",
+        "invoice": "Invoice from Toolverse",
+        "invoiceDesc": "All app charges consolidated into one"
+      }
+    },
     "pricing": {
       "badge": "Pricing & Plans",
       "title": "Transparent, Scalable Pricing",
