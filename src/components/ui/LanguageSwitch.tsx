@@ -15,7 +15,7 @@ const LANGUAGES: { code: Locale; flag: string; name: string }[] = [
   { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
   { code: 'es', flag: '🇪🇸', name: 'Español' },
   { code: 'pt', flag: '🇧🇷', name: 'Português' },
-  { code: 'ar', flag: '🇸🇦', name: 'العربية' },
+  { code: 'ar', flag: '🇦🇪', name: 'العربية' },
   { code: 'ru', flag: '🇷🇺', name: 'Русский' },
   { code: 'hi', flag: '🇮🇳', name: 'हिन्दी' },
 ];
