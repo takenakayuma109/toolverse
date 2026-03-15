@@ -7,23 +7,41 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/db';
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: 'jwt' },
+const hasDB = !!process.env.DATABASE_URL;
 
-  providers: [
+// Only include OAuth providers when credentials are configured
+const providers = [];
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  providers.push(
     GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    }),
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET) {
+  providers.push(
     Apple({
-      clientId: process.env.APPLE_CLIENT_ID!,
-      clientSecret: process.env.APPLE_CLIENT_SECRET!,
-    }),
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    })
+  );
+}
+
+// Only include credentials provider when DB is available
+if (hasDB) {
+  providers.push(
     Credentials({
       name: 'credentials',
       credentials: {
@@ -53,8 +71,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           role: user.role,
         };
       },
-    }),
-  ],
+    })
+  );
+}
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: hasDB ? PrismaAdapter(prisma) : undefined,
+  session: { strategy: 'jwt' },
+
+  providers,
 
   callbacks: {
     async jwt({ token, user }) {
@@ -78,7 +103,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: '/auth',
   },
 
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.AUTH_SECRET || 'dev-secret-change-in-production',
 
   trustHost: true,
 });

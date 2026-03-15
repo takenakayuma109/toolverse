@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
 const serverEnvSchema = z.object({
-  DATABASE_URL: z.string().startsWith('postgresql://'),
-  AUTH_SECRET: z.string().min(16),
-  STRIPE_SECRET_KEY: z.string().startsWith('sk_'),
-  STRIPE_WEBHOOK_SECRET: z.string().startsWith('whsec_'),
-  NEXT_PUBLIC_BASE_URL: z.string().url(),
+  DATABASE_URL: z.string().startsWith('postgresql://').optional(),
+  AUTH_SECRET: z.string().min(16).optional(),
+  STRIPE_SECRET_KEY: z.string().startsWith('sk_').optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().startsWith('whsec_').optional(),
+  NEXT_PUBLIC_BASE_URL: z.string().url().optional(),
 
   // OAuth providers (optional)
   GOOGLE_CLIENT_ID: z.string().optional(),
