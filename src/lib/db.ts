@@ -25,12 +25,11 @@ function createPrismaClient() {
       },
     }) as unknown as PrismaClient;
   }
-  const adapter = new PrismaPg({
-    connectionString,
-    options: {
-      connection: { ssl: { rejectUnauthorized: false } },
-    },
-  });
+  // Accept Supabase's SSL certificate
+  if (typeof process !== 'undefined') {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  }
+  const adapter = new PrismaPg({ connectionString });
   return new PrismaClient({
     adapter,
     log:
