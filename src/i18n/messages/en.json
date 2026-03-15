@@ -702,6 +702,57 @@
       "rateLimitDesc": "Usage limits and throttling",
       "openDocs": "Open Documentation"
     },
+    "integration": {
+      "title": "Integration Guide",
+      "subtitle": "Everything you need to integrate your app with the Toolverse platform.",
+      "endpoints": "API Endpoints",
+      "codeExample": "Code Example",
+      "tabs": {
+        "sso": "SSO",
+        "payment": "Payment",
+        "health": "Health Check",
+        "webhooks": "Webhooks"
+      },
+      "sso": {
+        "title": "Toolverse SSO Integration",
+        "description": "When a user opens your app from Toolverse, they are redirected to your app with a one-time authorization code. Exchange this code for an access token, then fetch the user's profile.",
+        "step1": "Redirect",
+        "step1Desc": "User clicks your app on Toolverse and is redirected with ?tv_code and ?tv_state",
+        "step2": "Exchange",
+        "step2Desc": "Your server exchanges the code for an access token via POST /api/oauth/token",
+        "step3": "User Info",
+        "step3Desc": "Fetch the user's profile with GET /api/oauth/userinfo using the token",
+        "step4": "Session",
+        "step4Desc": "Create a session in your app and redirect the user to your dashboard"
+      },
+      "payment": {
+        "title": "Payment Verification",
+        "description": "Verify whether a user has an active subscription or has paid for access to your app. Call this endpoint on each request or cache the result.",
+        "responseShape": "Response Shape",
+        "responseDesc": "Returns the access status and subscription details for the given user."
+      },
+      "health": {
+        "title": "Health Check Endpoint",
+        "description": "Your app must serve a health check endpoint so Toolverse can monitor its availability. Toolverse pings this endpoint every 15 minutes.",
+        "requirement": "Required Endpoint",
+        "requirementDesc": "Your app must respond to GET /.well-known/toolverse.json with a JSON object containing name, version, and status fields.",
+        "expectedResponse": "Expected Response"
+      },
+      "webhooks": {
+        "title": "Webhook Handling",
+        "description": "Toolverse sends webhooks to your configured URL when subscription and payment events occur. The webhook URL is configured in Tool Studio settings.",
+        "availableEvents": "Available Events",
+        "event": "Event",
+        "trigger": "Triggered When",
+        "triggerSubscribed": "A user subscribes to your app",
+        "triggerUnsubscribed": "A user cancels their subscription",
+        "triggerPayment": "A payment is successfully processed",
+        "security": "Signature Verification",
+        "securityDesc": "All webhook payloads are signed with HMAC-SHA256. Verify the x-toolverse-signature header using your webhook secret before processing.",
+        "payloadExample": "Example Payload",
+        "verificationCode": "Verification Code"
+      }
+    },
     "revenue": {
       "lifetimeEarnings": "Lifetime Earnings",
       "thisMonth": "This Month",
@@ -720,6 +771,54 @@
       "apiKeyDesc": "API key for SDK integration and tool management.",
       "productionKey": "Production Key",
       "regenerateKey": "Regenerate Key"
+    },
+    "checklist": {
+      "title": "App Review Checklist",
+      "subtitle": "Complete all required items before submitting your app for review.",
+      "progress": "Review progress",
+      "submitForReview": "Submit for Review",
+      "requiredLabel": "Required",
+      "automatedLabel": "Auto-verified by Toolverse",
+      "autoVerified": "Auto",
+      "automated": "Automatically verified",
+      "categorySecurity": "Security",
+      "categoryPerformance": "Performance",
+      "categoryContent": "Content",
+      "categoryPrivacy": "Privacy",
+      "categoryTechnical": "Technical",
+      "categoryBusiness": "Business",
+      "secHttpsTitle": "HTTPS only",
+      "secHttpsDesc": "All endpoints must be served over HTTPS. Plain HTTP connections are rejected.",
+      "secCspTitle": "Content Security Policy headers",
+      "secCspDesc": "Responses must include appropriate CSP headers to prevent XSS and data injection attacks.",
+      "secNoPlaintextTitle": "No plaintext credentials",
+      "secNoPlaintextDesc": "API keys, passwords, and tokens must never be stored or transmitted in plaintext.",
+      "perfLoadTimeTitle": "Page load under 3 seconds",
+      "perfLoadTimeDesc": "Initial page load must complete within 3 seconds on a standard broadband connection.",
+      "perfLighthouseTitle": "Lighthouse score >= 70",
+      "perfLighthouseDesc": "App must achieve a Lighthouse performance score of 70 or above.",
+      "contentAccurateDescTitle": "Accurate description",
+      "contentAccurateDescDesc": "App description must honestly represent functionality. Misleading claims are not allowed.",
+      "contentScreenshotsTitle": "Accurate screenshots",
+      "contentScreenshotsDesc": "Screenshots must reflect the current version of the app without misleading edits.",
+      "contentNoIllegalTitle": "No illegal content",
+      "contentNoIllegalDesc": "App must not contain, promote, or facilitate illegal content or activities.",
+      "privacyPolicyUrlTitle": "Privacy policy URL",
+      "privacyPolicyUrlDesc": "A publicly accessible privacy policy URL must be provided.",
+      "privacyDataDeletionTitle": "Data deletion support",
+      "privacyDataDeletionDesc": "Users must be able to request deletion of their personal data.",
+      "privacyGdprCcpaTitle": "GDPR / CCPA compliance",
+      "privacyGdprCcpaDesc": "App must comply with GDPR and CCPA regulations for data handling and user consent.",
+      "techHealthCheckTitle": "Health check endpoint",
+      "techHealthCheckDesc": "App must expose a /.well-known/toolverse.json endpoint returning status information.",
+      "techValidServiceUrlTitle": "Valid service URL",
+      "techValidServiceUrlDesc": "The registered service URL must be reachable and return a valid response.",
+      "techSsoTitle": "Toolverse SSO support",
+      "techSsoDesc": "Integrate Toolverse single sign-on so users can log in with their Toolverse account.",
+      "bizPricingTitle": "Pricing clearly stated",
+      "bizPricingDesc": "All costs must be clearly communicated. Hidden fees or unclear pricing is not permitted.",
+      "bizRefundPolicyTitle": "Refund policy defined",
+      "bizRefundPolicyDesc": "A clear refund or cancellation policy must be provided for paid apps."
     }
   }
 }

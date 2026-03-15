@@ -10,6 +10,7 @@ import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Input from '@/components/ui/Input';
+import IntegrationGuide from '@/components/studio/IntegrationGuide';
 import {
   Plus,
   Edit,
@@ -809,67 +810,70 @@ export default function ToolStudioPage() {
         )}
 
         {activeTab === 'sdk' && (
-          <div className="grid lg:grid-cols-2 gap-6">
-            <Card padding="lg">
-              <div className="flex items-center gap-2 mb-4">
-                <Terminal className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.quickStart')}</h2>
-              </div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                {t('studio.sdk.quickStartDesc')}
-              </p>
-              <div className="space-y-4">
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.install')}</p>
-                  <div className="relative">
-                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-sm overflow-x-auto pr-12">{SDK_INSTALL}</pre>
-                    <button onClick={() => copyCmd(SDK_INSTALL, 'install')} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-800 transition-colors">
-                      {copiedId === 'install' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
-                    </button>
+          <div className="space-y-8">
+            <div className="grid lg:grid-cols-2 gap-6">
+              <Card padding="lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <Terminal className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.quickStart')}</h2>
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                  {t('studio.sdk.quickStartDesc')}
+                </p>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.install')}</p>
+                    <div className="relative">
+                      <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-sm overflow-x-auto pr-12">{SDK_INSTALL}</pre>
+                      <button onClick={() => copyCmd(SDK_INSTALL, 'install')} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                        {copiedId === 'install' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.example')}</p>
+                    <div className="relative">
+                      <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-xs overflow-x-auto max-h-64 overflow-y-auto leading-relaxed pr-12">{SDK_SNIPPET}</pre>
+                      <button onClick={() => copyCmd(SDK_SNIPPET, 'snippet')} className="absolute right-3 top-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
+                        {copiedId === 'snippet' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{t('studio.sdk.example')}</p>
-                  <div className="relative">
-                    <pre className="p-4 rounded-xl bg-gray-900 dark:bg-gray-950 text-gray-100 text-xs overflow-x-auto max-h-64 overflow-y-auto leading-relaxed pr-12">{SDK_SNIPPET}</pre>
-                    <button onClick={() => copyCmd(SDK_SNIPPET, 'snippet')} className="absolute right-3 top-3 p-2 rounded-lg hover:bg-gray-800 transition-colors">
-                      {copiedId === 'snippet' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-400" />}
-                    </button>
-                  </div>
+              </Card>
+              <Card padding="lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <FileText className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.resources')}</h2>
                 </div>
-              </div>
-            </Card>
-            <Card padding="lg">
-              <div className="flex items-center gap-2 mb-4">
-                <FileText className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{t('studio.sdk.resources')}</h2>
-              </div>
-              <div className="space-y-3">
-                {[
-                  { labelKey: 'studio.sdk.apiReference', descKey: 'studio.sdk.apiReferenceDesc', icon: Code2 },
-                  { labelKey: 'studio.sdk.authGuide', descKey: 'studio.sdk.authGuideDesc', icon: Key },
-                  { labelKey: 'studio.sdk.webhook', descKey: 'studio.sdk.webhookDesc', icon: Webhook },
-                  { labelKey: 'studio.sdk.rateLimit', descKey: 'studio.sdk.rateLimitDesc', icon: Clock },
-                ].map((item) => (
-                  <button key={item.labelKey} className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group">
-                    <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
-                      <item.icon className="w-5 h-5 text-violet-600 dark:text-violet-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 dark:text-white text-sm">{t(item.labelKey)}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{t(item.descKey)}</p>
-                    </div>
-                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-violet-500 transition-colors shrink-0" />
-                  </button>
-                ))}
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                <Button variant="outline" fullWidth className="gap-2">
-                  <ExternalLink className="w-4 h-4" />
-                  {t('studio.sdk.openDocs')}
-                </Button>
-              </div>
-            </Card>
+                <div className="space-y-3">
+                  {[
+                    { labelKey: 'studio.sdk.apiReference', descKey: 'studio.sdk.apiReferenceDesc', icon: Code2 },
+                    { labelKey: 'studio.sdk.authGuide', descKey: 'studio.sdk.authGuideDesc', icon: Key },
+                    { labelKey: 'studio.sdk.webhook', descKey: 'studio.sdk.webhookDesc', icon: Webhook },
+                    { labelKey: 'studio.sdk.rateLimit', descKey: 'studio.sdk.rateLimitDesc', icon: Clock },
+                  ].map((item) => (
+                    <button key={item.labelKey} className="w-full flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors text-left group">
+                      <div className="w-10 h-10 rounded-lg bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center shrink-0">
+                        <item.icon className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 dark:text-white text-sm">{t(item.labelKey)}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{t(item.descKey)}</p>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-violet-500 transition-colors shrink-0" />
+                    </button>
+                  ))}
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                  <Button variant="outline" fullWidth className="gap-2">
+                    <ExternalLink className="w-4 h-4" />
+                    {t('studio.sdk.openDocs')}
+                  </Button>
+                </div>
+              </Card>
+            </div>
+            <IntegrationGuide />
           </div>
         )}
 

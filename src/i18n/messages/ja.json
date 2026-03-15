@@ -702,6 +702,57 @@
       "rateLimitDesc": "利用上限とスロットリング",
       "openDocs": "ドキュメントを開く"
     },
+    "integration": {
+      "title": "インテグレーションガイド",
+      "subtitle": "Toolverseプラットフォームとアプリを連携するために必要な情報をまとめています。",
+      "endpoints": "APIエンドポイント",
+      "codeExample": "コード例",
+      "tabs": {
+        "sso": "SSO",
+        "payment": "決済確認",
+        "health": "ヘルスチェック",
+        "webhooks": "Webhook"
+      },
+      "sso": {
+        "title": "Toolverse SSO連携",
+        "description": "ユーザーがToolverseからアプリを開くと、ワンタイム認証コード付きでリダイレクトされます。このコードをアクセストークンに交換し、ユーザー情報を取得します。",
+        "step1": "リダイレクト",
+        "step1Desc": "ユーザーがToolverseでアプリをクリックし、?tv_codeと?tv_state付きでリダイレクト",
+        "step2": "トークン交換",
+        "step2Desc": "サーバーがPOST /api/oauth/tokenでコードをアクセストークンに交換",
+        "step3": "ユーザー情報",
+        "step3Desc": "トークンを使ってGET /api/oauth/userinfoでユーザープロフィールを取得",
+        "step4": "セッション",
+        "step4Desc": "アプリ内でセッションを作成し、ダッシュボードにリダイレクト"
+      },
+      "payment": {
+        "title": "決済確認",
+        "description": "ユーザーがアプリへのアクセス権を持っているか（サブスクリプションや購入済みか）を確認します。リクエストごとに呼び出すか、結果をキャッシュしてください。",
+        "responseShape": "レスポンス形式",
+        "responseDesc": "指定されたユーザーのアクセス状況とサブスクリプション詳細を返します。"
+      },
+      "health": {
+        "title": "ヘルスチェックエンドポイント",
+        "description": "Toolverseがアプリの稼働状況を監視するため、ヘルスチェックエンドポイントを提供する必要があります。Toolverseは15分ごとにこのエンドポイントにアクセスします。",
+        "requirement": "必須エンドポイント",
+        "requirementDesc": "GET /.well-known/toolverse.json に対して、name、version、statusフィールドを含むJSONオブジェクトを返す必要があります。",
+        "expectedResponse": "期待されるレスポンス"
+      },
+      "webhooks": {
+        "title": "Webhookハンドリング",
+        "description": "サブスクリプションや決済イベントが発生すると、ToolverseからWebhookが送信されます。Webhook URLはTool Studioの設定で構成します。",
+        "availableEvents": "利用可能なイベント",
+        "event": "イベント",
+        "trigger": "トリガー条件",
+        "triggerSubscribed": "ユーザーがアプリにサブスクライブした時",
+        "triggerUnsubscribed": "ユーザーがサブスクリプションをキャンセルした時",
+        "triggerPayment": "決済が正常に処理された時",
+        "security": "署名検証",
+        "securityDesc": "すべてのWebhookペイロードはHMAC-SHA256で署名されています。処理前にx-toolverse-signatureヘッダーをWebhookシークレットで検証してください。",
+        "payloadExample": "ペイロード例",
+        "verificationCode": "検証コード"
+      }
+    },
     "revenue": {
       "lifetimeEarnings": "累計収益",
       "thisMonth": "今月の収益",
@@ -720,6 +771,54 @@
       "apiKeyDesc": "SDK連携・ツール管理用のAPIキーです。",
       "productionKey": "本番キー",
       "regenerateKey": "キーを再生成"
+    },
+    "checklist": {
+      "title": "アプリ審査チェックリスト",
+      "subtitle": "審査に提出する前に、すべての必須項目を完了してください。",
+      "progress": "審査準備の進捗",
+      "submitForReview": "審査に提出",
+      "requiredLabel": "必須",
+      "automatedLabel": "Toolverseが自動検証",
+      "autoVerified": "自動",
+      "automated": "自動検証",
+      "categorySecurity": "セキュリティ",
+      "categoryPerformance": "パフォーマンス",
+      "categoryContent": "コンテンツ",
+      "categoryPrivacy": "プライバシー",
+      "categoryTechnical": "技術要件",
+      "categoryBusiness": "ビジネス",
+      "secHttpsTitle": "HTTPS必須",
+      "secHttpsDesc": "すべてのエンドポイントはHTTPSで提供する必要があります。HTTP接続は拒否されます。",
+      "secCspTitle": "Content Security Policyヘッダー",
+      "secCspDesc": "XSSやデータインジェクション攻撃を防ぐため、適切なCSPヘッダーを含める必要があります。",
+      "secNoPlaintextTitle": "平文の認証情報を含めない",
+      "secNoPlaintextDesc": "APIキー、パスワード、トークンを平文で保存・送信してはいけません。",
+      "perfLoadTimeTitle": "ページ読み込み3秒以内",
+      "perfLoadTimeDesc": "標準的なブロードバンド接続で、初期ページ読み込みが3秒以内に完了する必要があります。",
+      "perfLighthouseTitle": "Lighthouseスコア 70以上",
+      "perfLighthouseDesc": "Lighthouseパフォーマンススコアが70以上である必要があります。",
+      "contentAccurateDescTitle": "正確な説明",
+      "contentAccurateDescDesc": "アプリの説明は機能を正直に表現する必要があります。誤解を招く表現は許可されません。",
+      "contentScreenshotsTitle": "正確なスクリーンショット",
+      "contentScreenshotsDesc": "スクリーンショットは現行バージョンのアプリを反映し、誤解を招く加工がないこと。",
+      "contentNoIllegalTitle": "違法コンテンツの禁止",
+      "contentNoIllegalDesc": "違法なコンテンツや活動を含む、促進する、または助長するアプリは許可されません。",
+      "privacyPolicyUrlTitle": "プライバシーポリシーURL",
+      "privacyPolicyUrlDesc": "公開アクセス可能なプライバシーポリシーのURLを提供する必要があります。",
+      "privacyDataDeletionTitle": "データ削除のサポート",
+      "privacyDataDeletionDesc": "ユーザーが個人データの削除をリクエストできるようにする必要があります。",
+      "privacyGdprCcpaTitle": "GDPR / CCPA準拠",
+      "privacyGdprCcpaDesc": "データの取り扱いとユーザーの同意に関して、GDPRおよびCCPA規制に準拠する必要があります。",
+      "techHealthCheckTitle": "ヘルスチェックエンドポイント",
+      "techHealthCheckDesc": "/.well-known/toolverse.json エンドポイントでステータス情報を返す必要があります。",
+      "techValidServiceUrlTitle": "有効なサービスURL",
+      "techValidServiceUrlDesc": "登録されたサービスURLが到達可能で、有効なレスポンスを返す必要があります。",
+      "techSsoTitle": "Toolverse SSO対応",
+      "techSsoDesc": "Toolverseシングルサインオンを統合し、ユーザーがToolverseアカウントでログインできるようにします。",
+      "bizPricingTitle": "料金の明示",
+      "bizPricingDesc": "すべての費用を明確に表示する必要があります。隠れた料金や不明瞭な価格設定は許可されません。",
+      "bizRefundPolicyTitle": "返金ポリシーの明記",
+      "bizRefundPolicyDesc": "有料アプリには、明確な返金またはキャンセルポリシーを提供する必要があります。"
     }
   }
 }
