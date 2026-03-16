@@ -23,7 +23,6 @@ import {
   ArrowRight,
   Shield,
 } from 'lucide-react';
-import { getPaymentProvider } from '@/lib/payments';
 import type { Invoice, PaymentMethod } from '@/lib/payments';
 
 const PLANS = [
@@ -144,16 +143,20 @@ export default function BillingPage() {
   const [cardCvc, setCardCvc] = useState('');
   const [cardName, setCardName] = useState('');
 
-  const provider = useMemo(() => getPaymentProvider(), []);
-
   useEffect(() => {
     if (activeTab === 'history' && invoices.length === 0) {
       let cancelled = false;
       const fetchInvoices = async () => {
-        const data = await provider.getInvoices('cus_demo', 6);
-        if (!cancelled) {
-          setInvoices(data);
-          setLoadingInvoices(false);
+        try {
+          const res = await fetch('/api/billing/invoices');
+          if (res.ok && !cancelled) {
+            const data = await res.json();
+            setInvoices(data.invoices ?? []);
+          }
+        } catch {
+          // ignore
+        } finally {
+          if (!cancelled) setLoadingInvoices(false);
         }
       };
       fetchInvoices();
@@ -162,16 +165,22 @@ export default function BillingPage() {
     if (activeTab === 'payment' && paymentMethods.length === 0) {
       let cancelled = false;
       const fetchMethods = async () => {
-        const data = await provider.getPaymentMethods('cus_demo');
-        if (!cancelled) {
-          setPaymentMethods(data);
-          setLoadingMethods(false);
+        try {
+          const res = await fetch('/api/billing/payment-methods');
+          if (res.ok && !cancelled) {
+            const data = await res.json();
+            setPaymentMethods(data.paymentMethods ?? []);
+          }
+        } catch {
+          // ignore
+        } finally {
+          if (!cancelled) setLoadingMethods(false);
         }
       };
       fetchMethods();
       return () => { cancelled = true; };
     }
-  }, [activeTab, provider, invoices.length, paymentMethods.length]);
+  }, [activeTab, invoices.length, paymentMethods.length]);
 
   useEffect(() => {
     let cancelled = false;
@@ -219,8 +228,21 @@ export default function BillingPage() {
   };
 
   const handleAddCard = async () => {
-    const pm = await provider.addPaymentMethod('cus_demo', 'tok_mock');
-    setPaymentMethods((prev) => [...prev, pm]);
+    try {
+      const res = await fetch('/api/billing/payment-methods', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cardNumber, cardExpiry, cardCvc, cardName }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.paymentMethod) {
+          setPaymentMethods((prev) => [...prev, data.paymentMethod]);
+        }
+      }
+    } catch {
+      // handle error
+    }
     setShowAddCard(false);
     setCardNumber('');
     setCardExpiry('');
@@ -414,15 +436,24 @@ export default function BillingPage() {
                       fullWidth
                       disabled={plan.current}
                       onClick={async () => {
-                        if (plan.id === 'enterprise') return;
-                        if (!plan.current) {
-                          await provider.createCheckoutSession({
-                            toolId: 'platform',
-                            priceId: `price_${plan.id}`,
-                            userId: 'usr_demo',
-                            successUrl: '/billing?success=true',
-                            cancelUrl: '/billing',
+                        if (plan.id === 'enterprise' || plan.current) return;
+                        try {
+                          const res = await fetch('/api/billing/checkout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                              planId: plan.id,
+                              priceId: `price_${plan.id}`,
+                              successUrl: '/billing?success=true',
+                              cancelUrl: '/billing',
+                            }),
                           });
+                          const data = await res.json();
+                          if (data.url) {
+                            window.location.href = data.url;
+                          }
+                        } catch {
+                          // handle error
                         }
                       }}
                     >
@@ -542,8 +573,14 @@ export default function BillingPage() {
                       size="sm"
                       className="flex-shrink-0"
                       onClick={async () => {
-                        await provider.removePaymentMethod(pm.id);
-                        setPaymentMethods((prev) => prev.filter((p) => p.id !== pm.id));
+                        try {
+                          await fetch(`/api/billing/payment-methods?id=${pm.id}`, {
+                            method: 'DELETE',
+                          });
+                          setPaymentMethods((prev) => prev.filter((p) => p.id !== pm.id));
+                        } catch {
+                          // handle error
+                        }
                       }}
                     >
                       <Trash2 className="w-4 h-4 text-gray-400" />

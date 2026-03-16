@@ -98,8 +98,6 @@ export default function PricingSection() {
 
   const paymentMethods = [
     { name: 'Stripe', desc: 'home.pricing.payment.stripe' },
-    { name: 'Apple Pay', desc: 'home.pricing.payment.applepay' },
-    { name: 'Google Pay', desc: 'home.pricing.payment.googlepay' },
   ];
 
   return (
@@ -276,25 +274,25 @@ export default function PricingSection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            {paymentMethods.map(({ name, desc }) => (
-              <div key={name} className={cn(
-                'flex items-center gap-4 p-5 rounded-xl border',
-                isDark
-                  ? 'bg-white/[0.03] border-white/[0.06]'
-                  : isEarth
-                    ? 'bg-white border-gray-200'
-                    : 'bg-white border-gray-200/60'
-              )}>
-                <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/[0.06] flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm">{name}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">{t(desc)}</p>
-                </div>
+          <div className="flex justify-center mb-8">
+            <div className={cn(
+              'flex items-center gap-4 p-5 rounded-xl border max-w-md w-full',
+              isDark
+                ? 'bg-white/[0.03] border-white/[0.06]'
+                : isEarth
+                  ? 'bg-white border-gray-200'
+                  : 'bg-white border-gray-200/60'
+            )}>
+              <div className="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/[0.06] flex items-center justify-center flex-shrink-0">
+                <CreditCard className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               </div>
-            ))}
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white text-sm">Stripe</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {t('home.pricing.payment.stripe')}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className={cn(
