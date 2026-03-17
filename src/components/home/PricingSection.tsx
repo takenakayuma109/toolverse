@@ -12,8 +12,13 @@ import {
   Check,
   ArrowRight,
 } from 'lucide-react';
+import type { PageView } from '@/app/page';
 
-export default function PricingSection() {
+interface PricingSectionProps {
+  onNavigate?: (page: PageView) => void;
+}
+
+export default function PricingSection({ onNavigate }: PricingSectionProps) {
   const { t } = useTranslation();
   const theme = useThemeStore((s) => s.theme);
   const isDark = theme === 'universe';
@@ -240,6 +245,7 @@ export default function PricingSection() {
                 ))}
               </ul>
               <button
+                onClick={() => onNavigate?.('auth')}
                 className={cn(
                   'w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 mt-8',
                   highlighted
