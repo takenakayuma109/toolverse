@@ -34,6 +34,8 @@ const PLANS = [
     periodKey: null,
     descriptionKey: 'billing.plans.free.description',
     priceValue: 0,
+    stripePriceId: null,
+    stripeYearlyPriceId: null,
     features: [
       '5 tools',
       '1 GB storage',
@@ -51,6 +53,8 @@ const PLANS = [
     periodKey: 'billing.plans.pro.period',
     descriptionKey: 'billing.plans.pro.description',
     priceValue: 1980,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? null,
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY ?? null,
     features: [
       'Unlimited tools',
       '10 GB storage',
@@ -70,6 +74,8 @@ const PLANS = [
     periodKey: 'billing.plans.team.period',
     descriptionKey: 'billing.plans.team.description',
     priceValue: 4980,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_MONTHLY ?? null,
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_YEARLY ?? null,
     features: [
       'Everything in Pro',
       'Team collaboration',
@@ -89,6 +95,8 @@ const PLANS = [
     periodKey: null,
     descriptionKey: 'billing.plans.enterprise.description',
     priceValue: -1,
+    stripePriceId: null,
+    stripeYearlyPriceId: null,
     features: [
       'Custom limits',
       'SLA guarantee',
@@ -436,14 +444,14 @@ export default function BillingPage() {
                       fullWidth
                       disabled={plan.current}
                       onClick={async () => {
-                        if (plan.id === 'enterprise' || plan.current) return;
+                        if (plan.id === 'enterprise' || plan.current || !plan.stripePriceId) return;
                         try {
                           const res = await fetch('/api/billing/checkout', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                               planId: plan.id,
-                              priceId: `price_${plan.id}`,
+                              priceId: plan.stripePriceId,
                               successUrl: '/billing?success=true',
                               cancelUrl: '/billing',
                             }),
