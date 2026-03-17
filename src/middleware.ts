@@ -113,8 +113,15 @@ export async function middleware(request: NextRequest) {
     // block the cross-origin response.
 
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-API-Key');
     response.headers.set('Access-Control-Max-Age', '86400');
+
+    // SDK cross-origin paths require credentials support
+    const sdkPaths = ['/api/proxy/', '/api/oauth/', '/api/billing/credits'];
+    const isSdkPath = sdkPaths.some((p) => pathname.startsWith(p));
+    if (isSdkPath && origin && isOriginAllowed(origin)) {
+      response.headers.set('Access-Control-Allow-Credentials', 'true');
+    }
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {

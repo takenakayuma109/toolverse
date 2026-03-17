@@ -68,6 +68,8 @@ export default function SdkDocsPage() {
     { id: 'billing', label: '課金', icon: CreditCard },
     { id: 'external', label: '外部連携', icon: Link2 },
     { id: 'access', label: 'プラン判定', icon: ShieldCheck },
+    { id: 'llm', label: 'LLMプロキシ', icon: Server },
+    { id: 'errors', label: 'エラー処理', icon: ShieldCheck },
     { id: 'philosophy', label: '思想', icon: Code2 },
   ];
 
@@ -130,15 +132,16 @@ export default function SdkDocsPage() {
 
             <div className="space-y-4">
               <CodeBlock
-                code="npm install toolverse-sdk"
+                code="npm install @toolverse/sdk"
                 language="bash"
               />
               <CodeBlock
-                code={`import { initToolverse } from "toolverse-sdk"
+                code={`import { initToolverse } from "@toolverse/sdk";
 
-initToolverse({
-  apiKey: "YOUR_API_KEY"
-})`}
+const toolverse = initToolverse({
+  apiKey: "YOUR_API_KEY",
+  // baseUrl: "https://toolverse.app" (default)
+});`}
                 language="typescript"
               />
             </div>
@@ -165,13 +168,35 @@ initToolverse({
               </div>
             </div>
 
-            <CodeBlock
-              code="await toolverse.loginWithGoogle()"
-              language="typescript"
-            />
+            <div className="space-y-4">
+              <CodeBlock
+                code={`// ポップアップモード（デフォルト）
+const user = await toolverse.loginWithGoogle();
+
+// リダイレクトモード
+await toolverse.loginWithGoogle({ mode: "redirect" });
+
+// GitHubログイン
+const user = await toolverse.loginWithGithub();`}
+                language="typescript"
+              />
+
+              <CodeBlock
+                code={`// 認証状態の確認
+if (toolverse.isAuthenticated()) {
+  const user = await toolverse.getUser();
+  console.log(user.email);
+  console.log(user.plan); // "free" | "pro" | "enterprise"
+}
+
+// ログアウト
+toolverse.logout();`}
+                language="typescript"
+              />
+            </div>
 
             <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-              ユーザーにGoogleログインボタンを表示し、認証完了後にToolverseがセッションを自動管理します。
+              ユーザーにGoogleまたはGitHubログインを表示し、認証完了後にToolverseがセッションを自動管理します。ポップアップ・リダイレクトの両方に対応。
             </p>
           </section>
 
@@ -187,15 +212,29 @@ initToolverse({
               </div>
             </div>
 
-            <CodeBlock
-              code={`toolverse.openCheckout({
-  planId: "pro_monthly"
-})`}
-              language="typescript"
-            />
+            <div className="space-y-4">
+              <CodeBlock
+                code={`// サブスクリプション購入
+await toolverse.openCheckout({
+  planId: "pro_monthly",
+});`}
+                language="typescript"
+              />
+
+              <CodeBlock
+                code={`// クレジットベース課金
+const { balance } = await toolverse.getCredits();
+console.log(\`残りクレジット: \${balance}\`);
+
+// クレジット追加購入
+const { url } = await toolverse.billing.purchaseCredits(10); // $10
+window.location.href = url;`}
+                language="typescript"
+              />
+            </div>
 
             <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-              Stripeを裏側で自動連携。決済フロー・請求・サブスク管理はすべてToolverseが処理します。
+              Stripeを裏側で自動連携。サブスクリプション・従量課金の両方に対応。決済フロー・請求・クレジット管理はすべてToolverseが処理します。
             </p>
           </section>
 
@@ -237,9 +276,9 @@ initToolverse({
             </div>
 
             <CodeBlock
-              code={`const isPro = toolverse.hasAccess("pro")
+              code={`const { hasAccess } = await toolverse.hasAccess("pro");
 
-if (isPro) {
+if (hasAccess) {
   // Pro機能を有効化
 }`}
               language="typescript"
@@ -250,7 +289,114 @@ if (isPro) {
             </p>
           </section>
 
-          {/* Section 6: Philosophy */}
+          {/* Section 6: LLM Proxy */}
+          <section id="llm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                <Server className="w-5 h-5 text-orange-500" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">LLMプロキシ（APIクレジット）</h2>
+                <p className="text-sm text-gray-500">LLMリクエストをToolverse経由で送信</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              Toolverseプロキシを通じてLLMリクエストを送信し、クレジットベースの課金・利用量追跡・プロバイダー抽象化を活用できます。
+            </p>
+
+            <div className="space-y-4">
+              <CodeBlock
+                code={`const response = await toolverse.callLLM({
+  provider: "openai",
+  model: "gpt-4o",
+  messages: [
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: "Explain quantum computing." },
+  ],
+  maxTokens: 1024,
+  temperature: 0.7,
+});
+
+console.log(response.content);
+console.log(response.cost); // { raw, markupRate, total }`}
+                language="typescript"
+              />
+
+              <CodeBlock
+                code={`// Anthropic も同様に利用可能
+const response = await toolverse.callLLM({
+  provider: "anthropic",
+  model: "claude-sonnet-4-20250514",
+  messages: [
+    { role: "user", content: "Write a haiku about programming." },
+  ],
+  maxTokens: 256,
+});`}
+                language="typescript"
+              />
+
+              <CodeBlock
+                code={`// ストリーミングモード
+const stream = await toolverse.callLLM({
+  provider: "openai",
+  model: "gpt-4o",
+  messages: [{ role: "user", content: "Tell me a story." }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  process.stdout.write(chunk.content);
+}`}
+                language="typescript"
+              />
+            </div>
+          </section>
+
+          {/* Section 7: Error Handling */}
+          <section id="errors">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5 text-red-500" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">エラー処理</h2>
+                <p className="text-sm text-gray-500">型付きエラーで精密なハンドリング</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              SDKは型付きエラークラスをエクスポートしています。エラーの種類に応じた適切な処理が可能です。
+            </p>
+
+            <CodeBlock
+              code={`import {
+  ToolverseError,
+  AuthError,
+  InsufficientCreditsError,
+  PlanRequiredError,
+} from "@toolverse/sdk";
+
+try {
+  await toolverse.callLLM({ /* ... */ });
+} catch (err) {
+  if (err instanceof InsufficientCreditsError) {
+    // クレジット購入を促す
+    const { url } = await toolverse.billing.purchaseCredits(10);
+    window.location.href = url;
+  } else if (err instanceof AuthError) {
+    // 未認証 → ログインへ
+    await toolverse.loginWithGoogle();
+  } else if (err instanceof PlanRequiredError) {
+    // プランアップグレードが必要
+    await toolverse.openCheckout({ planId: err.requiredPlan });
+  }
+}`}
+              language="typescript"
+            />
+          </section>
+
+          {/* Section 8: Philosophy */}
           <section id="philosophy">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center">

@@ -11,10 +11,26 @@ import { withErrorHandler, errorResponse } from '@/lib/api-utils';
 
 export async function GET(request: NextRequest) {
   return withErrorHandler(async () => {
+    const { searchParams } = new URL(request.url);
+    const provider = searchParams.get('provider');
+
+    // If a provider is specified (e.g. google, github), redirect to NextAuth
+    // sign-in for that provider. The callback URL preserves the original OAuth
+    // params so the flow can resume after authentication.
+    if (provider) {
+      const callbackUrl = new URL(request.url);
+      // Remove the provider param so the callback doesn't loop
+      callbackUrl.searchParams.delete('provider');
+
+      const signInUrl = new URL('/api/auth/signin/' + provider, request.url);
+      signInUrl.searchParams.set('callbackUrl', callbackUrl.toString());
+
+      return NextResponse.redirect(signInUrl.toString());
+    }
+
     const session = await requireAuth();
     const userId = (session.user as { id: string }).id;
 
-    const { searchParams } = new URL(request.url);
     const clientId = searchParams.get('client_id');
     const redirectUri = searchParams.get('redirect_uri');
     const state = searchParams.get('state');
