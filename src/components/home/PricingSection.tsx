@@ -289,11 +289,11 @@ export default function PricingSection({ onNavigate }: PricingSectionProps) {
                   ? 'bg-white border-gray-200'
                   : 'bg-white border-gray-200/60'
             )}>
-              <div className="bg-white rounded-lg px-5 py-3">
+              <div className="bg-white rounded-xl px-6 py-4 shadow-sm">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Stripe_Logo%2C_revised_2016.svg/512px-Stripe_Logo%2C_revised_2016.svg.png"
+                  src="/stripe-logo.svg"
                   alt="Stripe"
-                  className="h-8"
+                  className="h-9"
                 />
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
