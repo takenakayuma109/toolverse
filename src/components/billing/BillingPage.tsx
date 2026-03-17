@@ -319,7 +319,7 @@ export default function BillingPage() {
                 {t('billing.plans.free.description')}
               </p>
             </div>
-            <Button onClick={() => setActiveTab('plans')}>{t('billing.upgrade')}</Button>
+            <Button className="relative z-10" onClick={() => setActiveTab('plans')}>{t('billing.upgrade')}</Button>
           </div>
         </Card>
 
