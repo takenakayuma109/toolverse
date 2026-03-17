@@ -8,7 +8,7 @@ import { calculateRevenue, getRevenueShareRate } from '@/core/revenue/calculateR
 import { addCredits } from '@/core/billing/creditService';
 import type Stripe from 'stripe';
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
 export async function POST(request: NextRequest) {
   if (!WEBHOOK_SECRET) {
