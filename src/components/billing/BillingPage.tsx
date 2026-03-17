@@ -108,7 +108,7 @@ const PLANS = [
     current: false,
     highlight: false,
   },
-] as const;
+];
 
 const STATIC_USAGE_STATS = [
   { label: 'ツール使用数', value: '5', limit: '5', unit: 'tools', percent: 100 },
