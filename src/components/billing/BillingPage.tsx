@@ -37,10 +37,10 @@ const PLANS = [
     stripePriceId: null,
     stripeYearlyPriceId: null,
     features: [
-      '5 tools',
-      '1 GB storage',
-      'Community support',
-      'Basic analytics',
+      '5 ツール',
+      '1 GB ストレージ',
+      'コミュニティサポート',
+      '基本分析',
     ],
     current: true,
     highlight: false,
@@ -53,15 +53,15 @@ const PLANS = [
     periodKey: 'billing.plans.pro.period',
     descriptionKey: 'billing.plans.pro.description',
     priceValue: 1980,
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? null,
-    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY ?? null,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? 'price_1TBl3TRobU1ygm39tzorv9cL',
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY ?? 'price_1TBl3TRobU1ygm39Cqn8u0mn',
     features: [
-      'Unlimited tools',
-      '10 GB storage',
-      'Priority support',
-      'Advanced analytics',
-      'API access',
-      '90% revenue share',
+      'ツール数無制限',
+      '10 GB ストレージ',
+      '優先サポート',
+      '高度な分析',
+      'API アクセス',
+      '90% レベニューシェア',
     ],
     current: false,
     highlight: true,
@@ -74,15 +74,15 @@ const PLANS = [
     periodKey: 'billing.plans.team.period',
     descriptionKey: 'billing.plans.team.description',
     priceValue: 4980,
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_MONTHLY ?? null,
-    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_YEARLY ?? null,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_MONTHLY ?? 'price_1TBl3URobU1ygm396Z0TIYgf',
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_YEARLY ?? 'price_1TBl3URobU1ygm39N0SJvGu8',
     features: [
-      'Everything in Pro',
-      'Team collaboration',
-      '50 GB storage',
+      'プロの全機能を含む',
+      'チームコラボレーション',
+      '50 GB ストレージ',
       'SSO / SAML',
-      'Dedicated support',
-      'Custom domain',
+      '専任サポート',
+      'カスタムドメイン',
     ],
     current: false,
     highlight: false,
@@ -98,12 +98,12 @@ const PLANS = [
     stripePriceId: null,
     stripeYearlyPriceId: null,
     features: [
-      'Custom limits',
-      'SLA guarantee',
-      'On-premise option',
-      'Custom integrations',
-      'Dedicated account manager',
-      'Audit logs',
+      'カスタム制限',
+      'SLA 保証',
+      'オンプレミスオプション',
+      'カスタム統合',
+      '専任アカウントマネージャー',
+      '監査ログ',
     ],
     current: false,
     highlight: false,
@@ -111,10 +111,10 @@ const PLANS = [
 ] as const;
 
 const STATIC_USAGE_STATS = [
-  { label: 'Tools used', value: '5', limit: '5', unit: 'tools', percent: 100 },
-  { label: 'Storage', value: '0.8', limit: '1', unit: 'GB', percent: 80 },
-  { label: 'API calls', value: '1,240', limit: '10,000', unit: 'calls', percent: 12.4 },
-  { label: 'Bandwidth', value: '3.2', limit: '10', unit: 'GB', percent: 32 },
+  { label: 'ツール使用数', value: '5', limit: '5', unit: 'tools', percent: 100 },
+  { label: 'ストレージ', value: '0.8', limit: '1', unit: 'GB', percent: 80 },
+  { label: 'API コール数', value: '1,240', limit: '10,000', unit: 'calls', percent: 12.4 },
+  { label: '帯域幅', value: '3.2', limit: '10', unit: 'GB', percent: 32 },
 ];
 
 type BillingTab = 'plans' | 'payment' | 'history' | 'revenue';
@@ -214,7 +214,7 @@ export default function BillingPage() {
           ? (mauStats.activeUsers / mauStats.limit) * 100
           : 0;
       stats.unshift({
-        label: t('billing.activeUsers') || 'Active Users',
+        label: t('billing.activeUsers') || 'アクティブユーザー',
         value: mauStats.activeUsers.toLocaleString(),
         limit: mauStats.limit !== null ? mauStats.limit.toLocaleString() : '∞',
         unit: 'users',
@@ -260,8 +260,8 @@ export default function BillingPage() {
 
   const tabs: { id: BillingTab; label: string; icon: React.ReactNode }[] = [
     { id: 'plans', label: t('billing.subscription'), icon: <Crown className="w-4 h-4" /> },
-    { id: 'payment', label: t('billing.paymentMethods') || 'Payment Methods', icon: <CreditCard className="w-4 h-4" /> },
-    { id: 'history', label: t('billing.billingHistory') || 'Billing History', icon: <Receipt className="w-4 h-4" /> },
+    { id: 'payment', label: t('billing.paymentMethods') || 'お支払い方法', icon: <CreditCard className="w-4 h-4" /> },
+    { id: 'history', label: t('billing.billingHistory') || '請求履歴', icon: <Receipt className="w-4 h-4" /> },
     { id: 'revenue', label: t('billing.revenueShare'), icon: <TrendingUp className="w-4 h-4" /> },
   ];
 
@@ -274,7 +274,7 @@ export default function BillingPage() {
             {t('billing.title')}
           </h1>
           <p className="mt-1 text-gray-500 dark:text-gray-400">
-            Manage your subscription, payment methods, and billing history.
+            サブスクリプション、お支払い方法、請求履歴を管理できます。
           </p>
         </div>
 
@@ -292,7 +292,7 @@ export default function BillingPage() {
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                   {t('billing.plans.free.name')}
                 </h2>
-                <Badge variant="gradient" size="sm">Active</Badge>
+                <Badge variant="gradient" size="sm">有効</Badge>
               </div>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
                 {t('billing.plans.free.description')}
@@ -379,7 +379,7 @@ export default function BillingPage() {
                         size="sm"
                         className="absolute top-4 right-4"
                       >
-                        Current
+                        現在
                       </Badge>
                     )}
                     {plan.highlight && !plan.current && (
@@ -468,7 +468,7 @@ export default function BillingPage() {
                       {plan.current
                         ? t('billing.currentPlan')
                         : plan.id === 'enterprise'
-                          ? 'Contact Sales'
+                          ? 'お問い合わせ'
                           : t('billing.upgrade')}
                     </Button>
                   </Card>
@@ -483,7 +483,7 @@ export default function BillingPage() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Payment Methods
+                お支払い方法
               </h2>
               <Button
                 size="sm"
@@ -491,7 +491,7 @@ export default function BillingPage() {
                 onClick={() => setShowAddCard(!showAddCard)}
               >
                 <Plus className="w-4 h-4 mr-1" />
-                Add Card
+                カードを追加
               </Button>
             </div>
 
@@ -500,17 +500,17 @@ export default function BillingPage() {
               <Card padding="lg" className="border-violet-200 dark:border-violet-900/50">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <CreditCard className="w-4 h-4" />
-                  Add Payment Method
+                  お支払い方法を追加
                 </h3>
                 <div className="space-y-4">
                   <Input
-                    label="Cardholder Name"
+                    label="カード名義人"
                     placeholder="YUMA TAKENAKA"
                     value={cardName}
                     onChange={(e) => setCardName(e.target.value)}
                   />
                   <Input
-                    label="Card Number"
+                    label="カード番号"
                     placeholder="4242 4242 4242 4242"
                     value={cardNumber}
                     onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
@@ -518,7 +518,7 @@ export default function BillingPage() {
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <Input
-                      label="Expiry Date"
+                      label="有効期限"
                       placeholder="MM/YY"
                       value={cardExpiry}
                       onChange={(e) => setCardExpiry(formatExpiry(e.target.value))}
@@ -532,10 +532,10 @@ export default function BillingPage() {
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
                     <Shield className="w-3.5 h-3.5" />
-                    Payments are securely processed by Stripe. We never store your card details.
+                    決済はStripeにより安全に処理されます。カード情報は保存されません。
                   </div>
                   <div className="flex gap-3 pt-2">
-                    <Button onClick={handleAddCard}>Add Card</Button>
+                    <Button onClick={handleAddCard}>カードを追加</Button>
                     <Button variant="ghost" onClick={() => setShowAddCard(false)}>
                       {t('common.cancel')}
                     </Button>
@@ -550,9 +550,9 @@ export default function BillingPage() {
             ) : paymentMethods.length === 0 ? (
               <Card padding="lg" className="text-center">
                 <CreditCard className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-500 dark:text-gray-400">No payment methods on file.</p>
+                <p className="text-gray-500 dark:text-gray-400">お支払い方法が登録されていません。</p>
                 <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">
-                  Add a card to subscribe to a plan.
+                  プランに登録するにはカードを追加してください。
                 </p>
               </Card>
             ) : (
@@ -569,11 +569,11 @@ export default function BillingPage() {
                           {pm.card?.last4}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
-                          Expires {pm.card?.expMonth}/{pm.card?.expYear}
+                          有効期限 {pm.card?.expMonth}/{pm.card?.expYear}
                         </p>
                       </div>
                       {pm.isDefault && (
-                        <Badge variant="success" size="sm">Default</Badge>
+                        <Badge variant="success" size="sm">デフォルト</Badge>
                       )}
                     </div>
                     <Button
@@ -604,14 +604,14 @@ export default function BillingPage() {
         {activeTab === 'history' && (
           <div className="space-y-6">
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Billing History
+              請求履歴
             </h2>
             {loadingInvoices ? (
               <div className="text-center py-12 text-gray-400">{t('common.loading')}</div>
             ) : invoices.length === 0 ? (
               <Card padding="lg" className="text-center">
                 <Receipt className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-500 dark:text-gray-400">No invoices yet.</p>
+                <p className="text-gray-500 dark:text-gray-400">請求履歴はまだありません。</p>
               </Card>
             ) : (
               <Card padding="none" className="overflow-hidden">
@@ -620,19 +620,19 @@ export default function BillingPage() {
                     <thead>
                       <tr className="border-b border-gray-100 dark:border-gray-800">
                         <th className="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 py-3">
-                          Invoice
+                          請求番号
                         </th>
                         <th className="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 py-3">
-                          Description
+                          説明
                         </th>
                         <th className="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 py-3">
-                          Amount
+                          金額
                         </th>
                         <th className="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 py-3">
-                          Status
+                          ステータス
                         </th>
                         <th className="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-6 py-3">
-                          Date
+                          日付
                         </th>
                         <th className="px-6 py-3" />
                       </tr>
@@ -690,15 +690,14 @@ export default function BillingPage() {
                 {t('billing.revenueShare')}
               </h2>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                Creators earn 80-90% of revenue from their tools. Toolverse takes 10-20% for
-                platform fees, payment processing, and infrastructure.
+                クリエイターはツール収益の80〜90%を獲得できます。Toolverseはプラットフォーム手数料として10〜20%を収受します。
               </p>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="warning" size="md">
-                  80% Creator / 20% Platform
+                  クリエイター 80% / プラットフォーム 20%
                 </Badge>
                 <Badge variant="success" size="md">
-                  90% Creator / 10% Platform (Pro)
+                  クリエイター 90% / プラットフォーム 10% (プロ)
                 </Badge>
               </div>
             </Card>
@@ -706,7 +705,7 @@ export default function BillingPage() {
             {/* Revenue Tiers */}
             <Card padding="lg">
               <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-4">
-                Revenue Share Tiers
+                レベニューシェアティア
               </h3>
               <div className="space-y-4">
                 {[
@@ -739,7 +738,7 @@ export default function BillingPage() {
                       <span className="text-sm font-semibold text-gray-900 dark:text-white">
                         {row.split}
                       </span>
-                      {row.active && <Badge variant="gradient" size="sm">Current</Badge>}
+                      {row.active && <Badge variant="gradient" size="sm">現在</Badge>}
                     </div>
                   </div>
                 ))}
@@ -750,7 +749,7 @@ export default function BillingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <Card padding="md">
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  Lifetime Earnings
+                  累計収益
                 </p>
                 <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   {formatCurrency(284600)}
@@ -758,7 +757,7 @@ export default function BillingPage() {
               </Card>
               <Card padding="md">
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  This Month
+                  今月
                 </p>
                 <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(42800)}
@@ -766,7 +765,7 @@ export default function BillingPage() {
               </Card>
               <Card padding="md">
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-                  Next Payout
+                  次回振込
                 </p>
                 <div className="flex items-center gap-2">
                   <p className="text-2xl font-bold text-gray-900 dark:text-white">
