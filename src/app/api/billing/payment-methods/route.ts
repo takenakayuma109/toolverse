@@ -4,9 +4,10 @@ import { listPaymentMethods, stripe } from '@/lib/stripe';
 import { logger } from '@/lib/logger';
 
 /**
- * Find the Stripe customer ID for a user. Returns null if not found.
+ * Find the Stripe customer ID for a user by searching customers with metadata.
+ * Falls back to listing recent customers by email.
  */
-async function findStripeCustomerId(userId: string): Promise<string | null> {
+async function findStripeCustomerId(userId: string, email?: string | null): Promise<string | null> {
   try {
     const existing = await stripe.customers.search({
       query: `metadata["userId"]:"${userId}"`,
@@ -16,8 +17,20 @@ async function findStripeCustomerId(userId: string): Promise<string | null> {
       return existing.data[0].id;
     }
   } catch {
-    // Search not available — ignore
+    // Search API may not be available — try by email
   }
+
+  if (email) {
+    try {
+      const byEmail = await stripe.customers.list({ email, limit: 1 });
+      if (byEmail.data.length > 0) {
+        return byEmail.data[0].id;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   return null;
 }
 
@@ -35,9 +48,8 @@ export async function GET() {
   }
 
   try {
-    const customerId = await findStripeCustomerId(userId);
+    const customerId = await findStripeCustomerId(userId, session.user?.email);
     if (!customerId) {
-      // No Stripe customer yet — return empty list
       return NextResponse.json({ methods: [] });
     }
 
@@ -68,10 +80,7 @@ export async function GET() {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     logger.error('Failed to fetch payment methods', { error: message });
-    return NextResponse.json(
-      { error: 'Failed to fetch payment methods' },
-      { status: 500 },
-    );
+    return NextResponse.json({ methods: [] });
   }
 }
 
@@ -105,7 +114,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Find or create customer
-    let customerId = await findStripeCustomerId(userId);
+    let customerId = await findStripeCustomerId(userId, session.user?.email);
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: session.user?.email ?? undefined,

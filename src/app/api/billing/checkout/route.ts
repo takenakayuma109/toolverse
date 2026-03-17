@@ -4,46 +4,6 @@ import { requireAuth } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
 
-/**
- * Find or create a Stripe customer for a given user.
- */
-async function findOrCreateCustomer(userId: string, email?: string | null): Promise<string> {
-  // 1. Check if we already have a Stripe customer for this user in our DB
-  try {
-    const billingPlan = await prisma.userBillingPlan.findFirst({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-    });
-    if (billingPlan?.stripeSubscriptionId) {
-      const sub = await stripe.subscriptions.retrieve(billingPlan.stripeSubscriptionId);
-      const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id;
-      if (customerId) return customerId;
-    }
-  } catch {
-    // DB may not have billing plan yet — continue to search/create
-  }
-
-  // 2. Search Stripe for existing customer by metadata
-  try {
-    const existing = await stripe.customers.search({
-      query: `metadata["userId"]:"${userId}"`,
-      limit: 1,
-    });
-    if (existing.data.length > 0) {
-      return existing.data[0].id;
-    }
-  } catch {
-    // Search might fail on new Stripe accounts — continue to create
-  }
-
-  // 3. Create a new customer
-  const customer = await stripe.customers.create({
-    email: email ?? undefined,
-    metadata: { userId },
-  });
-  return customer.id;
-}
-
 export async function POST(request: NextRequest) {
   let session;
   try {
@@ -71,12 +31,10 @@ export async function POST(request: NextRequest) {
   // Handle setup mode (card registration without subscription)
   if (action === 'setup') {
     try {
-      const customerId = await findOrCreateCustomer(userId, userEmail);
-
       const checkoutSession = await stripe.checkout.sessions.create({
         mode: 'setup',
-        customer: customerId,
         payment_method_types: ['card'],
+        customer_email: userEmail ?? undefined,
         success_url: `${origin}${body.successUrl || '/billing?tab=payment&cardAdded=true'}`,
         cancel_url: `${origin}${body.cancelUrl || '/billing?tab=payment'}`,
         metadata: { userId },
@@ -141,11 +99,11 @@ export async function POST(request: NextRequest) {
     : `${origin}/billing`;
 
   try {
-    const customerId = await findOrCreateCustomer(userId, userEmail);
-
+    // Use customer_email instead of customer ID to let Stripe auto-create/match the customer
+    // This avoids extra API calls (search + create) that can timeout on serverless
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: 'subscription',
-      customer: customerId,
+      customer_email: userEmail ?? undefined,
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: resolvedSuccessUrl,
       cancel_url: resolvedCancelUrl,

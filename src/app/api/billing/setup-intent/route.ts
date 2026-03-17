@@ -17,41 +17,21 @@ export async function POST() {
   }
 
   try {
-    // Find or create a Stripe customer for this user
-    let customerId: string;
-
-    try {
-      const existing = await stripe.customers.search({
-        query: `metadata["userId"]:"${userId}"`,
-        limit: 1,
-      });
-      if (existing.data.length > 0) {
-        customerId = existing.data[0].id;
-      } else {
-        const customer = await stripe.customers.create({
-          email: session.user?.email ?? undefined,
-          metadata: { userId },
-        });
-        customerId = customer.id;
-      }
-    } catch {
-      // Search might fail — create a new customer
-      const customer = await stripe.customers.create({
-        email: session.user?.email ?? undefined,
-        metadata: { userId },
-      });
-      customerId = customer.id;
-    }
+    // Create a new customer for this setup intent
+    const customer = await stripe.customers.create({
+      email: session.user?.email ?? undefined,
+      metadata: { userId },
+    });
 
     const setupIntent = await stripe.setupIntents.create({
-      customer: customerId,
+      customer: customer.id,
       payment_method_types: ['card'],
       metadata: { userId },
     });
 
     return NextResponse.json({
       clientSecret: setupIntent.client_secret,
-      customerId,
+      customerId: customer.id,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';

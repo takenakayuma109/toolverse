@@ -1,21 +1,25 @@
 import Stripe from 'stripe';
 
-let _stripe: Stripe | null = null;
+function createStripe(): Stripe {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('Missing STRIPE_SECRET_KEY environment variable');
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2026-02-25.clover',
+    typescript: true,
+    maxNetworkRetries: 3,
+    timeout: 30000,
+  });
+}
 
-export const stripe = new Proxy({} as Stripe, {
-  get(_target, prop) {
-    if (!_stripe) {
-      if (!process.env.STRIPE_SECRET_KEY) {
-        throw new Error('Missing STRIPE_SECRET_KEY environment variable');
-      }
-      _stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: '2026-02-25.clover',
-        typescript: true,
-      });
-    }
-    return (_stripe as unknown as Record<string | symbol, unknown>)[prop];
-  },
-});
+const globalForStripe = globalThis as unknown as { _stripe?: Stripe };
+
+export const stripe: Stripe = (() => {
+  if (!globalForStripe._stripe) {
+    globalForStripe._stripe = createStripe();
+  }
+  return globalForStripe._stripe;
+})();
 
 /**
  * Create a Stripe Checkout session for one-time or subscription payments.
