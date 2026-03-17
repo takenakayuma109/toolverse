@@ -147,7 +147,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     }
   }
 
-  // Activate subscription if present
+  // Activate tool subscription if present
   if (subscriptionId && toolId) {
     await prisma.subscription.upsert({
       where: { stripeSubscriptionId: subscriptionId },
@@ -164,6 +164,62 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
         currentPeriodStart: new Date(),
       },
     });
+  }
+
+  // Activate billing plan subscription (pro/team upgrade)
+  const planId = session.metadata?.planId;
+  if (subscriptionId && planId) {
+    // Find the BillingPlan record by planId name (e.g. 'pro', 'team')
+    const billingPlan = await prisma.billingPlan.findFirst({
+      where: {
+        OR: [
+          { id: planId },
+          { name: { contains: planId, mode: 'insensitive' } },
+        ],
+      },
+    });
+
+    if (billingPlan) {
+      await prisma.userBillingPlan.upsert({
+        where: { userId_planId: { userId, planId: billingPlan.id } },
+        create: {
+          userId,
+          planId: billingPlan.id,
+          stripeSubscriptionId: subscriptionId,
+          status: 'ACTIVE',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+        update: {
+          stripeSubscriptionId: subscriptionId,
+          status: 'ACTIVE',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+      });
+      logger.info('Billing plan activated', { userId, planId: billingPlan.id, subscriptionId });
+    } else {
+      // BillingPlan record doesn't exist yet — create one on the fly
+      const stripePriceId = session.metadata?.priceId?.trim();
+      const newPlan = await prisma.billingPlan.create({
+        data: {
+          name: planId.charAt(0).toUpperCase() + planId.slice(1),
+          price: planId === 'pro' ? 1980 : planId === 'team' ? 4980 : 0,
+          currency: 'JPY',
+          period: 'monthly',
+          stripePriceId: stripePriceId ?? null,
+          features: [],
+        },
+      });
+      await prisma.userBillingPlan.create({
+        data: {
+          userId,
+          planId: newPlan.id,
+          stripeSubscriptionId: subscriptionId,
+          status: 'ACTIVE',
+          currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        },
+      });
+      logger.info('Billing plan created and activated', { userId, planId: newPlan.id, subscriptionId });
+    }
   }
 }
 

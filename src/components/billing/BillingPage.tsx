@@ -146,6 +146,7 @@ export default function BillingPage() {
   const [loadingMethods, setLoadingMethods] = useState(true);
   const [mauStats, setMauStats] = useState<MAUStats | null>(null);
   const [isYearly, setIsYearly] = useState(false);
+  const [currentPlanId, setCurrentPlanId] = useState<string>('free');
 
   const [showAddCard, setShowAddCard] = useState(false);
   const [addingCard, setAddingCard] = useState(false);
@@ -153,6 +154,24 @@ export default function BillingPage() {
 
   const [upgradingPlanId, setUpgradingPlanId] = useState<string | null>(null);
   const [upgradeError, setUpgradeError] = useState<string | null>(null);
+
+  // Fetch user's current billing plan
+  useEffect(() => {
+    let cancelled = false;
+    const fetchPlan = async () => {
+      try {
+        const res = await fetch('/api/billing/current-plan');
+        if (res.ok && !cancelled) {
+          const data = await res.json();
+          setCurrentPlanId(data.planId ?? 'free');
+        }
+      } catch {
+        // Default to free
+      }
+    };
+    fetchPlan();
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     if (activeTab === 'history' && invoices.length === 0) {
@@ -311,20 +330,26 @@ export default function BillingPage() {
               </p>
               <div className="flex items-center gap-3">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                  {t('billing.plans.free.name')}
+                  {PLANS.find(p => p.id === currentPlanId)
+                    ? t(PLANS.find(p => p.id === currentPlanId)!.nameKey)
+                    : t('billing.plans.free.name')}
                 </h2>
                 <Badge variant="gradient" size="sm">有効</Badge>
               </div>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
-                {t('billing.plans.free.description')}
+                {PLANS.find(p => p.id === currentPlanId)
+                  ? t(PLANS.find(p => p.id === currentPlanId)!.descriptionKey)
+                  : t('billing.plans.free.description')}
               </p>
             </div>
-            <Button className="relative z-10" onClick={() => {
-              setActiveTab('plans');
-              setTimeout(() => {
-                document.getElementById('plan-cards')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }, 50);
-            }}>{t('billing.upgrade')}</Button>
+            {currentPlanId === 'free' && (
+              <Button className="relative z-10" onClick={() => {
+                setActiveTab('plans');
+                setTimeout(() => {
+                  document.getElementById('plan-cards')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 50);
+              }}>{t('billing.upgrade')}</Button>
+            )}
           </div>
         </Card>
 
@@ -439,7 +464,7 @@ export default function BillingPage() {
                         'ring-2 ring-violet-500 shadow-xl shadow-violet-500/20 dark:shadow-violet-500/10'
                     )}
                   >
-                    {plan.current && (
+                    {plan.id === currentPlanId && (
                       <Badge
                         variant="gradient"
                         size="sm"
@@ -448,7 +473,7 @@ export default function BillingPage() {
                         現在
                       </Badge>
                     )}
-                    {plan.highlight && !plan.current && (
+                    {plan.highlight && plan.id !== currentPlanId && (
                       <Badge
                         variant="info"
                         size="sm"
@@ -508,10 +533,10 @@ export default function BillingPage() {
                     <Button
                       variant={plan.highlight ? 'primary' : 'outline'}
                       fullWidth
-                      disabled={plan.current || plan.id === 'enterprise' || upgradingPlanId === plan.id}
+                      disabled={plan.id === currentPlanId || plan.id === 'enterprise' || upgradingPlanId === plan.id}
                       isLoading={upgradingPlanId === plan.id}
                       onClick={async () => {
-                        if (plan.id === 'enterprise' || plan.current) return;
+                        if (plan.id === 'enterprise' || plan.id === currentPlanId) return;
                         const priceId = isYearly
                           ? plan.stripeYearlyPriceId
                           : plan.stripePriceId;
@@ -545,7 +570,7 @@ export default function BillingPage() {
                         }
                       }}
                     >
-                      {plan.current
+                      {plan.id === currentPlanId
                         ? t('billing.currentPlan')
                         : plan.id === 'enterprise'
                           ? 'お問い合わせ'

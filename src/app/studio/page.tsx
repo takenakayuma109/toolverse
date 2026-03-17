@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+'use client';
+
+import PageLayout from '@/components/layout/PageLayout';
 import ToolStudioPage from '@/components/studio/ToolStudioPage';
 
-export const metadata: Metadata = {
-  title: 'Tool Studio - Toolverse',
-  description:
-    'Create, manage, and publish your tools on the Toolverse platform.',
-};
-
 export default function StudioPage() {
-  return <ToolStudioPage />;
+  return (
+    <PageLayout currentPage="studio">
+      <ToolStudioPage />
+    </PageLayout>
+  );
 }

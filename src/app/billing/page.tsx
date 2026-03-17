@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
+'use client';
+
+import PageLayout from '@/components/layout/PageLayout';
 import BillingPage from '@/components/billing/BillingPage';
 
-export const metadata: Metadata = {
-  title: 'Billing - Toolverse',
-  description:
-    'Manage your subscriptions, payments, and billing settings on Toolverse.',
-};
-
 export default function BillingRoute() {
-  return <BillingPage />;
+  return (
+    <PageLayout currentPage="billing">
+      <BillingPage />
+    </PageLayout>
+  );
 }
