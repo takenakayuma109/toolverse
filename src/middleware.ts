@@ -62,6 +62,11 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isApi = isApiRoute(pathname);
 
+  // ----- Skip middleware for NextAuth routes (they handle their own redirects) -----
+  if (isAuthEndpoint(pathname)) {
+    return NextResponse.next();
+  }
+
   // ----- Rate limiting for API routes -----
   if (isApi) {
     const ip = getClientIP(request);
