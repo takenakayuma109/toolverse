@@ -8,11 +8,34 @@ import { isValidEmail, validatePassword as secureValidatePassword, sanitizeInput
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import { Mail, Lock, User, Github, Apple, CheckCircle2, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, User, Github, Apple, CheckCircle2, ArrowLeft, AlertTriangle } from 'lucide-react';
 
 type AuthTab = 'signin' | 'signup' | 'forgot-password' | 'reset-password';
 
 const authRateLimiter = new RateLimiter(5, 60000);
+
+/**
+ * Map NextAuth error codes to user-friendly messages.
+ */
+function getAuthErrorMessage(code: string | null): string | null {
+  if (!code) return null;
+  switch (code) {
+    case 'OAuthAccountNotLinked':
+      return 'This email is already associated with another sign-in method. Please sign in using your original method.';
+    case 'OAuthCallbackError':
+      return 'There was a problem signing in with the OAuth provider. Please try again.';
+    case 'OAuthSignin':
+      return 'Could not initiate OAuth sign-in. Please try again.';
+    case 'Callback':
+      return 'There was an error during the authentication callback. Please try again.';
+    case 'AccessDenied':
+      return 'Access denied. You do not have permission to sign in.';
+    case 'Configuration':
+      return 'There is a server configuration issue. Please contact support.';
+    default:
+      return `Authentication error: ${code}. Please try again.`;
+  }
+}
 
 export default function AuthPage() {
   const { t } = useTranslation();
@@ -27,6 +50,13 @@ export default function AuthPage() {
     forgotPassword,
     resetPassword,
   } = useAuthStore();
+
+  // Check for NextAuth error in URL (e.g., /auth?error=OAuthCallbackError)
+  const [authError] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const params = new URLSearchParams(window.location.search);
+    return getAuthErrorMessage(params.get('error'));
+  });
 
   const [tab, setTab] = useState<AuthTab>(() => {
     if (typeof window === 'undefined') return 'signin';
@@ -194,6 +224,18 @@ export default function AuthPage() {
         </div>
 
         <Card padding="lg" className="shadow-2xl shadow-gray-200/50 dark:shadow-none">
+          {/* OAuth/Auth error banner */}
+          {authError && (
+            <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 mb-6">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+                <p className="text-sm text-red-800 dark:text-red-300">
+                  {authError}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Forgot Password View */}
           {isForgotPassword && (
             <>

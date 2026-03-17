@@ -111,6 +111,7 @@ model User {
   email          String    @unique
   name           String
   avatar         String?
+  image          String?   // NextAuth PrismaAdapter writes OAuth profile picture here
   role           UserRole  @default(USER)
   hashedPassword String?
   emailVerified  DateTime?

@@ -82,10 +82,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
 
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      // Log OAuth sign-in attempts for debugging
+      if (account?.provider) {
+        console.log(`[auth] OAuth signIn attempt: provider=${account.provider}, email=${user?.email ?? profile?.email ?? 'unknown'}`);
+      }
+      return true;
+    },
+
+    async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
         token.role = (user as { role?: string }).role ?? 'USER';
+      }
+      // On initial OAuth sign-in, persist the provider
+      if (account) {
+        token.provider = account.provider;
       }
       return token;
     },
@@ -99,8 +111,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 
+  events: {
+    async signIn({ user, account }) {
+      console.log(`[auth] signIn event: user=${user?.id}, provider=${account?.provider}`);
+    },
+    async createUser({ user }) {
+      console.log(`[auth] createUser event: id=${user?.id}, email=${user?.email}`);
+    },
+  },
+
   pages: {
     signIn: '/auth',
+    error: '/auth',  // Redirect auth errors to our custom page instead of NextAuth default
+  },
+
+  // Enable debug logging in non-production to surface OAuth issues
+  debug: process.env.NODE_ENV !== 'production',
+
+  logger: {
+    error(code, ...message) {
+      console.error(`[auth][error] ${code}`, ...message);
+    },
+    warn(code, ...message) {
+      console.warn(`[auth][warn] ${code}`, ...message);
+    },
+    debug(code, ...message) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug(`[auth][debug] ${code}`, ...message);
+      }
+    },
   },
 
   secret: process.env.AUTH_SECRET || 'dev-secret-change-in-production',

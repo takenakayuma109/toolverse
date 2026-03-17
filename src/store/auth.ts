@@ -96,10 +96,42 @@ async function credentialsSignIn(email: string, password: string): Promise<void>
 }
 
 /**
- * Initiate OAuth sign-in by redirecting to the NextAuth signin page.
+ * Initiate OAuth sign-in via NextAuth's CSRF-protected flow.
+ *
+ * NextAuth v5 requires a POST to /api/auth/signin/{provider} with a valid
+ * csrfToken. A bare GET redirect lands on NextAuth's built-in page which
+ * then errors out when the server-side config doesn't match expectations.
+ *
+ * We build a hidden form, populate it with the csrfToken and a callbackUrl,
+ * then submit it so the browser follows the 302 redirect to the OAuth
+ * provider exactly like NextAuth expects.
  */
-function oauthSignIn(provider: 'google' | 'github' | 'apple'): void {
-  window.location.href = `/api/auth/signin/${provider}`;
+async function oauthSignIn(provider: 'google' | 'github' | 'apple'): Promise<void> {
+  // 1. Obtain CSRF token
+  const csrfRes = await fetch('/api/auth/csrf');
+  if (!csrfRes.ok) throw new Error('Failed to obtain CSRF token');
+  const { csrfToken } = await csrfRes.json();
+
+  // 2. Build and submit a hidden form (POST) to initiate the OAuth redirect
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = `/api/auth/signin/${provider}`;
+  form.style.display = 'none';
+
+  const csrfInput = document.createElement('input');
+  csrfInput.type = 'hidden';
+  csrfInput.name = 'csrfToken';
+  csrfInput.value = csrfToken;
+  form.appendChild(csrfInput);
+
+  const callbackInput = document.createElement('input');
+  callbackInput.type = 'hidden';
+  callbackInput.name = 'callbackUrl';
+  callbackInput.value = window.location.origin;
+  form.appendChild(callbackInput);
+
+  document.body.appendChild(form);
+  form.submit();
 }
 
 /**
@@ -132,9 +164,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   signInWithGoogle: async () => {
     set({ isLoading: true });
     try {
-      oauthSignIn('google');
+      await oauthSignIn('google');
       // Browser will redirect, so loading stays true
-    } catch {
+    } catch (err) {
+      console.error('[auth] Google sign-in failed:', err);
       set({ isLoading: false });
     }
   },
@@ -142,8 +175,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   signInWithGitHub: async () => {
     set({ isLoading: true });
     try {
-      oauthSignIn('github');
-    } catch {
+      await oauthSignIn('github');
+    } catch (err) {
+      console.error('[auth] GitHub sign-in failed:', err);
       set({ isLoading: false });
     }
   },
@@ -151,8 +185,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   signInWithApple: async () => {
     set({ isLoading: true });
     try {
-      oauthSignIn('apple');
-    } catch {
+      await oauthSignIn('apple');
+    } catch (err) {
+      console.error('[auth] Apple sign-in failed:', err);
       set({ isLoading: false });
     }
   },
