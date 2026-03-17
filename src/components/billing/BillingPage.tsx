@@ -53,8 +53,8 @@ const PLANS = [
     periodKey: 'billing.plans.pro.period',
     descriptionKey: 'billing.plans.pro.description',
     priceValue: 1980,
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY ?? 'price_1TBl3TRobU1ygm39tzorv9cL',
-    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY ?? 'price_1TBl3TRobU1ygm39Cqn8u0mn',
+    stripePriceId: 'price_1TBl3TRobU1ygm39tzorv9cL',
+    stripeYearlyPriceId: 'price_1TBl3TRobU1ygm39Cqn8u0mn',
     features: [
       'ツール数無制限',
       '10 GB ストレージ',
@@ -74,8 +74,8 @@ const PLANS = [
     periodKey: 'billing.plans.team.period',
     descriptionKey: 'billing.plans.team.description',
     priceValue: 4980,
-    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_MONTHLY ?? 'price_1TBl3URobU1ygm396Z0TIYgf',
-    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_YEARLY ?? 'price_1TBl3URobU1ygm39N0SJvGu8',
+    stripePriceId: 'price_1TBl3URobU1ygm396Z0TIYgf',
+    stripeYearlyPriceId: 'price_1TBl3URobU1ygm39N0SJvGu8',
     features: [
       'プロの全機能を含む',
       'チームコラボレーション',
@@ -444,7 +444,11 @@ export default function BillingPage() {
                       fullWidth
                       disabled={plan.current}
                       onClick={async () => {
-                        if (plan.id === 'enterprise' || plan.current || !plan.stripePriceId) return;
+                        if (plan.id === 'enterprise' || plan.current) return;
+                        if (!plan.stripePriceId) {
+                          alert('Price ID が設定されていません: ' + plan.id);
+                          return;
+                        }
                         try {
                           const res = await fetch('/api/billing/checkout', {
                             method: 'POST',
