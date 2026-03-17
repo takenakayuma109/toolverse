@@ -319,7 +319,12 @@ export default function BillingPage() {
                 {t('billing.plans.free.description')}
               </p>
             </div>
-            <Button className="relative z-10" onClick={() => setActiveTab('plans')}>{t('billing.upgrade')}</Button>
+            <Button className="relative z-10" onClick={() => {
+              setActiveTab('plans');
+              setTimeout(() => {
+                document.getElementById('plan-cards')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }, 50);
+            }}>{t('billing.upgrade')}</Button>
           </div>
         </Card>
 
@@ -423,7 +428,7 @@ export default function BillingPage() {
                   {upgradeError}
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div id="plan-cards" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {PLANS.map((plan) => (
                   <Card
                     key={plan.id}
