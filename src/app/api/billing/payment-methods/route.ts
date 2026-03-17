@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
       createdAt: new Date(pm.created * 1000).toISOString(),
     };
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json({ paymentMethod: result }, { status: 201 });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     logger.error('Failed to add payment method', { error: message });

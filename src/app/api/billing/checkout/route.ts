@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createCheckoutSession, createPortalSession } from '@/lib/stripe';
+import { createCheckoutSession, createPortalSession, stripe } from '@/lib/stripe';
 import { requireAuth } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
@@ -25,6 +25,46 @@ export async function POST(request: NextRequest) {
   }
 
   const { action } = body;
+  const origin = request.nextUrl.origin;
+
+  // Handle setup mode (card registration without subscription)
+  if (action === 'setup') {
+    try {
+      // Find or create customer
+      const existingCustomers = await stripe.customers.search({
+        query: `metadata["userId"]:"${userId}"`,
+        limit: 1,
+      });
+
+      let customerId: string;
+      if (existingCustomers.data.length > 0) {
+        customerId = existingCustomers.data[0].id;
+      } else {
+        const customer = await stripe.customers.create({
+          metadata: { userId },
+        });
+        customerId = customer.id;
+      }
+
+      const checkoutSession = await stripe.checkout.sessions.create({
+        mode: 'setup',
+        customer: customerId,
+        payment_method_types: ['card'],
+        success_url: `${origin}${body.successUrl || '/billing?tab=payment&cardAdded=true'}`,
+        cancel_url: `${origin}${body.cancelUrl || '/billing?tab=payment'}`,
+        metadata: { userId },
+      });
+
+      return NextResponse.json({ id: checkoutSession.id, url: checkoutSession.url });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unknown error';
+      logger.error('Setup checkout session creation failed', { error: message });
+      return NextResponse.json(
+        { error: 'カード登録セッションの作成に失敗しました' },
+        { status: 500 },
+      );
+    }
+  }
 
   // Handle billing portal session
   if (action === 'portal') {
@@ -64,7 +104,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'priceId is required' }, { status: 400 });
   }
 
-  const origin = request.nextUrl.origin;
   const resolvedSuccessUrl = successUrl
     ? `${origin}${successUrl}`
     : `${origin}/billing?success=true`;

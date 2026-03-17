@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import { formatCurrency } from '@/lib/utils';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
-import Input from '@/components/ui/Input';
 import {
   Check,
   Zap,
@@ -22,7 +21,9 @@ import {
   Trash2,
   ArrowRight,
   Shield,
+  AlertCircle,
 } from 'lucide-react';
+import { getStripe } from '@/lib/stripe-client';
 import type { Invoice, PaymentMethod } from '@/lib/payments';
 
 const PLANS = [
@@ -144,12 +145,14 @@ export default function BillingPage() {
   const [loadingInvoices, setLoadingInvoices] = useState(true);
   const [loadingMethods, setLoadingMethods] = useState(true);
   const [mauStats, setMauStats] = useState<MAUStats | null>(null);
+  const [isYearly, setIsYearly] = useState(false);
 
   const [showAddCard, setShowAddCard] = useState(false);
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCvc, setCardCvc] = useState('');
-  const [cardName, setCardName] = useState('');
+  const [addingCard, setAddingCard] = useState(false);
+  const [cardError, setCardError] = useState<string | null>(null);
+
+  const [upgradingPlanId, setUpgradingPlanId] = useState<string | null>(null);
+  const [upgradeError, setUpgradeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (activeTab === 'history' && invoices.length === 0) {
@@ -177,7 +180,7 @@ export default function BillingPage() {
           const res = await fetch('/api/billing/payment-methods');
           if (res.ok && !cancelled) {
             const data = await res.json();
-            setPaymentMethods(data.paymentMethods ?? []);
+            setPaymentMethods(data.methods ?? data.paymentMethods ?? []);
           }
         } catch {
           // ignore
@@ -224,39 +227,57 @@ export default function BillingPage() {
     return stats;
   }, [mauStats, t]);
 
-  const formatCardNumber = (v: string) => {
-    const digits = v.replace(/\D/g, '').slice(0, 16);
-    return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
-  };
-
-  const formatExpiry = (v: string) => {
-    const digits = v.replace(/\D/g, '').slice(0, 4);
-    if (digits.length > 2) return digits.slice(0, 2) + '/' + digits.slice(2);
-    return digits;
-  };
-
-  const handleAddCard = async () => {
+  const handleAddCard = useCallback(async () => {
+    setAddingCard(true);
+    setCardError(null);
     try {
-      const res = await fetch('/api/billing/payment-methods', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardNumber, cardExpiry, cardCvc, cardName }),
+      const stripeJs = await getStripe();
+      if (!stripeJs) {
+        setCardError('Stripe の初期化に失敗しました。ページを再読み込みしてください。');
+        return;
+      }
+
+      // Create a SetupIntent on the server to securely collect card details
+      const setupRes = await fetch('/api/billing/setup-intent', { method: 'POST' });
+      if (!setupRes.ok) {
+        const err = await setupRes.json().catch(() => ({}));
+        setCardError(err.error || 'セットアップの作成に失敗しました。');
+        return;
+      }
+      const { clientSecret, customerId } = await setupRes.json();
+
+      // Use Stripe's secure card collection via redirect
+      const { error } = await stripeJs.confirmCardSetup(clientSecret, {
+        payment_method: {
+          card: { token: '' } as never, // Will be replaced by redirect
+        },
       });
-      if (res.ok) {
-        const data = await res.json();
-        if (data.paymentMethod) {
-          setPaymentMethods((prev) => [...prev, data.paymentMethod]);
+
+      // If Stripe.js card element is not mounted, redirect to Stripe Checkout for setup
+      if (error) {
+        // Fallback: use Checkout in setup mode
+        const checkoutRes = await fetch('/api/billing/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'setup',
+            successUrl: '/billing?tab=payment&cardAdded=true',
+            cancelUrl: '/billing?tab=payment',
+          }),
+        });
+        const checkoutData = await checkoutRes.json();
+        if (checkoutData.url) {
+          window.location.href = checkoutData.url;
+          return;
         }
+        setCardError(error.message || 'カード登録に失敗しました。');
       }
     } catch {
-      // handle error
+      setCardError('カード登録中にエラーが発生しました。');
+    } finally {
+      setAddingCard(false);
     }
-    setShowAddCard(false);
-    setCardNumber('');
-    setCardExpiry('');
-    setCardCvc('');
-    setCardName('');
-  };
+  }, []);
 
   const tabs: { id: BillingTab; label: string; icon: React.ReactNode }[] = [
     { id: 'plans', label: t('billing.subscription'), icon: <Crown className="w-4 h-4" /> },
@@ -359,9 +380,49 @@ export default function BillingPage() {
 
             {/* Plan Comparison */}
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                {t('billing.subscription')}
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {t('billing.subscription')}
+                </h2>
+                <div className="flex items-center gap-3">
+                  <span className={cn(
+                    'text-sm font-medium',
+                    !isYearly ? 'text-gray-900 dark:text-white' : 'text-gray-400'
+                  )}>
+                    月払い
+                  </span>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={isYearly}
+                    onClick={() => setIsYearly(!isYearly)}
+                    className={cn(
+                      'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                      isYearly ? 'bg-violet-600' : 'bg-gray-300 dark:bg-gray-600'
+                    )}
+                  >
+                    <span className={cn(
+                      'inline-block h-4 w-4 rounded-full bg-white shadow transition-transform',
+                      isYearly ? 'translate-x-6' : 'translate-x-1'
+                    )} />
+                  </button>
+                  <span className={cn(
+                    'text-sm font-medium',
+                    isYearly ? 'text-gray-900 dark:text-white' : 'text-gray-400'
+                  )}>
+                    年払い
+                  </span>
+                  {isYearly && (
+                    <Badge variant="success" size="sm">2ヶ月分お得</Badge>
+                  )}
+                </div>
+              </div>
+              {upgradeError && (
+                <div className="mb-4 flex items-center gap-2 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {upgradeError}
+                </div>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {PLANS.map((plan) => (
                   <Card
@@ -442,20 +503,26 @@ export default function BillingPage() {
                     <Button
                       variant={plan.highlight ? 'primary' : 'outline'}
                       fullWidth
-                      disabled={plan.current}
+                      disabled={plan.current || plan.id === 'enterprise' || upgradingPlanId === plan.id}
+                      isLoading={upgradingPlanId === plan.id}
                       onClick={async () => {
                         if (plan.id === 'enterprise' || plan.current) return;
-                        if (!plan.stripePriceId) {
-                          alert('Price ID が設定されていません: ' + plan.id);
+                        const priceId = isYearly
+                          ? plan.stripeYearlyPriceId
+                          : plan.stripePriceId;
+                        if (!priceId) {
+                          setUpgradeError('このプランの Price ID が設定されていません。');
                           return;
                         }
+                        setUpgradingPlanId(plan.id);
+                        setUpgradeError(null);
                         try {
                           const res = await fetch('/api/billing/checkout', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                               planId: plan.id,
-                              priceId: plan.stripePriceId,
+                              priceId,
                               successUrl: '/billing?success=true',
                               cancelUrl: '/billing',
                             }),
@@ -463,9 +530,13 @@ export default function BillingPage() {
                           const data = await res.json();
                           if (data.url) {
                             window.location.href = data.url;
+                          } else {
+                            setUpgradeError(data.error || 'チェックアウトの作成に失敗しました。');
                           }
                         } catch {
-                          // handle error
+                          setUpgradeError('ネットワークエラーが発生しました。もう一度お試しください。');
+                        } finally {
+                          setUpgradingPlanId(null);
                         }
                       }}
                     >
@@ -507,40 +578,24 @@ export default function BillingPage() {
                   お支払い方法を追加
                 </h3>
                 <div className="space-y-4">
-                  <Input
-                    label="カード名義人"
-                    placeholder="YUMA TAKENAKA"
-                    value={cardName}
-                    onChange={(e) => setCardName(e.target.value)}
-                  />
-                  <Input
-                    label="カード番号"
-                    placeholder="4242 4242 4242 4242"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-                    icon={<CreditCard className="w-4 h-4" />}
-                  />
-                  <div className="grid grid-cols-2 gap-4">
-                    <Input
-                      label="有効期限"
-                      placeholder="MM/YY"
-                      value={cardExpiry}
-                      onChange={(e) => setCardExpiry(formatExpiry(e.target.value))}
-                    />
-                    <Input
-                      label="CVC"
-                      placeholder="123"
-                      value={cardCvc}
-                      onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').slice(0, 4))}
-                    />
-                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Stripeの安全な画面でカード情報を入力できます。カード情報は当サイトのサーバーに保存されません。
+                  </p>
+                  {cardError && (
+                    <div className="flex items-center gap-2 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      {cardError}
+                    </div>
+                  )}
                   <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
                     <Shield className="w-3.5 h-3.5" />
-                    決済はStripeにより安全に処理されます。カード情報は保存されません。
+                    決済はStripeにより安全に処理されます（PCI DSS準拠）。
                   </div>
                   <div className="flex gap-3 pt-2">
-                    <Button onClick={handleAddCard}>カードを追加</Button>
-                    <Button variant="ghost" onClick={() => setShowAddCard(false)}>
+                    <Button onClick={handleAddCard} isLoading={addingCard} disabled={addingCard}>
+                      Stripeでカードを登録
+                    </Button>
+                    <Button variant="ghost" onClick={() => { setShowAddCard(false); setCardError(null); }}>
                       {t('common.cancel')}
                     </Button>
                   </div>
