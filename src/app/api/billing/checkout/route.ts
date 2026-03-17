@@ -85,7 +85,8 @@ export async function POST(request: NextRequest) {
   }
 
   // Handle checkout session (subscription)
-  const { priceId, planId, successUrl, cancelUrl } = body;
+  const { planId, successUrl, cancelUrl } = body;
+  const priceId = body.priceId?.trim();
 
   if (!priceId) {
     return NextResponse.json({ error: 'priceId is required' }, { status: 400 });
