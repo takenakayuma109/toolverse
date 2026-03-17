@@ -19,6 +19,7 @@ export interface Tool {
   creatorName: string;
   tags: string[];
   screenshots: string[];
+  targetCountries: string[]; // ISO 3166-1 alpha-2 codes, empty = worldwide
   createdAt: string;
   updatedAt: string;
 }
@@ -169,4 +170,50 @@ export interface InfraServicePricing {
   pricePerUnit: number;
   freeAllowance: number;
   icon: string;
+}
+
+// ─── API Usage Billing ─────────────────────────────────────────────────────────
+
+export type CreditTransactionType = 'PURCHASE' | 'USAGE' | 'REFUND' | 'BONUS';
+
+export interface CreditBalance {
+  id: string;
+  userId: string;
+  balance: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreditTransaction {
+  id: string;
+  balanceId: string;
+  type: CreditTransactionType;
+  amount: number;
+  description?: string;
+  metadata?: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface ApiUsageRecord {
+  id: string;
+  userId: string;
+  toolId?: string;
+  provider: string;
+  model: string;
+  inputTokens: number;
+  outputTokens: number;
+  rawCost: number;
+  markupRate: number;
+  totalCost: number;
+  durationMs?: number;
+  createdAt: string;
+}
+
+export interface ApiProviderConfig {
+  id: string;
+  provider: string;
+  model: string;
+  inputPricePerM: number;
+  outputPricePerM: number;
+  isActive: boolean;
 }

@@ -236,6 +236,35 @@ async function main() {
 
   console.log(`Created billing plans: ${freePlan.name}, ${proPlan.name}`);
 
+  // 5. Seed PlatformConfig (markup rate)
+  await prisma.platformConfig.upsert({
+    where: { key: "markup_rate" },
+    update: {},
+    create: { key: "markup_rate", value: "0.2" },
+  });
+
+  console.log("Created platform config: markup_rate = 0.2 (20%)");
+
+  // 6. Seed ApiProviderConfig (LLM provider pricing)
+  const providerConfigs = [
+    { provider: "openai", model: "gpt-4o", inputPricePerM: 2.5, outputPricePerM: 10.0 },
+    { provider: "openai", model: "gpt-4o-mini", inputPricePerM: 0.15, outputPricePerM: 0.6 },
+    { provider: "anthropic", model: "claude-sonnet-4-20250514", inputPricePerM: 3.0, outputPricePerM: 15.0 },
+    { provider: "anthropic", model: "claude-haiku-4-5-20251001", inputPricePerM: 0.8, outputPricePerM: 4.0 },
+    { provider: "google", model: "gemini-1.5-pro", inputPricePerM: 1.25, outputPricePerM: 5.0 },
+    { provider: "google", model: "gemini-1.5-flash", inputPricePerM: 0.075, outputPricePerM: 0.3 },
+  ];
+
+  for (const config of providerConfigs) {
+    await prisma.apiProviderConfig.upsert({
+      where: { provider_model: { provider: config.provider, model: config.model } },
+      update: { inputPricePerM: config.inputPricePerM, outputPricePerM: config.outputPricePerM },
+      create: config,
+    });
+  }
+
+  console.log(`Created ${providerConfigs.length} API provider configs`);
+
   console.log("Seeding complete.");
 }
 

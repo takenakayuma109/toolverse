@@ -5,6 +5,7 @@ import { isCriticalEvent, logWebhookError } from '@/lib/webhook-errors';
 import { logger } from '@/lib/logger';
 import { isToolverseAttributed, extractAttribution } from '@/core/attribution/attributionEngine';
 import { calculateRevenue, getRevenueShareRate } from '@/core/revenue/calculateRevenue';
+import { addCredits } from '@/core/billing/creditService';
 import type Stripe from 'stripe';
 
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
@@ -98,6 +99,22 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   if (!userId) {
     logger.error('checkout.session.completed: no userId found in session');
     return;
+  }
+
+  // Handle credit purchase (prepaid API credits)
+  if (session.metadata?.type === 'credit_purchase') {
+    const creditAmount = parseFloat(session.metadata.creditAmount ?? '0');
+    if (creditAmount > 0) {
+      await addCredits(userId, creditAmount, 'PURCHASE', 'Stripe credit purchase', {
+        stripeSessionId: session.id,
+        stripePaymentIntentId:
+          typeof session.payment_intent === 'string'
+            ? session.payment_intent
+            : session.payment_intent?.id ?? null,
+      });
+      logger.info('Credits added via Stripe purchase', { userId, creditAmount });
+    }
+    return; // credit purchases don't need further processing
   }
 
   const subscriptionId =

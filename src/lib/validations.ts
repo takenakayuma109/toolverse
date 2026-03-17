@@ -62,6 +62,7 @@ export const toolCreateSchema = z
       .max(10, 'Maximum 10 tags'),
     serviceUrl: z.string().url('Service URL must be a valid URL').optional(),
     screenshots: z.array(z.string().url()).max(10).optional(),
+    targetCountries: z.array(z.string().length(2, 'Must be ISO 3166-1 alpha-2 code')).optional(),
   })
   .refine(
     (data) => {
@@ -83,6 +84,7 @@ export const toolUpdateSchema = z.object({
   tags: z.array(z.string().min(1).max(50)).min(1).max(10).optional(),
   serviceUrl: z.string().url().optional(),
   screenshots: z.array(z.string().url()).max(10).optional(),
+  targetCountries: z.array(z.string().length(2)).optional(),
 });
 
 // ---------------------------------------------------------------------------
@@ -143,6 +145,40 @@ export const adminToolStatusSchema = z.object({
   toolId: z.string().min(1, 'Tool ID is required'),
   status: z.enum(['PUBLISHED', 'REJECTED', 'DRAFT']),
   reason: z.string().max(500).optional(),
+});
+
+// ---------------------------------------------------------------------------
+// LLM Proxy schemas
+// ---------------------------------------------------------------------------
+
+export const LLM_PROVIDERS = ['openai', 'anthropic', 'google'] as const;
+
+export const llmProxyRequestSchema = z.object({
+  provider: z.enum(LLM_PROVIDERS),
+  model: z.string().min(1, 'Model is required').max(100),
+  messages: z
+    .array(
+      z.object({
+        role: z.enum(['system', 'user', 'assistant']),
+        content: z.string().min(1),
+      }),
+    )
+    .min(1, 'At least one message is required')
+    .max(100),
+  toolId: z.string().optional(),
+  maxTokens: z.number().int().min(1).max(128000).optional(),
+  temperature: z.number().min(0).max(2).optional(),
+});
+
+// ---------------------------------------------------------------------------
+// Credit purchase schemas
+// ---------------------------------------------------------------------------
+
+export const creditPurchaseSchema = z.object({
+  amount: z
+    .number()
+    .min(1, 'Minimum purchase is $1')
+    .max(1000, 'Maximum purchase is $1,000'),
 });
 
 // ---------------------------------------------------------------------------

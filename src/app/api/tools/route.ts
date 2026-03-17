@@ -146,6 +146,7 @@ export async function POST(request: NextRequest) {
         tags: data.tags,
         serviceUrl: data.serviceUrl ?? null,
         screenshots: data.screenshots ?? [],
+        targetCountries: data.targetCountries ?? [],
         status: 'DRAFT',
         rating: 0,
         reviewCount: 0,

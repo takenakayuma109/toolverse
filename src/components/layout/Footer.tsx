@@ -6,11 +6,17 @@ import LanguageSwitch from '@/components/ui/LanguageSwitch';
 import ThemeSwitch from '@/components/ui/ThemeSwitch';
 import { Sparkles } from 'lucide-react';
 
-const FOOTER_LINKS = {
+const FOOTER_LINKS: {
+  product: { key: string; href?: string }[];
+  company: { key: string; href?: string }[];
+  resources: { key: string; href?: string }[];
+  legal: { key: string; href: string }[];
+} = {
   product: [
-    { key: 'marketplace' },
-    { key: 'workspace' },
-    { key: 'creator' },
+    { key: 'marketplace', href: '/discover' },
+    { key: 'workspace', href: '/workspace' },
+    { key: 'creator', href: '/creators' },
+    { key: 'submit', href: '/submit' },
   ],
   company: [
     { key: 'about' },
@@ -21,7 +27,7 @@ const FOOTER_LINKS = {
   resources: [
     { key: 'documentation' },
     { key: 'apiReference' },
-    { key: 'sdkGuide' },
+    { key: 'sdkGuide', href: '/docs/sdk' },
     { key: 'community' },
   ],
   legal: [
@@ -29,7 +35,7 @@ const FOOTER_LINKS = {
     { key: 'privacy', href: '/privacy' },
     { key: 'developerAgreement', href: '/developer-agreement' },
   ],
-} as const;
+};
 
 const SOCIAL_LINKS = [
   { name: 'Twitter', icon: '𝕏' },
@@ -76,11 +82,17 @@ export default function Footer() {
               {t('footer.product')}
             </h3>
             <ul className="mt-4 space-y-3">
-              {FOOTER_LINKS.product.map(({ key }) => (
+              {FOOTER_LINKS.product.map(({ key, href }) => (
                 <li key={key}>
-                  <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                    {t(`${key}.title`)}
-                  </button>
+                  {href ? (
+                    <Link href={href} className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      {t(`footer.${key}`)}
+                    </Link>
+                  ) : (
+                    <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      {t(`footer.${key}`)}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -106,11 +118,17 @@ export default function Footer() {
               {t('footer.resources')}
             </h3>
             <ul className="mt-4 space-y-3">
-              {FOOTER_LINKS.resources.map(({ key }) => (
+              {FOOTER_LINKS.resources.map(({ key, href }) => (
                 <li key={key}>
-                  <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                    {t(`footer.${key}`)}
-                  </button>
+                  {href ? (
+                    <Link href={href} className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      {t(`footer.${key}`)}
+                    </Link>
+                  ) : (
+                    <button className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                      {t(`footer.${key}`)}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>

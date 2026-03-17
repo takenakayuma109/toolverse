@@ -42,6 +42,7 @@ import {
   Save,
   ExternalLink,
   Globe,
+  MapPin,
   Link,
   Shield,
   CreditCard,
@@ -112,6 +113,47 @@ const AUTH_METHODS = [
   { value: 'none', labelKey: 'studio.auth.none', descKey: 'studio.auth.noneDesc', icon: Globe },
 ] as const;
 
+const TARGET_COUNTRIES = [
+  { code: '', labelKey: 'studio.countries.worldwide' },
+  { code: 'JP', labelKey: 'studio.countries.JP' },
+  { code: 'US', labelKey: 'studio.countries.US' },
+  { code: 'GB', labelKey: 'studio.countries.GB' },
+  { code: 'DE', labelKey: 'studio.countries.DE' },
+  { code: 'FR', labelKey: 'studio.countries.FR' },
+  { code: 'KR', labelKey: 'studio.countries.KR' },
+  { code: 'CN', labelKey: 'studio.countries.CN' },
+  { code: 'TW', labelKey: 'studio.countries.TW' },
+  { code: 'IN', labelKey: 'studio.countries.IN' },
+  { code: 'BR', labelKey: 'studio.countries.BR' },
+  { code: 'CA', labelKey: 'studio.countries.CA' },
+  { code: 'AU', labelKey: 'studio.countries.AU' },
+  { code: 'SG', labelKey: 'studio.countries.SG' },
+  { code: 'ES', labelKey: 'studio.countries.ES' },
+  { code: 'IT', labelKey: 'studio.countries.IT' },
+  { code: 'MX', labelKey: 'studio.countries.MX' },
+  { code: 'ID', labelKey: 'studio.countries.ID' },
+  { code: 'TH', labelKey: 'studio.countries.TH' },
+  { code: 'VN', labelKey: 'studio.countries.VN' },
+  { code: 'PH', labelKey: 'studio.countries.PH' },
+  { code: 'RU', labelKey: 'studio.countries.RU' },
+  { code: 'SA', labelKey: 'studio.countries.SA' },
+  { code: 'AE', labelKey: 'studio.countries.AE' },
+  { code: 'NL', labelKey: 'studio.countries.NL' },
+  { code: 'SE', labelKey: 'studio.countries.SE' },
+  { code: 'CH', labelKey: 'studio.countries.CH' },
+  { code: 'PL', labelKey: 'studio.countries.PL' },
+  { code: 'NG', labelKey: 'studio.countries.NG' },
+  { code: 'ZA', labelKey: 'studio.countries.ZA' },
+  { code: 'AR', labelKey: 'studio.countries.AR' },
+] as const;
+
+const COUNTRY_FLAGS: Record<string, string> = {
+  JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', DE: '🇩🇪', FR: '🇫🇷', KR: '🇰🇷', CN: '🇨🇳', TW: '🇹🇼',
+  IN: '🇮🇳', BR: '🇧🇷', CA: '🇨🇦', AU: '🇦🇺', SG: '🇸🇬', ES: '🇪🇸', IT: '🇮🇹', MX: '🇲🇽',
+  ID: '🇮🇩', TH: '🇹🇭', VN: '🇻🇳', PH: '🇵🇭', RU: '🇷🇺', SA: '🇸🇦', AE: '🇦🇪', NL: '🇳🇱',
+  SE: '🇸🇪', CH: '🇨🇭', PL: '🇵🇱', NG: '🇳🇬', ZA: '🇿🇦', AR: '🇦🇷',
+};
+
 interface WizardFormData {
   // Step 1: Basic Info
   name: string;
@@ -128,6 +170,7 @@ interface WizardFormData {
   webhookUrl: string;
   webhookEvents: string[];
   sandboxUrl: string;
+  targetCountries: string[]; // ISO 3166-1 alpha-2, empty = worldwide
   // Step 3: Pricing & Billing
   pricingType: 'free' | 'freemium' | 'paid' | 'subscription';
   monthlyPrice: string;
@@ -174,6 +217,7 @@ export default function ToolStudioPage() {
     webhookUrl: '',
     webhookEvents: ['install', 'payment'],
     sandboxUrl: '',
+    targetCountries: [],
     pricingType: 'free',
     monthlyPrice: '',
     yearlyPrice: '',
@@ -198,6 +242,20 @@ export default function ToolStudioPage() {
       webhookEvents: prev.webhookEvents.includes(event)
         ? prev.webhookEvents.filter((e) => e !== event)
         : [...prev.webhookEvents, event],
+    }));
+  };
+
+  const toggleTargetCountry = (code: string) => {
+    if (code === '') {
+      // "Worldwide" clears all selections
+      setFormData((prev) => ({ ...prev, targetCountries: [] }));
+      return;
+    }
+    setFormData((prev) => ({
+      ...prev,
+      targetCountries: prev.targetCountries.includes(code)
+        ? prev.targetCountries.filter((c) => c !== code)
+        : [...prev.targetCountries, code],
     }));
   };
 
@@ -404,6 +462,53 @@ export default function ToolStudioPage() {
           />
         </div>
       )}
+
+      {/* Target Countries */}
+      <div className="w-full">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+          <span className="flex items-center gap-1.5">
+            <MapPin className="w-4 h-4" />
+            {t('studio.form.targetCountries')}
+          </span>
+        </label>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+          {t('studio.form.targetCountriesDesc')}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {TARGET_COUNTRIES.map((country) => {
+            const isWorldwide = country.code === '';
+            const isSelected = isWorldwide
+              ? formData.targetCountries.length === 0
+              : formData.targetCountries.includes(country.code);
+            return (
+              <button
+                key={country.code || 'worldwide'}
+                onClick={() => toggleTargetCountry(country.code)}
+                className={cn(
+                  'px-3 py-1.5 rounded-lg text-xs font-medium transition-all border inline-flex items-center gap-1.5',
+                  isSelected
+                    ? isWorldwide
+                      ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700'
+                      : 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700'
+                    : 'bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
+                )}
+              >
+                {isWorldwide ? (
+                  <Globe className="w-3.5 h-3.5" />
+                ) : (
+                  <span>{COUNTRY_FLAGS[country.code] || ''}</span>
+                )}
+                {t(country.labelKey)}
+              </button>
+            );
+          })}
+        </div>
+        {formData.targetCountries.length > 0 && (
+          <div className="mt-2 text-xs text-gray-400">
+            {t('studio.form.selectedCountries')}: {formData.targetCountries.map((c) => `${COUNTRY_FLAGS[c] || ''} ${c}`).join(', ')}
+          </div>
+        )}
+      </div>
 
       <div className="w-full">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">{t('studio.form.webhookUrl')}</label>
@@ -688,6 +793,14 @@ export default function ToolStudioPage() {
             <p className="text-gray-500 dark:text-gray-400">{t('studio.review.visibility')}</p>
             <p className="font-medium text-gray-900 dark:text-white">
               {t(`studio.review.${formData.visibility}`)}
+            </p>
+          </div>
+          <div className="col-span-2">
+            <p className="text-gray-500 dark:text-gray-400">{t('studio.form.targetCountries')}</p>
+            <p className="font-medium text-gray-900 dark:text-white">
+              {formData.targetCountries.length === 0
+                ? t('studio.countries.worldwide')
+                : formData.targetCountries.map((c) => `${COUNTRY_FLAGS[c] || ''} ${c}`).join(', ')}
             </p>
           </div>
         </div>

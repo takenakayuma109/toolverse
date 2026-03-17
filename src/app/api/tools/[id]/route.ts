@@ -79,6 +79,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
     if (data.tags !== undefined) updateData.tags = data.tags;
     if (data.serviceUrl !== undefined) updateData.serviceUrl = data.serviceUrl;
     if (data.screenshots !== undefined) updateData.screenshots = data.screenshots;
+    if (data.targetCountries !== undefined) updateData.targetCountries = data.targetCountries;
 
     if (data.pricing) {
       updateData.pricingType = data.pricing.type;

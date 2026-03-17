@@ -4,7 +4,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { useThemeStore } from '@/store/theme';
 import Button from '@/components/ui/Button';
 import HeroBackground from './HeroBackground';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Search, ArrowRight, Sparkles } from 'lucide-react';
 
 type PageView = 'home' | 'discover' | 'workspace' | 'studio' | 'account' | 'auth' | 'billing' | 'admin';
 
@@ -92,16 +92,17 @@ export default function HeroSection({ onNavigate }: HeroSectionProps) {
             <Button
               size="lg"
               variant="primary"
-              className="w-full sm:w-auto gap-2 group text-[15px] px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/15 hover:shadow-violet-500/25 transition-shadow"
+              className="w-full sm:w-auto sm:min-w-[240px] gap-2 group text-[15px] px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/15 hover:shadow-violet-500/25 transition-shadow"
               onClick={() => onNavigate?.('discover')}
             >
+              <Search className="w-4 h-4" />
               {t('home.hero.cta')}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto gap-2 border-white/[0.12] text-white/90 hover:bg-white/[0.06] hover:border-white/20 backdrop-blur-sm text-[15px] px-8 py-4 rounded-2xl"
+              className="w-full sm:w-auto sm:min-w-[240px] gap-2 border-white/[0.12] text-white/90 hover:bg-white/[0.06] hover:border-white/20 backdrop-blur-sm text-[15px] px-8 py-4 rounded-2xl"
               onClick={() => onNavigate?.('studio')}
             >
               <Sparkles className="w-4 h-4" />

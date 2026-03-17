@@ -129,6 +129,7 @@ model User {
   subscriptions  Subscription[]
   billingPlans      UserBillingPlan[]
   activeUserEvents  ActiveUserEvent[]
+  creditBalance     CreditBalance?
 
   @@index([email])
   @@index([role])
@@ -196,6 +197,7 @@ model Tool {
   creatorId       String
   tags            String[]
   screenshots     String[]
+  targetCountries String[]       // ISO 3166-1 alpha-2 codes; empty = worldwide
   status          ToolStatus     @default(DRAFT)
   visibility      ToolVisibility @default(PUBLIC)
   serviceUrl      String?
@@ -389,6 +391,89 @@ model UserBillingPlan {
   @@index([userId])
   @@index([planId])
   @@index([status])
+}
+
+// ─── API Usage Billing ─────────────────────────────────────────────────────────
+
+enum CreditTransactionType {
+  PURCHASE
+  USAGE
+  REFUND
+  BONUS
+}
+
+model PlatformConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([key])
+}
+
+model ApiProviderConfig {
+  id              String   @id @default(cuid())
+  provider        String   // e.g. "openai", "anthropic", "google"
+  model           String   // e.g. "gpt-4o", "claude-sonnet-4-20250514"
+  inputPricePerM  Decimal  @db.Decimal(10, 6) // price per 1M input tokens (USD)
+  outputPricePerM Decimal  @db.Decimal(10, 6) // price per 1M output tokens (USD)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([provider, model])
+  @@index([provider])
+  @@index([isActive])
+}
+
+model CreditBalance {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  balance   Decimal  @default(0) @db.Decimal(12, 6) // USD credits
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions CreditTransaction[]
+
+  @@index([userId])
+}
+
+model CreditTransaction {
+  id          String                @id @default(cuid())
+  balanceId   String
+  type        CreditTransactionType
+  amount      Decimal               @db.Decimal(12, 6) // positive for credit, negative for debit
+  description String?
+  metadata    Json?                 // e.g. { stripeSessionId, usageRecordId }
+  createdAt   DateTime              @default(now())
+
+  balance CreditBalance @relation(fields: [balanceId], references: [id], onDelete: Cascade)
+
+  @@index([balanceId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model ApiUsageRecord {
+  id            String   @id @default(cuid())
+  userId        String
+  toolId        String?
+  provider      String
+  model         String
+  inputTokens   Int
+  outputTokens  Int
+  rawCost       Decimal  @db.Decimal(12, 6) // cost at provider rate
+  markupRate    Decimal  @db.Decimal(5, 4)  // e.g. 0.2000 for 20%
+  markedUpCost  Decimal  @db.Decimal(12, 6) // rawCost * (1 + markupRate)
+  durationMs    Int?
+  createdAt     DateTime @default(now())
+
+  @@index([userId])
+  @@index([toolId])
+  @@index([provider, model])
+  @@index([createdAt])
 }
 
 // ─── Active User Tracking ───────────────────────────────────────────────────────
