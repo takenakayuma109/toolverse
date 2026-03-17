@@ -63,6 +63,12 @@ body {
   transition: background-color 0.4s ease, color 0.3s ease;
 }
 
+/* ── Earth mode diagonal gradient background ── */
+[data-theme="offwhite"] body {
+  background: linear-gradient(135deg, #f5f0eb 0%, #ede5dc 25%, #e8ddd3 50%, #ddd0c4 75%, #d5c8bb 100%);
+  background-attachment: fixed;
+}
+
 /* ────────────────────────────────────────────
    Off-White overrides for Tailwind classes
    Uses [data-theme="offwhite"] selector
