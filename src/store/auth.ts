@@ -96,12 +96,26 @@ async function credentialsSignIn(email: string, password: string): Promise<void>
 }
 
 /**
- * Initiate OAuth sign-in by redirecting to the provider.
+ * Initiate OAuth sign-in by posting to NextAuth's signin endpoint.
+ * NextAuth v5 requires a CSRF token and POST request.
  */
-function oauthSignIn(provider: 'google' | 'github' | 'apple'): void {
-  // For OAuth, we redirect the browser to NextAuth's sign-in endpoint.
-  // NextAuth handles the full OAuth flow.
-  window.location.href = `/api/auth/signin/${provider}`;
+async function oauthSignIn(provider: 'google' | 'github' | 'apple'): Promise<void> {
+  const csrfRes = await fetch('/api/auth/csrf');
+  const { csrfToken } = await csrfRes.json();
+
+  // Build a form and submit it — NextAuth expects a form POST
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = `/api/auth/signin/${provider}`;
+
+  const csrfInput = document.createElement('input');
+  csrfInput.type = 'hidden';
+  csrfInput.name = 'csrfToken';
+  csrfInput.value = csrfToken;
+  form.appendChild(csrfInput);
+
+  document.body.appendChild(form);
+  form.submit();
 }
 
 /**
