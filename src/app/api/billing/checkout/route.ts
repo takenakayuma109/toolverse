@@ -1,8 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createCheckoutSession, createPortalSession, stripe } from '@/lib/stripe';
+import { createPortalSession, stripe } from '@/lib/stripe';
 import { requireAuth } from '@/lib/auth-helpers';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+
+/**
+ * Find or create a Stripe customer for a given user.
+ */
+async function findOrCreateCustomer(userId: string, email?: string | null): Promise<string> {
+  // 1. Check if we already have a Stripe customer for this user in our DB
+  try {
+    const billingPlan = await prisma.userBillingPlan.findFirst({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+    if (billingPlan?.stripeSubscriptionId) {
+      const sub = await stripe.subscriptions.retrieve(billingPlan.stripeSubscriptionId);
+      const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id;
+      if (customerId) return customerId;
+    }
+  } catch {
+    // DB may not have billing plan yet — continue to search/create
+  }
+
+  // 2. Search Stripe for existing customer by metadata
+  try {
+    const existing = await stripe.customers.search({
+      query: `metadata["userId"]:"${userId}"`,
+      limit: 1,
+    });
+    if (existing.data.length > 0) {
+      return existing.data[0].id;
+    }
+  } catch {
+    // Search might fail on new Stripe accounts — continue to create
+  }
+
+  // 3. Create a new customer
+  const customer = await stripe.customers.create({
+    email: email ?? undefined,
+    metadata: { userId },
+  });
+  return customer.id;
+}
 
 export async function POST(request: NextRequest) {
   let session;
@@ -26,25 +66,12 @@ export async function POST(request: NextRequest) {
 
   const { action } = body;
   const origin = request.nextUrl.origin;
+  const userEmail = session.user?.email;
 
   // Handle setup mode (card registration without subscription)
   if (action === 'setup') {
     try {
-      // Find or create customer
-      const existingCustomers = await stripe.customers.search({
-        query: `metadata["userId"]:"${userId}"`,
-        limit: 1,
-      });
-
-      let customerId: string;
-      if (existingCustomers.data.length > 0) {
-        customerId = existingCustomers.data[0].id;
-      } else {
-        const customer = await stripe.customers.create({
-          metadata: { userId },
-        });
-        customerId = customer.id;
-      }
+      const customerId = await findOrCreateCustomer(userId, userEmail);
 
       const checkoutSession = await stripe.checkout.sessions.create({
         mode: 'setup',
@@ -60,7 +87,7 @@ export async function POST(request: NextRequest) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       logger.error('Setup checkout session creation failed', { error: message });
       return NextResponse.json(
-        { error: 'カード登録セッションの作成に失敗しました' },
+        { error: `カード登録セッションの作成に失敗しました: ${message}` },
         { status: 500 },
       );
     }
@@ -68,36 +95,38 @@ export async function POST(request: NextRequest) {
 
   // Handle billing portal session
   if (action === 'portal') {
-    const billingPlan = await prisma.userBillingPlan.findFirst({
-      where: { userId, status: { in: ['ACTIVE', 'PAST_DUE'] } },
-      orderBy: { createdAt: 'desc' },
-    });
-
-    if (!billingPlan?.stripeSubscriptionId) {
-      return NextResponse.json(
-        { error: 'No active subscription found' },
-        { status: 404 },
-      );
-    }
-
     try {
-      // Use userId as Stripe customer ID (set during checkout)
+      const billingPlan = await prisma.userBillingPlan.findFirst({
+        where: { userId, status: { in: ['ACTIVE', 'PAST_DUE'] } },
+        orderBy: { createdAt: 'desc' },
+      });
+
+      if (!billingPlan?.stripeSubscriptionId) {
+        return NextResponse.json(
+          { error: 'No active subscription found' },
+          { status: 404 },
+        );
+      }
+
+      const sub = await stripe.subscriptions.retrieve(billingPlan.stripeSubscriptionId);
+      const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id;
+
       const portalSession = await createPortalSession(
-        userId,
-        body.successUrl ?? `${request.nextUrl.origin}/billing`,
+        customerId,
+        body.successUrl ?? `${origin}/billing`,
       );
       return NextResponse.json({ url: portalSession.url });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error';
       logger.error('Portal session creation failed', { error: message });
       return NextResponse.json(
-        { error: 'Failed to create portal session' },
+        { error: `Failed to create portal session: ${message}` },
         { status: 500 },
       );
     }
   }
 
-  // Handle checkout session
+  // Handle checkout session (subscription)
   const { priceId, planId, successUrl, cancelUrl } = body;
 
   if (!priceId) {
@@ -112,13 +141,18 @@ export async function POST(request: NextRequest) {
     : `${origin}/billing`;
 
   try {
-    const checkoutSession = await createCheckoutSession(
-      userId,
-      priceId,
-      resolvedSuccessUrl,
-      resolvedCancelUrl,
-      planId ? { planId, priceId } : { priceId },
-    );
+    const customerId = await findOrCreateCustomer(userId, userEmail);
+
+    const checkoutSession = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      customer: customerId,
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: resolvedSuccessUrl,
+      cancel_url: resolvedCancelUrl,
+      client_reference_id: userId,
+      metadata: { userId, ...(planId ? { planId, priceId } : { priceId }) },
+      allow_promotion_codes: true,
+    });
 
     return NextResponse.json({
       id: checkoutSession.id,
@@ -126,9 +160,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
-    logger.error('Checkout session creation failed', { error: message });
+    logger.error('Checkout session creation failed', { error: message, priceId, userId });
     return NextResponse.json(
-      { error: 'Failed to create checkout session' },
+      { error: `チェックアウトの作成に失敗しました: ${message}` },
       { status: 500 },
     );
   }

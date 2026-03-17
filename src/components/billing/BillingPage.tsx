@@ -35,8 +35,8 @@ const PLANS = [
     periodKey: null,
     descriptionKey: 'billing.plans.free.description',
     priceValue: 0,
-    stripePriceId: null,
-    stripeYearlyPriceId: null,
+    stripePriceId: null as string | null,
+    stripeYearlyPriceId: null as string | null,
     features: [
       '5 ツール',
       '1 GB ストレージ',
@@ -54,8 +54,8 @@ const PLANS = [
     periodKey: 'billing.plans.pro.period',
     descriptionKey: 'billing.plans.pro.description',
     priceValue: 1980,
-    stripePriceId: 'price_1TBl3TRobU1ygm39tzorv9cL',
-    stripeYearlyPriceId: 'price_1TBl3TRobU1ygm39Cqn8u0mn',
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_MONTHLY || 'price_1TBl3TRobU1ygm39tzorv9cL',
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO_YEARLY || 'price_1TBl3TRobU1ygm39Cqn8u0mn',
     features: [
       'ツール数無制限',
       '10 GB ストレージ',
@@ -75,8 +75,8 @@ const PLANS = [
     periodKey: 'billing.plans.team.period',
     descriptionKey: 'billing.plans.team.description',
     priceValue: 4980,
-    stripePriceId: 'price_1TBl3URobU1ygm396Z0TIYgf',
-    stripeYearlyPriceId: 'price_1TBl3URobU1ygm39N0SJvGu8',
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_MONTHLY || 'price_1TBl3URobU1ygm396Z0TIYgf',
+    stripeYearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_TEAM_YEARLY || 'price_1TBl3URobU1ygm39N0SJvGu8',
     features: [
       'プロの全機能を含む',
       'チームコラボレーション',
@@ -96,8 +96,8 @@ const PLANS = [
     periodKey: null,
     descriptionKey: 'billing.plans.enterprise.description',
     priceValue: -1,
-    stripePriceId: null,
-    stripeYearlyPriceId: null,
+    stripePriceId: null as string | null,
+    stripeYearlyPriceId: null as string | null,
     features: [
       'カスタム制限',
       'SLA 保証',

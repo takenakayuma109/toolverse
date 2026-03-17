@@ -26,14 +26,17 @@ export async function createCheckoutSession(
   successUrl: string,
   cancelUrl: string,
   metadata?: Record<string, string>,
+  customerId?: string,
 ): Promise<Stripe.Checkout.Session> {
   return stripe.checkout.sessions.create({
     mode: 'subscription',
+    ...(customerId ? { customer: customerId } : {}),
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: successUrl,
     cancel_url: cancelUrl,
     client_reference_id: userId,
     metadata: { userId, ...metadata },
+    allow_promotion_codes: true,
   });
 }
 

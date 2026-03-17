@@ -18,16 +18,26 @@ export async function POST() {
 
   try {
     // Find or create a Stripe customer for this user
-    const existingCustomers = await stripe.customers.search({
-      query: `metadata["userId"]:"${userId}"`,
-      limit: 1,
-    });
-
     let customerId: string;
-    if (existingCustomers.data.length > 0) {
-      customerId = existingCustomers.data[0].id;
-    } else {
+
+    try {
+      const existing = await stripe.customers.search({
+        query: `metadata["userId"]:"${userId}"`,
+        limit: 1,
+      });
+      if (existing.data.length > 0) {
+        customerId = existing.data[0].id;
+      } else {
+        const customer = await stripe.customers.create({
+          email: session.user?.email ?? undefined,
+          metadata: { userId },
+        });
+        customerId = customer.id;
+      }
+    } catch {
+      // Search might fail — create a new customer
       const customer = await stripe.customers.create({
+        email: session.user?.email ?? undefined,
         metadata: { userId },
       });
       customerId = customer.id;
@@ -47,7 +57,7 @@ export async function POST() {
     const message = err instanceof Error ? err.message : 'Unknown error';
     logger.error('SetupIntent creation failed', { error: message });
     return NextResponse.json(
-      { error: 'セットアップの作成に失敗しました' },
+      { error: `セットアップの作成に失敗しました: ${message}` },
       { status: 500 },
     );
   }

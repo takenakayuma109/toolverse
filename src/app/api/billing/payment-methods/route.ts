@@ -3,6 +3,24 @@ import { requireAuth } from '@/lib/auth-helpers';
 import { listPaymentMethods, stripe } from '@/lib/stripe';
 import { logger } from '@/lib/logger';
 
+/**
+ * Find the Stripe customer ID for a user. Returns null if not found.
+ */
+async function findStripeCustomerId(userId: string): Promise<string | null> {
+  try {
+    const existing = await stripe.customers.search({
+      query: `metadata["userId"]:"${userId}"`,
+      limit: 1,
+    });
+    if (existing.data.length > 0) {
+      return existing.data[0].id;
+    }
+  } catch {
+    // Search not available — ignore
+  }
+  return null;
+}
+
 export async function GET() {
   let session;
   try {
@@ -17,9 +35,15 @@ export async function GET() {
   }
 
   try {
-    const stripePaymentMethods = await listPaymentMethods(userId);
+    const customerId = await findStripeCustomerId(userId);
+    if (!customerId) {
+      // No Stripe customer yet — return empty list
+      return NextResponse.json({ methods: [] });
+    }
 
-    const customer = await stripe.customers.retrieve(userId).catch(() => null);
+    const stripePaymentMethods = await listPaymentMethods(customerId);
+
+    const customer = await stripe.customers.retrieve(customerId).catch(() => null);
     const defaultPmId =
       customer && typeof customer !== 'string' && !customer.deleted
         ? (customer.invoice_settings?.default_payment_method as string | null)
@@ -80,8 +104,18 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // Find or create customer
+    let customerId = await findStripeCustomerId(userId);
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: session.user?.email ?? undefined,
+        metadata: { userId },
+      });
+      customerId = customer.id;
+    }
+
     const pm = await stripe.paymentMethods.attach(paymentMethodId, {
-      customer: userId,
+      customer: customerId,
     });
 
     const result = {
